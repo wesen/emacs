@@ -1,0 +1,79 @@
+                                 dpans2texi.el
+
+   dpans2texi.el converts the TeX sources of the draft ANSI Common Lisp
+   standard (dpANS) to the [2]Texinfo format.
+
+   The purpose is to take advantage of the superior qualities of the Info
+   reader in Emacs compared with other formats, viz.
+     * Single-key index lookup with completion: i.
+     * Single-key full text regexp search: s
+     * Convenient symbol lookup from source code: C-h C-i
+
+   There are [3]various existing ways to do the latter, though, by
+   opening a web browser at the right spot in the [4]Common Lisp
+   HyperSpec. But this means leaving Emacs ... a Bad Thing(TM).
+
+   Some of the information conveyed by the selection of fonts in the
+   hard-copy version is lost in the translation to Texinfo. I've also
+   made frivolous use of Unicode characters to represent various glyphs
+   -- you might need to [5]supplement your fontset to avoid empty boxes
+   in Emacs.
+
+   As a side effect of using Texinfo you can also produce a HTML version.
+   This wasn't really a target, but I think the result is quite decent
+   nevertheless.
+
+   I won't distribute the converted files, as the draft doesn't grant me
+   permission to do so. So, you need to run the converter on the original
+   TeX files yourself.
+
+   Caveat: The translation may have introduced errors, please report
+   discrepancies with the hard-copy version.
+
+   Q: Why didn't you just use Bill Schelter's [8]Texinfo rendition?
+   A: Good question! I didn't learn about it until I had finished most of
+   my converter, so I might as well do the rest. I think my version is a
+   bit more polished (I also had the advantage of some handy new Texinfo
+   commands introduced since 1994). Besides, having a converter means
+   that it's fairly easy to customize aspects of the conversion to your
+   preference.
+
+  Installation
+
+     * You need Texinfo 4.7 (released 10-04-2004) or later.
+     * Get dpans2texi-1.03.tar.gz and unpack the tarball.
+     * Run ./configure
+     * Run make wget to download the .tex files with wget (or download
+       them directly from [10]parcftp.xerox.com/pub/cl/dpANS3 and
+       [11]parcftp.xerox.com/pub/cl/dpANS3R to the same directory).
+     * Build the info files with make, and finally install them in your
+       Info directory with make install
+     * To use C-h C-i in Lisp mode to look up the symbol at point in the
+       spec, add the following to your .emacs file:
+   (require 'info-look)
+   (info-lookup-add-help
+    :mode 'lisp-mode
+    :regexp "[^][()'\" \t\n]+"
+    :ignore-case t
+    :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+     * Run make html if you want a HTML version. You can also produce
+       Docbook and XML versions with the xml and docbook targets.
+
+  Problems
+
+   Bugs in Texinfo and Emacs rather than the converter as such:
+     * Backreferences from the list of figures are broken in Info.
+     * makeinfo crashes on the XML, Docbook and HTML targets on Mac OS X.
+     * Emacs on Mac OS X doesn't display all characters even though the
+       font does contain them.
+
+References
+
+   2. http://texinfo.org/
+   3. http://www.cliki.net/CLHS
+   4. http://www.lispworks.com/reference/HyperSpec/Front/index.htm
+   5. http://www.gnu.org/software/emacs/manual/html_node/International.html
+   8. ftp://ftp.ma.utexas.edu/pub/gcl/gcl-info+texi.tgz
+  10. ftp://parcftp.xerox.com/pub/cl/dpANS3
+  11. ftp://parcftp.xerox.com/pub/cl/dpANS3R
+

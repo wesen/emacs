@@ -1,0 +1,1157 @@
+2008-11-27  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.27 released.
+	(vhdl-special-syntax-alist): Make '\<', '\>' explicit, add "In comments"
+	switch.
+	(vhdl-update-sensitivity-list): Handle array index of record field.
+	(vhdl-mode): Not set `paragraph-start|separate' in Emacs 22.
+
+2008-11-13  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-update-sensitivity-list): Error out if 'begin' keyword missing.
+
+2008-09-16  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(top): Handle indentation for 'protected' same as for 'record'.
+
+2008-08-07  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.26 released.
+	(vhdl-port-paste-testbench): Correctly indent inserted clock templates.
+	(vhdl-font-lock-keywords-2): Improve highlighting of component inst.
+	(vhdl-words-init): Fix 'max-specpdl-size' error (empty regexp-opt list).
+
+2008-08-06  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-electric-tab): TAB indents region if active (Emacs only).
+
+2008-06-13  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-speedbar-*): Revert to old speedbar variables (Emacs 21 compat.).
+
+2008-06-05  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-speedbar-*): Use new speedbar variables/functions.
+	(speedbar-*-directory*): Alias for obsoleted speedbar variables.
+	(top): Emacs 22 cleanup changes by FSF.
+
+2008-06-04  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.25 released.
+	(vhdl-fix-case-*): Also fix case of standardized constants.
+	(vhdl-font-lock-*): Also highlight standardized constants.
+	(top): Add/update VHDL-AMS packages, types, constants.
+	(vhdl-template-standard-package): Fix std.textio package insertion.
+	(vhdl-port-paste-signals): Fix ';' insertion.
+	(vhdl-back-to-indentation, vhdl-indent-line): Fix indentation for '^L'.
+	(vhdl-generate-makefile-1): Not visit file as raw (coding system).
+	(top): Replace " \t\n" by " \t\n\r\f" in regexps.
+	(vhdl-compose-new-component): Leave cursor at header description.
+	(vhdl-math-*): Update reserved words from math packages.
+
+2008-05-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.24 released.
+	(vhdl-file-header): Add "<authorfull>" keyword.
+	(vhdl-font-lock-keywords-2): Highlight name after "end record".
+	(vhdl-array-index-record-field-in-sensitivity-list): New option.
+	(vhdl-update-sensitivity-list): Include array index, record field in
+	sensitivity list.
+	(vhdl-fixup-whitespace-region): Fix fixup in comment at EOF.
+	(vhdl-port-paste-signals, vhdl-port-paste-initializations): Correct
+	initialization for integer and real types.
+	(vhdl-port-paste-port-map): Fix direction string for terminal type.
+
+2008-04-01  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.23 released.
+	(vhdl-mode-map-init): Change keybindings (remove C-c[a-zA-Z] bindings).
+
+2008-03-18  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Code cleanup.
+
+2008-01-14  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-b-o-s-re): Fix indentation for "process(..." (no space).
+
+2007-12-21  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.22 released.
+	(vhdl-update-sensitivity-list): Exclude record fields (preceding '.').
+
+2007-11-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-02-functions): Add "hwrite", "owrite", "hread", "oread" keywords.
+
+2007-08-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-template-seq-process): Add condition parenthesis.
+
+2007-08-06  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.21 released.
+	(vhdl-template-variable): Fix seq. block checking for proc. with label.
+
+2007-07-27  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-align-alist): Add alignment for keywords "across", "through".
+
+2007-07-26  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.20 released.
+	(vhdl-align-region-2): Fix alignment right after string.
+	(vhdl-template-variable): Add error message for VHDL'87.
+	(vhdl-electric-return): Not fix case if inside comment.
+
+2007-06-22  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-lineup-statement-cont): "==" also assignment operator (VHDL-AMS).
+	(vhdl-hooked-abbrev): Adjust case of keywords after "end".
+	(vhdl-expand-abbrev, vhdl-expand-paren): Use `defalias'.
+
+2007-06-04  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-parse-string): Handle ';' inside port comment.
+
+2007-05-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.18 released.
+	(vhdl-update-sensitivity-list): Handle attributes after parenthesis.
+
+2007-05-14  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(top): Code cleanup (from GNU distribution).
+
+2007-03-29  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-statistics-buffer): Add empty/comment lines statistics.
+
+2007-03-09  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-{beginning,end}-of-block): Handle 'record' correctly.
+	(vhdl-template-variable): Improve checking for shared variable context.
+
+2007-01-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-generate-makefile-1): Use `vhdl-makefile-default-targets` always.
+
+2006-12-12  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.17 released.
+	(vhdl-in-extended-identifier-p): Handle extended identifiers in
+	beautification.
+
+2006-09-19  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.16 released.
+	(vhdl-indent-line): Fix comment at bol indentation.
+	(vhdl-align-region-2): Prevent alignment of keywords in comments.
+
+2006-09-14  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.15 released.
+	(vhdl-indent-comment-like-next-code-line): New option.
+	(vhdl-indent-line): Indent comment line like following code line.
+	(vhdl-generate-makefile-1): Use variable `vhdl-compile-post-command'.
+
+2006-09-12  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compile): Use variable `vhdl-compile-post-command'.
+
+2006-08-21  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.14 released.
+	(vhdl-compiler-alist): Fix error regexp for Modelsim.
+
+2006-08-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.13 released.
+	(vhdl-makefile-default-targets): New option (user target names).
+
+2006-08-02  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-port-reverse-direction): Handle upper-case "IN", "OUT".
+
+2006-06-20  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Consider new "Modelsim" warning syntax.
+
+2006-06-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-reset-kind): Add query option.
+	(vhdl-align-alist): Fix alignment for "?<=".
+
+2006-05-29  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-comment-display-line-char): Add hidden variable.
+
+2006-05-24  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Add support for ADVance MS compiler.
+
+2006-05-23  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.12 released.
+	(vhdl-in-quote-p): Handle single quoted characters correctly.
+	(vhdl-begin-*-re): Fix indentation for "if/case ... use".
+	(vhdl-fixup-whitespace-region): Add "??" operator.
+	(vhdl-corresponding-end): Fix indentation for "if/case ... use".
+
+2006-05-16  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-align-region-2): Not align at end of line.
+	(vhdl-in-literal): Also check character quotes (single quote).
+	(vhdl-align-region-2): Fix in-literal checking.
+	(vhdl-fixup-whitespace-region): Add ?= ?/= ?> ?>= ?< ?<= operators.
+
+2006-05-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.11 released.
+	(vhdl-fixup-whitespace-region): Correctly handle single '-'.
+	(vhdl-align-region-2, vhdl-fixup-whitespace-region): Handle at boi.
+	(vhdl-get-syntactic-context): Fix argument list indentation.
+
+2006-05-11  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.10 released.
+	(vhdl-compile): Use relative path for compiled files by default.
+	(vhdl-compile-absolute-path): Use absolute path for compiled files.
+	(vhdl-begin-p): Fix indentation for "-- when".
+
+2006-04-12  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.8 released.
+	(vhdl-compiler-alist): Add "Aldec" simulator.
+	(vhdl-get-visible-signals): Allow "port ..." in middle of line.
+	(vhdl-fixup-whitespace-region): Fix whitespace removal before comma.
+	(top): Update for VHDL'02 standard (add 'protected' keyword).
+
+2006-01-13  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el:
+	(vhdl-mode): Remove 'fill-prefix' definition for XEmacs (breaks else).
+
+2005-12-09  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.7 released.
+	(vhdl-template-case): Disable "case ... use" template if AMS turned off.
+	(vhdl-mode-syntax-table-init): Define '\' as word-constituent character
+	for extended identifiers.
+	(vhdl-mode): Define 'fill-prefix' for paragraph filling in XEmacs
+	(vhdl-port-copy): Handle '(' in port comments.
+	(vhdl-template-if-then-use): "if ... use" ends with "end use".
+	(vhdl-compiler-alist): Add 'Xilinx' compiler.
+
+2005-08-30  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Sync with GNU Emacs CVS 1.42
+
+2005-08-29  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Sync with GNU Emacs CVS 1.15.4.1.
+
+2005-06-22  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Sync with GNU Emacs CVS 1.35.
+
+2005-06-03  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-emacs-21): Make compatible with Emacs 22.
+
+2005-05-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-update-sensitivity-list): Handle multi-dimensional array access.
+
+2005-04-10  Stefan Monnier  <monnier@iro.umontreal.ca>
+
+	* vhdl-mode.el: GNU Emacs CVS 1.26.
+	(vhdl-mode-map-init): Don't override default
+	TAB binding so tab-always-indent is obeyed.
+	(vhdl-minibuffer-local-map): Move initialization into declaration.
+	(vhdl-run-when-idle, vhdl-create-mode-menu, vhdl-character-to-event)
+	(vhdl-hooked-abbrev): Avoid test for XEmacs.
+	(vhdl-current-line): Use line-beginning-position.
+	(vhdl-doc-variable, vhdl-doc-mode): Call help-setup-xref before
+	with-output-to-temp-buffer, so the current position can be recorded.
+
+2005-04-07  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-end-p): Fix indentation bug "else" after "-- when".
+
+2005-02-25  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.3 released.
+	(vhdl-set-default-project): New function (easier setting of default).
+	(vhdl-port-copy): Handle extended identifiers for generics.
+
+2005-01-21  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Better description for error message regexp.
+
+2005-01-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-make): Query for target, use previous as default.
+
+2005-01-11  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-port-copy): Fix port copy for port names starting with "signal".
+
+2004-12-10  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-font-lock-keywords-2): Fix fontification for record el. assign.
+
+2004-10-23  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-speedbar-make-subpack-line): Add package body link.
+	(vhdl-generate-makefile-1): Not include itself as dependency.
+
+2004-09-30  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.2 released.
+	(vhdl-font-lock-init): Highlight c-preprocessor directives.
+	(vhdl-*ward-syntactic-ws): Skip c-preprocessor directives.
+	(vhdl-get-syntactic-context): Handle c-preprocessor directives.
+
+2004-09-23  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.33.1 released.
+	(vhdl-update-sensitivity-list): Start scan at opening parenthesis.
+	(vhdl-fixup-whitespace-region): Fix jumping point (infinite loop).
+	(vhdl-update-sensitivity-list-buffer): Add string argument for `error'.
+	(vhdl-import-project): Add string argument for `error'.
+
+2004-04-01  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compose-*): Add configuration declaration generation.
+
+2004-02-28  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-scan-directory-contents): Scan for block/generate hierarchy.
+
+2004-02-16  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-trailer-re): Add "record" keyword (better indentation).
+	(vhdl-fixup-whitespace-region): "[^ \t\"-]+" instead of "[^ \t-\"]+".
+	(vhdl-font-lock-keywords-2): Not highlight formal parameter after '|'.
+	(vhdl-testbench-entity-file-name,vhdl-testbench-architecture-file-name):
+	Allow separate customization of testbench file names.	
+
+2004-02-13  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-beginning-of-block): Handle optional subprogram parameter list.
+
+2004-02-06  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-get-visible-signals): Allow newline within alias declaration.
+
+2004-01-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-update-sensitivity-list): Signal read only on certain attributes.
+
+2003-12-18  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-fixup-whitespace-region): Fix bug with strings (double quotes).
+
+2003-11-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(member-ignore-case): Alias for missing function in XEmacs.
+
+2003-09-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Add unit-to-file name mapping for Cadence NC.
+	(vhdl-update-sensitivity-list): Ignore case on read signals.
+
+2003-09-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-replace-string): Adjust case only for file names.
+
+2003-08-04  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-update-sensitivity-list): Fix search for read signals.
+
+2003-04-20  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-update-sensitivity-list): Exclude formal parameters.
+	(vhdl-get-visible-signals): Include aliases of signals.
+	(vhdl-get-visible-signals): Fix signal name searching.
+
+2003-03-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-port-flatten, vhdl-port-reverse-direction): Better message.
+
+2003-03-12  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.32.13 released.
+	(vhdl-fixup-whitespace-region): Fix for character literals (e.g. ':').
+
+2003-02-28  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.32.12 released, submitted to GNU Emacs.
+	(vhdl-in-literal): Restore old function (fixes bug).
+
+2003-01-06  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compiler-alist): Add new error message syntax for Modelsim.
+
+2002-12-09  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-create-mode-menu): Split menues for compilers, projects, models.
+
+2002-11-12  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.32.11 released.
+	(vhdl-file-name-case): New option (allow casing of file names).
+	(vhdl-replace-string): Allow casing (use `vhdl-file-name-case').
+
+2002-10-27  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.32.10 released.
+	(vhdl-forward-comment): Replace buggy `forward-comment' in XEmacs 21.4.
+
+2002-09-16  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-update-sensitivity-list): Recognize signals with attributes.
+
+2002-08-12  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-template-exit,vhdl-template-next,vhdl-template-return):
+	Fix template abortion.
+
+2002-07-01  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-statistics-buffer): Open message buffer unless Emacs 21.
+	(vhdl-subprog-copy): Allow subprogram names in double quotes.
+
+2002-06-24  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el: Version 3.32.9 beta released.
+	(vhdl-compiler-alist): Add "Speedwave" compiler.
+
+2002-05-08  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-re-search-forward): Simplify search.
+	(vhdl-in-literal,vhdl-in-literal-p): Faster literal checking.
+
+2002-05-07  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-compose-wire-components): Insert missing generic/port clause.
+	(vhdl-statistics-buffer): New code statistics function.
+	(vhdl-compose-place-component): Improve positioning of library clause.
+
+2002-05-02  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-subprog-*): New subprogram interface copy/paste.
+	(vhdl-speedbar-port-copy): Add subprogram copy.
+	(vhdl-fixup-whitespace-region): No whitespace after '(' and before ')'.
+	(vhdl-fill-{region,group,list,same-indent}): New code filling funcs.
+
+2002-04-29  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-port-paste-testbench): Print file names created.
+	(vhdl-port-paste-testbench): Better handling when file exist/open.
+	(vhdl-update-hierarchy): Preserve order of files changed.
+	(vhdl-compose-new-component): Print file names created.
+	(vhdl-compose-components-package): Print file name created.
+
+2002-04-26  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-visit-file): Improve error handling.
+
+2002-04-25  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-port-paste-instance): Special case: no number in instance name.
+	(vhdl-visit-file): Abort if file does not exist.
+	(error): Add "ERROR:  " prefix to all error messages.
+	(vhdl-port-flattened): Indicate flattened port in menu.
+	(vhdl-port-reversed-direction): Indicate reversed port in menu.
+	(vhdl-compose-wire-components): Case-insensitive wiring.
+	(vhdl-compose-wire-components): Error message for formals mismatch.
+
+2002-03-17  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-scan-directory-contents): Add filename to "non-existing" warning.
+	(vhdl-speedbar-expand-units): Fix speedbar frame switching oddity.
+
+2002-03-15  Reto Zimmermann  <reto@gnu.org>
+
+	* vhdl-mode.el
+	(vhdl-scan-directory-contents): Scan for instantiations without map.
+	(vhdl-font-lock-keywords-2): Highlight instantiations without map.
+
+2002-03-14  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.32.8 beta released.
+	(vhdl-mode): `comment-padding' for Emacs 21 only.
+	(vhdl-mode): Remove forced `turn-on-font-lock'.
+	(vhdl-create-mode-menu): Add customization for `global-font-lock-mode'.
+	(vhdl-work-library): Resolve environment variable.
+	(vhdl-port-reverse-direction): New function.
+
+2001-12-11  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.32.7 beta released.
+	(vhdl-comment-uncomment-region): Remove usage of `commend-dwim' again.
+	(vhdl-compiler-alist): Add support for "Simili".
+	(vhdl-speedbar-make-*-line): Fix for displaying XEmacs speedbar images.
+
+2001-11-27  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-fontify-buffer): Toggle font-lock-mode for better recovery.
+	(vhdl-update-sensitivity-list): Fix signal attributes as not reading.
+	(vhdl-port-list): Add context clause.
+	(vhdl-compose-place-component): Place context clause for used packages.
+	(vhdl-compose-place-component): Place component declaration only once.
+	(vhdl-compose-components-package): Include context clause.
+
+2001-11-26  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-emacs-21): Add Emacs 21 compatibility/enhancements: not use
+	`lazy-lock-mode' anymore, use `comment-dwim'.
+	(vhdl-port-paste-signals): Include direction comments.
+	(vhdl-port-paste-testbench): Additional comments in code.
+	(vhdl-testbench-entity-header,vhdl-testbench-architecture-header):
+	Obsoleted.
+	(vhdl-testbench-include-header): Option for header in testbench files.
+	(vhdl-testbench-declarations,vhdl-testbench-statements): New default.
+
+2001-11-24  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-port-*, vhdl-compose-*): Include name in status messages.
+	(vhdl-package-alist): Scan for and display subprogram body.
+	(vhdl-scan-directory-contents): Enhance double declaration warnings.
+	(vhdl-speedbar-find-file): Always jump to design unit if buffer open.
+	(vhdl-project-file-name): Include user name in setup file name.
+	(vhdl-auto-load-project,vhdl-import-project): Only make projects
+	from first entry current.
+	(vhdl-speedbar-insert-hierarchy): Mark non-existing entities/packages.
+	(vhdl-visit-file): Fix set visiting buffer by file name.
+
+2001-11-21  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-speedbar-cache-file-name, vhdl-load-cache, vhdl-save-cache):
+	Include user name in cache file name.
+
+2001-11-20  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.25, 3.32.6 beta released.
+	(vhdl-compiler-alist): Add Synplify, column no in error regexp.
+	(vhdl-compile-init): Allow fourth element (column no) in error regexp.
+	(vhdl-speedbar-toggle-hierarchy): Removed.
+
+2001-11-18  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-beginning-of-block): Fix for function with multiple arguments.
+	(vhdl-get-visible-signals, vhdl-update-sensitivity-list): Make
+	case-insensitive.
+	(vhdl-minibuffer-tab): No indentation.
+
+2001-11-12  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-ams-types, vhdl-ams-enum-values, vhdl-ams-packages): Add
+	identifiers from `nature_pkg' package.
+
+2001-11-01  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-comment-uncomment-region): Change ARG for uncommenting.
+
+2001-09-17  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-create-mode-menu): Fix `customize-group' entries for XEmacs.
+
+2001-07-30  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-create-mode-menu): "Gen." -> "Generate" for XEmacs.
+
+2001-05-28  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.24 released.
+	(vhdl-align-alist): Fix "when/else ... =>" case.
+	(vhdl-port-copy): Extended identifiers for signal names.
+	(vhdl-align-region-groups, vhdl-align-inline-comment-region,
+	vhdl-align-inline-comment-group): re-tabify.
+
+2001-02-28  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.32.3 beta / 3.31.23 released.
+	(vhdl-compile-init): Fix `nconc' bug (also in 3.31).
+	(vhdl-compose-wire-components): Fix buffer switching.
+
+2001-02-19  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.32.2 beta released.
+	(vhdl-font-lock-function-face): Change DarkCyan to Cyan4.
+	(vhdl-file-header): Insert VHDL language standard string.
+	(vhdl-use-direct-instantiation): Allow direct instantiation in VHDL'87.
+	(vhdl-default-library): Option to define default library name.
+
+2001-02-18  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.32.1 beta released.
+	(vhdl-port-copy): Fix on empty generic/port clause.
+	(vhdl-use-direct-instantiation): Option to allow direct instantiation.
+	(vhdl-compose-wire-components): Include direct instantiation.
+	(vhdl-instance-name): Unique numbers in instance names.
+
+2001-02-17  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compile, vhdl-make): Check for existing compile directory.
+	(vhdl-fix-case-word): Upcase VHDL words after SPC and RET.
+	(vhdl-template-field): Fix case on all VHDL words.
+	(vhdl-visit-file): Error if file not found.
+
+2001-02-14  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.21 released.
+	(vhdl-compile-directory): Make sure that directory name ends with '/'.
+
+2001-02-10  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.20 released.
+	(vhdl-compile): Put file name with spaces in quotes.
+	(speedbar): Use new 'speedbar-select-attached-frame' function.
+	(vhdl-mode): New web address.
+
+2000-12-04  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-generate-makefile-hook): Allow to insert user parts in Makefile.
+
+2000-11-22  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-font-lock-keywords-2): Fix label highlighting for signal asst.
+
+2000-11-14  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el:
+	(vhdl-speedbar-show-hierarchy, vhdl-speedbar-show-projects): Replaced
+	by `vhdl-speedbar-display-mode'.
+
+2000-11-12  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	Remove variable declarations for faces.
+	(vhdl-template-others): Re-electrified "others".
+	(vhdl-speedbar-expand-architecture, vhdl-speedbar-expand-config):
+	Give user control over displayed hierarchy depth.
+
+2000-11-11  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-scan-directory-contents): Allow same name for multiple instances.
+	(vhdl-project-sort): Display projects in alphabetical order.
+	(vhdl-project-file-name): Change to list of file names.
+
+2000-11-09  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compiler-alist): Include library name in library command.
+
+2000-11-05  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	Adaptions for displaying all projects in hierarchy browser.
+	(vhdl-make): Fix missing options if there is a target.
+	(vhdl-speedbar-generate-makefile): Makefile generation from speedbar.
+	(vhdl-speedbar-show-projects): Option for project displaying mode.
+
+2000-11-03  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-save-cache, vhdl-export-project, vhdl-generate-makefile-1):
+	Create directory first if non-existent.
+	(vhdl-compile-directory): Allow absolute path for compile directory.
+	(vhdl-project-alist): Insert library name in Makefile name.
+
+2000-11-02  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-get-hierarchy): Include configurations in hierarchy list.
+
+2000-11-01  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-speedbar-item-info): Enhanced displaying.
+	(vhdl-scan-file-contents): Fix skipping of comments in scanning.
+
+2000-10-31  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(speedbar-indentation-width): Set default to 2 for VHDL Mode.
+
+2000-10-30  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	Adaptions for case-insensitive hierarchy browsing.
+	(vhdl-entity-alist, vhdl-config-alist, vhdl-package-alist): Change
+	key to lower case, add original case identifier.
+	(vhdl-get-hierarchy): Fix bug with configurations.
+	(vhdl-generate-makefile-1): Add used packages to library unit targets.
+	(vhdl-speedbar-library-face): New face in hierarchy browser.
+	(vhdl-speedbar-case-insensitive): Remove option.
+
+2000-10-26  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-electric-tab, vhdl-minibuffer-tab): Check whether
+	`hippie-expand-only-buffers' is bound (old XEmacs package).
+	(vhdl-port-copy): Fix parsing of comment on first line.
+	(vhdl-generate-makefile-1): Create library for all targets.
+
+2000-10-25  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compile-use-local-error-regexp): Option for global error regexps.
+	(vhdl-project-alist, vhdl-scan-file-contents): Sources exclude regexp.
+
+2000-10-22  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.11 beta released.
+	(vhdl-compile-init): Eliminate redundant regexps.
+	(vhdl-generate-makefile-1): Fix entry for files not to be compiled.
+	(vhdl-compiler-alist): Add unit-to-file name mapping for Savant.
+
+2000-10-21  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compile, vhdl-make, vhdl-generate-makefile): Check compiler name.
+	(vhdl-generate-makefile-1): Allow absolute path for library directory.
+	(vhdl-port-paste-testbench): Replace keywords in testbench entity
+	and architecture file headers.
+	(vhdl-template-elsif): No expansion in concurrent part (except AMS).
+	(vhdl-compiler-alist, vhdl-generate-makefile): Add library option in
+	Makefile generation command.
+	(vhdl-scan-file-contents): Allow comment lines in instantiations.
+	(vhdl-testbench-include-library): Option for std_logic_1164 use clause.
+
+2000-09-18  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-electric-tab, vhdl-minibuffer-tab): Not overwrite non-nil
+	default of `hippie-expand-only-buffers'.
+
+2000-09-07  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-mode): Remove `hippie-expand-only-buffers' setting.
+	(vhdl-electric-tab, vhdl-minibuffer-tab): Use
+	`hippie-expand-only-buffers' to take expansions from VHDL buffers only.
+
+2000-08-28  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compiler-alist): Add "Synopsys Design Compiler", "Cadence NC",
+	"Savant".
+
+2000-08-25  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compose-use-components-package): Option for struct. composition.
+	(vhdl-compose-new-component, vhdl-compose-place-component,
+	vhdl-compose-wire-components): Consider components package.
+
+2000-08-24  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compiler-alist): Add command to create library directory.
+	(vhdl-generate-makefile-1): Add rule to create library directory.
+
+2000-08-23  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.9 beta released.
+	(vhdl-generate-makefile-1): Add subcomponent dependencies to rules for
+	single library units (to compile subhierarchies as well).
+
+2000-08-22  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-generate-makefile-1): Better library and unit variable names.
+
+2000-08-19  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.8 beta released.
+	(vhdl-insert-string-or-file): Resolve environment variables.
+	(vhdl-submit-bug-report): Prompt for summary.
+
+2000-08-17  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compiler-alist): Built-in Makefile generation is always default.
+	(vhdl-speedbar-cache-file-name, vhdl-save-cache, vhdl-load-cache):
+	Resolve environment variables, allow absolute paths.
+	(vhdl-resolve-paths, vhdl-scan-project-contents): Rearrange environment
+	variable resolution.
+	(vhdl-project-file-name, vhdl-import-project, vhdl-export-project,
+	vhdl-auto-load-project): Resolve environment variables, allow absolute
+	paths.
+
+2000-08-16  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-compile-directory): Resolve environment variables.
+	(vhdl-scan-file-contents): Fix used packages in package body scanning.
+	(vhdl-activate-project): Add message "(auto-loaded)".
+
+2000-08-15  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-doc-coding-style): Update RMM URL.
+	(vhdl-scan-project-contents): Allow absolute paths.
+	(vhdl-end-of-leader): Consider "is" keyword in VHDL'93.
+
+2000-07-31  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.5 beta released.
+	(vhdl-compose-wire-components, vhdl-compose-insert-generic): Add
+	generics support to structural composition.
+	(vhdl-model-insert): Replace header prompts too.
+	(vhdl-template-header): New argument `is-model'.
+	(vhdl-template-generate-body): Remove "begin" for VHDL'93.
+	(vhdl-fixup-whitespace-region): Better treat comments and strings.
+	(vhdl-duplicate-project): New function.
+
+2000-07-22  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-port-copy): Allow generic clause begin on first line.
+
+2000-07-20  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Change Rod's email address.
+
+2000-07-19  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.31.4 beta released.
+	(vhdl-run-when-idle): Explicitely activate idle timer.
+	(vhdl-show-messages, vhdl-create-mode-menu): Get *Messages* buffer.
+
+2000-07-18  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-mode): Remove `lazy-lock-mode' for XEmacs (too old package).
+	(vhdl-speedbar-cache-file-name): Change default value.
+	(vhdl-create-mode-menu): Fix "Auto Load Setup File" menu entry.
+	(vhdl-set-project, vhdl-activate-project): Change message string.
+
+2000-07-16  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-speedbar-contract-all): Only contract in current dir/project.
+	(vhdl-speedbar-expand-all): New function.
+	(vhdl-get-end-of-unit): Match only real beginnings of design units.
+	(vhdl-scan-file-contents): Allow code before first block configuration.
+	(vhdl-scan-file-contents): Scan also for "is" keyword of design units.
+	(vhdl-save-caches): Catch error while saving caches.
+
+2000-07-14  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-mode): Enable `lazy-lock-mode' in XEmacs.
+	(vhdl-actual-port-name): Change default value (no "_i" extension).
+
+2000-07-11  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Version 3.31.2 beta released.
+	(vhdl-indent-syntax-based): Option to switch to fast indentation.
+	(vhdl-speedbar-insert-hierarchy): Message "No VHDL design units!".
+	(vhdl-write-file-hooks-init): Use `after-save-hook'.
+	(vhdl-testbench-include-configuration): Changed default to t.
+
+2000-06-15  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-compose-wire-components): Function for structural composition.
+	(vhdl-create-mode-menu): Add faces customization to "Options". 
+
+2000-06-11  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-compose-components-package): Function for structural composition.
+	(vhdl-compose-include-header, vhdl-components-package-name):
+	Option for structural composition.
+	(vhdl-port-paste-testbench): Adjust case in testbench configuration.
+	(vhdl-fix-clause): Also fix port clause if cursor is at end.
+	(vhdl-create-mode-menu): Include `speedbar-indentation-width'.
+
+2000-06-10  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Version 3.32 started.
+	(vhdl-compose-create-component, vhdl-compose-place-component):
+	Function for structural composition.
+	(vhdl-compose-create-files, vhdl-compose-architecture-name):
+	Option for structural composition.
+	(vhdl-template-modify): Delete date instead of kill.
+	(vhdl-get-source-files): Not match source files beginning with ".".
+
+2000-04-28  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Version 3.31.1 beta released.
+	(vhdl-port-copy): Add "inout" and "linkage" to direction modes.
+
+2000-04-13  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(hideshow): Adaptions for hideshow 5.
+	(vhdl-directive-keywords): New option.
+	(vhdl-create-mode-menu): Add "Options" entry.
+	(vhdl-compiler-alist): Add "ProVHDL" compiler.
+	(vhdl-update-sensitivity-list): Fix bug ("<=" is relational operator).
+
+2000-03-30  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-scan-file-contents): Scan configuration specification.
+	(vhdl-mode): Update online documentation.
+	(vhdl-fixup-whitespace-region): Not in strings.
+	(file-expand-wildcards): Added for XEmacs compatibility.
+	(noninteractive): Non-interactive makefile generation.
+	(vhdl-process-command-line-option): "-compile" and "-project" options.
+
+2000-03-18  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Include `itimer.el' patch for XEmacs.
+	(vhdl-project-*-alist): Merged with variables `vhdl-*-alist'.
+	(vhdl-get-hierarchy): Consider configurations at lower levels.
+	(vhdl-speedbar-contract-all): Added.
+	(vhdl-speedbar-case-insensitive): New variable and functionality.
+	(vhdl-speedbar-*): Many enhancements and fixes in hierarchy browser.
+	(vhdl-{save,load}-project): Importing/exporting project setup.
+	(vhdl-auto-load-project): Automatically load project setup on startup.
+	(vhdl-project-file-name,vhdl-project-auto-load): New variables.
+
+2000-03-08  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-speedbar-expand-*): Display used packages.
+	(vhdl-warning*): Enhanced warning message handling.
+	(vhdl-visit-file): Fix coding system conversion for DOS.
+	(vhdl-package-alist): Scan for packages used by package body.
+	(vhdl-speedbar-update-on-saving, vhdl-speedbar-cache-file-name,
+	 vhdl-speedbar-save-cache): New custom variables.
+	(vhdl-{read,write}-cache-file): Store hierarchy cache in file.
+	(vhdl-update-file-contents): Automatically update hierarchy.
+	(vhdl-get-hierarchy): Consider configurations.
+
+2000-02-08  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-fixup-whitespace-region): Fix "=> ," alignment.
+	(vhdl-font-lock-keywords-2): Enhance highlighting of instantiation.
+	(vhdl-scan-file-contents): Clear directory alists first.
+	(vhdl-scan-file-contents, vhdl-generate-makefile-1): Consistency check.
+	(vhdl-generate-makefile-1): Add rules for design units.
+
+2000-01-23  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-generate-makefile-1): Only configurations for working library.
+
+2000-01-05  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-align-alist): Align declaration keywords only at beg. of line.
+
+1999-12-16  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-sequential-statement-p): Better algorithm.
+	(vhdl-project-alist): Add file-specific compile exceptions.
+	(vhdl-scan-file-contents): Check for multiply scanned design units.
+	(vhdl-speedbar-expand-config): Added.
+	(vhdl-speedbar-port-copy): Copy port of component in package.
+
+1999-12-11  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Version 3.30.3 beta released as 3.30
+	(includes some fixes from 3.30.4).
+	Version 3.30.4 beta changed to 3.31.1 beta.
+
+1999-12-03  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el
+	(vhdl-scan-file-contents): Scan components/subprograms in package.
+	(vhdl-generate-makefile): Add dependencies for components in package.
+	(vhdl-speedbar-expand-package): Add function.
+
+1999-12-02  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Version 3.30.4 beta released.
+	(vhdl-scan-file-contents): Scan library clauses and subconfigurations.
+	(vhdl-generate-makefile): Add function.
+	(vhdl-project-alist): Enhanced customization of projects.
+	(vhdl-compiler-alist): Enhanced customization of compilers.
+	(vhdl-compiler): Changed empty value from "" to nil.
+	(vhdl-electric, vhdl-stutter): Changed key bindings.
+	(vhdl-set-compiler, vhdl-set-project): Added with key bindings.
+
+1999-11-15  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Backquote fix.
+	(vhdl-forward-same-indent, vhdl-backward-same-indent): Add function.
+	(vhdl-electric-...): No stuttering within literals.
+	(vhdl-remove-trailing-spaces): Not within literals.
+	(vhdl-template-footer): Replace keywords in footer as in header.
+	(vhdl-align-group-separate, vhdl-align-same-indent): Add variables.
+	(vhdl-align-same-indent): Add function.
+	(vhdl-align-noindent-region): Change to `vhdl-align-region'.
+	(vhdl-align-noindent-buffer): Change to `vhdl-align-buffer'.
+	(vhdl-align-...): Enhance alignment, add progress reporting.
+	(vhdl-fixup-whitespace-region, vhdl-beautify-region): Bug fix.
+	(vhdl-comment-insert-inline): Remove wrapping to next line if too long.
+	(vhdl-update-progress-info): Change to line-based.
+	(vhdl-indent-group): Add function.
+	(vhdl-port-paste-initializations): Add function.
+	(vhdl-testbench-configuration-name),
+	(vhdl-testbench-include-configuration): Add variable and functionality.
+
+1999-10-02  Reto Zimmermann  <reto@gnu.org>
+	* progmodes/vhdl-mode.el
+	(vhdl-update-sensitivity-list-buffer): Fix starting cursor position.
+	(vhdl-align-alist): Align <=, := and == among each other.
+
+1999-09-08  Reto Zimmermann  <reto@gnu.org>
+	
+	* progmodes/vhdl-mode.el: Version 3.30.3 beta released.
+	(vhdl-insert-string-or-file): Fix NTEmacs `file-exists-p' problem.
+	(vhdl-prepare-search-[12]): Fix search within hidden code.
+
+1999-08-26  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.30.2 beta released.
+	(vhdl-update-sensitivity-list): Add updating for sequential processes.
+	(vhdl-fix-clause): Handle closing parenthesis on separate line.
+
+1999-08-17  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.30.1 beta released.
+	(hs-minor-mode): Enhanced usage of hideshow.
+
+1999-08-07  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-electric-tab): Toggle comment indent.
+	(vhdl-update-sensitivity-list): Add sensitivity list update functions.
+	(vhdl-speedbar-jump-to-unit): Disable cursor re-positioning.
+	(vhdl-fix-clause): Fixup parenthesis in generic/port clause.
+	(vhdl-font-lock-keywords-2): Highlight formal parameters.
+
+1999-07-21  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-template-for): Fix sequential statement part detection.
+	(vhdl-electric-space): Fix wrapping for non-word characters.
+	(vhdl-delete-indentation): Fix delete-indentation for comments.
+	(vhdl-speedbar-scan-limit, vhdl-scan-file-contents):
+	Limit file size for scanning.
+
+1999-07-17  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-copyright-string): Insert copyright string in file header.
+
+1999-06-26  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-font-lock-keywords-2): Highlight quantity declaration names.
+	(vhdl-align-list, vhdl-align-declarations): New alignment functions.
+	(vhdl-compile): Print out file name if compiler does not.
+	(vhdl-compiler-alist): Add VeriBest compiler.
+	(vhdl-include-group-comments): Include group comments in port pasting.
+	(vhdl-include-type-comments): Include type in generic/port comments.
+
+1999-06-21  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el: Version 3.30 started.
+	(top): Change some documentation strings. 
+	(vhdl-template-standard-package): Don't insert "std" library.
+	(vhdl-template-architecture): Code optimization.
+	(vhdl-template-package): Search for existing package name.
+	(vhdl-template-component-decl): Insert "is" in VHDL'93.
+	(vhdl-port-paste-declaration): Insert "is" in VHDL'93.
+
+1999-06-10  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-port-copy): Fix parsing bug.
+	(vhdl-port-paste-generic-map): Fix indentation bug.
+	(vhdl-port-paste-port-map): Fix indentation bug.
+	(vhdl-scan-file-contents): Scan case insensitive.
+
+1998-10-11  Reto Zimmermann  <reto@gnu.org>
+
+	* progmodes/vhdl-mode.el
+	(vhdl-add-index-menu): reverse order in imenu-generic-expression.
+	(vhdl-template-assert, vhdl-block, vhdl-configuration-spec,
+	vhdl-elsif, vhdl-generate, vhdl-if, vhdl-map,
+	vhdl-selected-signal-assignment, vhdl-use, vhdl-while-loop,
+	vhdl-get-port, vhdl-get-generic): replace (undo 0) by (undo).
+	(vhdl-when): fix indentation problem.
+	(vhdl-outer-space): add "_" to syntax table for expand-abbrev.
+	(vhdl-get-port, vhdl-get-generic): bug fix in template.
+	(vhdl-hooked-abbrev): bug fix in hooked abbrev.

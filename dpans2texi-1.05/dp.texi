@@ -1,0 +1,1589 @@
+@c -*- Mode: Texinfo; -*-
+@c ----- diverse.
+
+@ifinfo
+@include dpi.texi
+@end ifinfo
+
+@ifnotinfo
+@include dph.texi
+@end ifnotinfo
+
+@macro spc {}
+@w{ }
+@end macro
+
+@macro subN {}
+@sub1{n}
+@end macro
+
+@macro tild {}
+~
+@end macro
+
+@macro cr {}
+@*
+@end macro
+
+@macro backslash {}
+\\
+@end macro
+
+@macro TypographyCaveats {}
+@end macro
+
+@macro gexample {arg}
+``\arg\''
+@end macro
+
+@macro Noun {}
+@i{n.}
+@end macro
+
+@macro Verb {}
+@i{v.}
+@end macro
+
+@macro TransitiveVerb {}
+@i{v.t.}
+@end macro
+
+@macro Adjective {}
+@i{adj.}
+@end macro
+
+@macro Adverb {}
+@i{adv.}
+@end macro
+
+@macro ANSI {}
+@i{ANSI}
+@end macro
+
+@macro IEEE {}
+@i{IEEE}
+@end macro
+
+@macro ISO {}
+@i{ISO}
+@end macro
+
+@macro Traditional {}
+@i{Trad.}
+@end macro
+
+@macro Mathematics {}
+@i{Math.}
+@end macro
+
+@macro Idiomatic {}
+@i{Idiom.}
+@end macro
+
+@macro Computers {}
+@i{Comp.}
+@end macro
+
+@macro rev {}
+15.17R
+@end macro
+
+@macro DocumentNumber {}
+X3J13/94-101R
+@end macro
+
+@macro omit {}
+@end macro
+
+@macro Vtop {}
+@end macro
+
+@macro id {arg}
+\arg\
+@end macro
+
+@macro dot {}
+.
+@end macro
+
+@macro ampers {}
+&
+@end macro
+
+@macro ampersand {}
+&
+@end macro
+
+@macro break {}
+@end macro
+
+@macro indent {}
+@end macro
+
+@macro keyword {arg}
+@f{\arg\}
+@end macro
+
+@macro it {arg}
+@i{\arg\}
+@end macro
+
+@macro lbrack {}
+@t{[}
+@end macro
+
+@macro rbrack {}
+@t{]}
+@end macro
+
+@macro negthinspace {}
+@end macro
+
+@macro prmseven {arg}
+\arg\
+@end macro
+
+@macro vert {}
+@r{|}
+@end macro
+
+@macro thissection {}
+this section
+@end macro
+
+@macro minussign {}
+@minus{}
+@end macro
+
+@macro j {arg}
+@i{\arg\}
+@end macro
+
+@macro left {}
+@end macro 
+
+@macro right {}
+@end macro
+
+@rmacro mat {arg}
+\arg\
+@end rmacro
+
+@macro empty {}
+()
+@end macro
+
+@macro ldots {}
+@dots{}
+@end macro
+
+@macro over2 {}
+/2
+@end macro
+
+@macro goodbreak {}
+@end macro
+
+@macro dollar {}
+$
+@end macro  
+
+@macro percent {}
+%
+@end macro
+
+@macro TVar {}
+var
+@end macro
+
+@macro hfil {}
+@end macro
+
+@macro span {}
+@end macro
+
+
+@macro bigl {}
+@end macro
+
+@macro bigr {}
+@end macro
+
+@macro Bigl {}
+@end macro
+
+@macro Bigr {}
+@end macro
+
+@macro over {arg}
+/(\arg\)
+@end macro
+
+@macro Result {}
+result
+@end macro
+
+@macro starY {}
+* 
+@end macro
+
+@macro starN {}
+@w{ }
+@end macro
+
+@macro quad {}
+@end macro
+
+@rmacro ff {arg}
+\arg\
+@end rmacro
+
+@macro log {}
+log
+@end macro
+
+@macro sqrt {arg1}
+sqrt(\arg1\)
+@end macro
+
+
+@macro begingroup {}
+@end macro
+
+@macro endgroup {}
+@end macro
+
+@macro EV {}
+@result{}
+@end macro
+
+@macro IN {arg}
+@kbd{\arg\}
+@end macro
+
+@macro None {}
+@end macro
+
+@macro eject {}
+@end macro
+
+@macro hat {}
+^
+@end macro
+
+@macro bq {}
+`
+@end macro
+
+@macro bsl {}
+\\
+@end macro
+
+@macro lbr {}
+@{
+@end macro
+
+@macro rbr {}
+@}
+@end macro
+
+@macro rbracket {}
+]
+@end macro
+
+@macro lbracket {}
+[
+@end macro
+
+@macro CR {}
+@*
+@end macro
+
+@macro vtop {arg}
+\arg\
+@end macro
+
+@macro NV {}
+not@EV{}
+@end macro
+
+@macro OV {}
+or@EV{}
+@end macro
+
+@macro ang {arg}
+<\arg\>
+@end macro
+
+@macro NewlineChar {}
+@ang{Newline}
+@end macro
+
+@macro SpaceChar {}
+@ang{Space}
+@end macro
+
+@macro TabChar {}
+@ang{Tab}
+@end macro
+
+@macro ReturnChar {}
+@ang{Return}
+@end macro
+
+@macro LinefeedChar {}
+@ang{Linefeed}
+@end macro
+
+@macro BackspaceChar {}
+@ang{Backspace}
+@end macro
+
+@macro PageChar {}
+@ang{Page}
+@end macro
+
+@macro RuboutChar {}
+@ang{Rubout}
+@end macro
+
+@macro WhitespaceChar {}
+@ang{Whitespace}
+@end macro
+
+@macro bull {}
+@bullet{}
+@end macro
+
+@macro param {arg}
+@var{\arg\}
+@end macro
+
+@rmacro f {arg}
+@code{\arg\}
+@end rmacro
+
+@macro bf {arg}
+@b{\arg\}
+@end macro
+
+@macro tt {arg}
+@code{\arg\}
+@end macro
+
+@macro medbreak {}
+@
+
+@
+
+@end macro
+
+@macro smallbreak {}
+@
+
+@end macro
+
+@macro newterm {arg}
+@cindex \arg\
+@dfn{\arg\}
+@end macro
+
+@rmacro hbox {arg}
+@w{\arg\}
+@end rmacro
+
+@rmacro paren {arg}
+@t{(}\arg\@t{)}
+@end rmacro
+
+@macro lparen {}
+@t{(}
+@end macro
+
+@macro rparen {}
+@t{)}
+@end macro
+
+@macro pronounced {arg}
+[\arg\]
+@end macro
+
+@rmacro star {arg}
+\arg\*
+@end rmacro
+
+@macro plus {arg}
+\arg\+
+@end macro
+
+@rmacro curly {arg}
+@t{@{}\arg\@t{@}}
+@end rmacro
+
+@macro lcurly {}
+@t{@{}
+@end macro
+
+@macro rcurly {}
+@t{@}}
+@end macro
+
+@macro xcurly {}
+@t{@{}
+@end macro
+
+@macro xparen {}
+@end macro
+
+@macro ttbrac {arg}
+@t{[}\arg\@t{]}
+@end macro
+
+@rmacro brac {arg}
+@t{[}\arg\@t{]}
+@end rmacro
+
+@c @macro lbrac {}
+@c [
+@c @end macro
+
+@macro interleave {arg}
+@begininterleave{}\arg\@endinterleave{}
+@end macro
+
+@macro plusdown {arg}
+@plus{@curly{@down{\arg\}}}
+@end macro
+
+@macro plusparam {arg}
+@plus{@curly{@var{\arg\}}}
+@end macro
+
+@macro plusparen {arg}
+@plus{@curly{@paren{\arg\}}}
+@end macro
+
+@macro stardown {arg}
+@star{@curly{@down{\arg\}}}
+@end macro
+
+@macro starparam {arg}
+@star{@curly{\arg\}}
+@end macro
+
+@macro starparen {arg}
+@star{@curly{@paren{\arg\}}}
+@end macro
+
+@macro VarValue {}
+@curly{var @vert{} (var [init-form])}
+@end macro
+
+@macro VarInitStep {}
+@curly{@var{var} @vert{} @paren{@TVar{} @brac{init-form @brac{step-form}}}}
+@end macro
+
+@macro auxbnf {arg1, arg2}
+@table @asis
+@item @var{\arg1\}::= 
+\arg2\
+@end table
+@end macro
+
+@macro kwd {arg}
+@t{:\arg\}
+@end macro
+
+@macro kwdref {arg}
+@t{:\arg\}
+@end macro
+
+@macro HairyDefault {}
+Complicated defaulting behavior; see below
+@end macro
+
+@macro noeval {}
+not evaluated
+@end macro
+
+@macro evalspecial {}
+evaluated as described below
+@end macro
+
+@macro eval {}
+evaluated
+@end macro
+
+@macro noargs {}
+@ang{no @term{arguments}}
+@end macro
+
+@macro novalues {}
+@ang{no @term{values}}
+@end macro
+
+@macro metaparam {arg}
+@metavar{@var{\arg\}}
+@end macro
+
+@macro editorissue {arg}
+@end macro
+
+@macro editornote {arg}
+@end macro
+
+@macro reviewer {arg}
+@end macro
+
+@macro term {arg}
+@i{\arg\}
+@end macro
+
+@macro bogusterm {arg}
+\arg\
+@end macro
+
+@macro DeclsAndDoc {}
+@interleave{@curly{declaration}* @vert{} documentation}
+@end macro
+
+@macro LocalDeclsAndDoc {}
+@interleave{@curly{local-declaration}* @vert{} local-documentation}
+@end macro
+
+@macro Shouldcheckanytype {arg1, arg2}
+Should signal an error @oftype{type-error} if @var{\arg1\} is not
+\arg2\.
+@end macro
+
+@macro Shouldchecktype {arg1, arg2}
+Should signal an error @oftype{type-error} if @var{\arg1\} is not \arg2\.
+@end macro
+
+@macro shouldchecktype {arg1, arg2}
+should signal an error @oftype{type-error} if @var{\arg1\} is not \arg2\.
+@end macro
+
+@macro Predicate {arg1, arg2}
+Returns @term{true} if @var{\arg1\} is \arg2\; otherwise, returns @term{false}.
+@end macro
+
+@macro NamedPredicate {arg1, arg2, arg3}
+@code{\arg1\} returns @term{true} if @var{\arg2\} is \arg3\;
+otherwise, returns @term{false}.
+@end macro
+
+@macro TypePredicate {arg1, arg2}
+Returns @term{true} if @var{\arg1\} is of @term{type} @code{\arg2\};
+otherwise, returns @term{false}.
+@end macro
+
+@macro StrictPredicate {arg1, arg2}
+Returns @code{t} if @var{\arg1\} is \arg2\; otherwise, returns @code{nil}.
+@end macro
+
+@macro Lazychecktype {arg1, arg2}
+Should be prepared to signal an error @oftype{type-error} if
+@var{\arg1\} is not \arg2\.
+@end macro
+
+@macro Lazychecktypes {arg1, arg2}
+Should be prepared to signal an error @oftype{type-error} if
+@var{\arg1\} are not \arg2\.
+@end macro
+
+@macro Lazychecknottype {arg1, arg2}
+Should be prepared to signal an error @oftype{type-error} if
+@var{\arg1\} is \arg2\.
+@end macro
+
+@macro Lazycheckanytype {arg1, arg2}
+Should be prepared to signal an error @oftype{type-error} if
+any @var{\arg1\} is not \arg2\.
+@end macro
+
+@macro Lazycheckanynottype {arg1, arg2}
+Should be prepared to signal an error @oftype{type-error} if
+any @var{\arg1\} is \arg2\.
+@end macro
+
+@macro Checktype {arg1, arg2}
+Signals an error @oftype{type-error} if @var{\arg1\} is not \arg2\
+@end macro
+
+@macro Checktypes {arg1, arg2}
+Signals an error @oftype{type-error} if \arg1\ are not \arg2\
+@end macro
+
+@macro Checknottype {arg1, arg2}
+Signals an error @oftype{type-error} if @var{\arg1\} is \arg2\
+@end macro
+
+@macro Checknottypes {arg1, arg2}
+Signals an error @oftype{type-error} if \arg1\ are \arg2\
+@end macro
+
+@macro Shouldcheckplus {arg}
+Should signal an error @oftype{program-error} if at least one
+@var{\arg\} is not supplied.
+@end macro
+
+@macro SatisfyTest {arg1, arg2}
+The @param{test}, @param{test-not}, and @param{key} 
+affect how it is determined whether @param{\arg1\} is the same as \arg2\.
+For details, @ref{SatisfyingTheTwoArgTest, Satisfying a Two-Argument Test}
+@end macro
+
+@macro Defun {arg1, arg2}
+@defun \arg1\ \arg2\
+@end defun
+@end macro
+
+@macro Defspec {function, arg}
+@defspec \function\ \arg\
+@end defspec
+@end macro
+
+@macro DefmacWithValues {function, arg, result}
+@defmac \function\ \arg\ @result{} \result\
+@end defmac
+@end macro
+
+@macro DefunWithValues {function, arg, result}
+@defun \function\ \arg\ @result{} \result\
+@end defun
+@end macro
+
+@macro DefspecWithValues {function, arg, result}
+@defspec \function\ \arg\ @result{} \result\
+@end defspec
+@end macro
+
+@macro Defsetf {arg1, arg2, arg3}
+@t{(setf (\arg1\ \arg2\) \arg3\)}
+@end macro
+
+@macro DefmacWithValuesNewline {function, arg, result}
+@defmac \function\ \arg\ @result{} \result\
+@end defmac
+@end macro
+
+@macro DefspecWithValuesNewline {function, arg, result}
+@defspec \function\ \arg\ @result{} \result\
+@end defspec
+@end macro
+
+@macro DefunWithValuesNewline {function, arg, result}
+@defun \function\ \arg\ @result{} \result\
+@end defun
+@end macro
+
+@macro Deftype {arg1, arg2}
+(\arg1\ \arg2\)
+@end macro
+
+@macro Defgen {arg1, arg2}
+@deffn {Generic Function} \arg1\ \arg2\
+@end deffn
+@end macro
+
+@macro DefgenWithValues {arg1, arg2, arg3}
+@deffn {Generic Function} \arg1\ \arg2\ @result{} \arg3\
+@end deffn
+@end macro
+
+@macro DefgenWithValuesNewline {arg1, arg2, arg3}
+@deffn {Generic Function} \arg1\ \arg2\ @result{} \arg3\
+@end deffn
+@end macro
+
+@macro specparam {arg1, arg2}
+@paren{@var{\arg1\} @code{\arg2\}}
+@end macro
+
+@c @alias loopref = code
+@macro loopref {arg}
+@code{\arg\}
+@end macro
+
+@macro keyref {arg}
+@code{&\arg\}
+@end macro
+
+@macro Theloopconstruct {arg}
+The @code{loop} @loopref{\arg\} construct
+@end macro
+
+@macro theloopconstruct {arg}
+the @code{loop} @loopref{\arg\} construct
+@end macro
+
+@macro Theloopkeyword {arg}
+The @code{loop} @loopref{\arg\} keyword
+@end macro
+
+@macro theloopkeyword {arg}
+the @code{loop} @loopref{\arg\} keyword
+@end macro
+
+@macro SETFof {arg}
+@code{setf} of @code{\arg\}
+@end macro
+
+@macro oftype {type}
+of @term{type} @code{\type\}
+@end macro
+
+@macro ofclass {type}
+of @term{class} @code{\type\}
+@end macro
+
+@macro oftypes {arg}
+of @term{type} @code{\arg\} or a @term{suptype} of @term{type} @code{\arg\}
+@end macro
+
+@macro ofmetaclass {arg}
+of @term{metaclass} @code{\arg\}
+@end macro       
+
+@macro subclassof {arg}
+@term{subclass} of @term{type} @code{\arg\}
+@end macro
+
+@macro Default {arg}
+The default is \arg\.
+@end macro
+
+@macro DefaultFor {arg1, arg2}
+The default for \arg1\ is \arg2\.
+@end macro
+
+@macro DefaultIn {arg1, arg2}
+The defaults in \arg1\ is \arg2\.
+@end macro
+
+@macro Defaults {arg1, arg2}
+The defaults for \arg1\ are \arg2\, respectively.
+@end macro
+
+@macro DefaultEach {arg1, arg2}
+The defaults for each of \arg1\ is \arg2\.
+@end macro
+
+@macro DefaultsEach {arg1, arg2}
+The defaults for each of \arg1\ is \arg2\.
+@end macro
+
+@macro Thenextfigure {}
+The next figure
+@end macro
+
+@macro thenextfigure {}
+the next figure
+@end macro
+
+@macro theclass {arg}
+the @term{class} @code{\arg\}
+@end macro
+
+@macro Theclass {arg}
+The @term{class} @code{\arg\}
+@end macro
+
+@macro thevariable {arg}
+the @term{variable} @code{\arg\}
+@end macro
+
+@macro Thevariable {arg}
+The @term{variable} @code{\arg\}
+@end macro
+
+@macro thevariables {arg}
+the @term{variables} @code{\arg\}
+@end macro
+
+@macro Thevariables {arg}
+The @term{variables} @code{\arg\}
+@end macro
+
+@macro thekeyarg {arg}
+the @kwd{\arg\} @term{argument}
+@end macro
+
+@macro Thekeyarg {arg}
+The @kwd{\arg\} @term{argument}
+@end macro
+
+@macro theinitkeyarg {arg}
+the @kwd{\arg\} initialization argument
+@end macro
+
+@macro Theinitkeyarg {arg}
+The @kwd{\arg\} initialization argument
+@end macro
+
+@macro theinitkeyargs {arg}
+the initialization arguments named @kwd{\arg\}
+@end macro
+
+@macro Theinitkeyargs {arg}
+The initialization arguments named @kwd{\arg\}
+@end macro
+
+@macro themacro {arg}
+the @code{\arg\} @term{macro}
+@end macro
+
+@macro Themacro {arg}
+The @code{\arg\} @term{macro}
+@end macro
+
+@macro theGF {arg}
+the @term{generic function} @code{\arg\}
+@end macro
+
+@macro TheGF {arg}
+The @term{generic function} @code{\arg\}
+@end macro
+
+@macro Thespecop {arg}
+The @code{\arg\} @term{special operator}
+@end macro
+
+@macro thespecop {arg}
+the @code{\arg\} @term{special operator}
+@end macro
+
+@macro thefunction {function}
+the @term{function} @code{\function\}
+@end macro
+
+@macro Thefunction {function}
+The @term{function} @code{\function\}
+@end macro
+
+@macro thefunctions {function}
+the @term{functions} @code{\function\}
+@end macro
+
+@macro Thefunctions {function}
+The @term{functions} @code{\function\}
+@end macro
+
+@macro thespecform {function}
+the @code{\function\} @term{special form}
+@end macro
+
+@macro Thespecform {function}
+The @code{\function\} @term{special form}
+@end macro
+
+@macro thespecforms {function}
+the @code{\function\} @term{special forms}
+@end macro
+
+@macro Thespecforms {function}
+The @code{\function\} @term{special forms}
+@end macro
+
+@macro thetype {type}
+the @term{type} @code{\type\}
+@end macro
+
+@macro Thetype {type}
+The @term{type} @code{\type\}
+@end macro
+
+@macro thetypes {type}
+the @term{types} @code{\type\}
+@end macro
+
+@macro Thetypes {type}
+The @term{types} @code{\type\}
+@end macro
+
+@macro thevalueof {arg}
+the @term{value} of @code{\arg\}
+@end macro
+
+@macro Thevalueof {arg}
+The @term{value} of @code{\arg\}
+@end macro
+
+@macro thevaluesof {arg}
+the @term{values} of @code{\arg\}
+@end macro
+
+@macro Thevaluesof {arg}
+The @term{values} of @code{\arg\}
+@end macro
+
+@macro subtypeof {arg}
+subtype of @term{type} @code{\arg\}
+@end macro
+
+@macro subtypesof {arg}
+subtypes of @term{type} @code{\arg\}
+@end macro
+
+@macro Subtypesof {arg}
+Subtypes of @term{type} @code{\arg\}
+@end macro
+
+@macro supertypeof {arg}
+supertype of @term{type} @code{\arg\}
+@end macro
+
+@macro supertypesof {arg}
+supertypes of @term{type} @code{\arg\}
+@end macro
+
+@macro Supertypeof {arg}
+Supertypes of @term{type} @code{\arg\}
+@end macro
+
+@c books
+
+@macro CLtL {}
+@cite{Common Lisp: The Language}
+@end macro
+
+@macro CLtLTwo {}
+@cite{@uref{http://www-2.cs.cmu.edu/Groups/AI/html/cltl/cltl2.html,,Common Lisp: The Language Second Edition}}
+@end macro
+
+@macro RandomHouseDictionary {}
+@cite{The Random House Dictionary of the English Language, Second Edition, Unabridged}
+@end macro
+
+@macro WebstersDictionary {}
+@cite{Webster's Third New International Dictionary the English Language, Unabridged}
+@end macro
+
+@macro CondSysPaper {}
+@cite{@uref{http://www.nhplace.com/kent/Papers/Exceptional-Situations-1990.html,,Exceptional Situations in Lisp}}
+@end macro
+
+@macro GabrielBenchmarks {}
+@cite{@uref{http://www.dreamsongs.com/Books.html,,Performance and Evaluation of Lisp Programs}}
+@end macro
+
+@macro KnuthVolThree {}
+@cite{The Art of Computer Programming, Volume 3}
+@end macro
+
+@macro MetaObjectProtocol {}
+@cite{The Art of the Metaobject Protocol}
+@end macro
+
+@macro AnatomyOfLisp {}
+@cite{The Anatomy of Lisp}
+@end macro
+
+@macro FlavorsPaper {}
+@cite{Flavors: A Non-Hierarchical Approach to Object-Oriented Programming}
+@end macro
+
+@macro LispOnePointFive {}
+@cite{@uref{http://green.iis.nsk.su/~vp/doc/lisp1.5/mccarthy.html,,Lisp 1.5 Programmer's Manual}}
+@end macro
+
+@macro Moonual {}
+@cite{Maclisp Reference Manual, Revision 0}
+@end macro
+
+@macro Pitmanual {}
+@cite{The Revised Maclisp Manual}
+@end macro
+
+@macro InterlispManual {}
+@cite{Interlisp Reference Manual}
+@end macro
+
+@macro Chinual {}
+@cite{Lisp Machine Manual}
+@end macro
+
+@macro SmalltalkBook {}
+@cite{Smalltalk-80: The Language and its Implementation}
+@end macro
+
+@macro XPPaper {}
+@cite{@uref{ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-1102a.pdf,,XP: A Common Lisp Pretty Printing System}}
+@end macro
+
+@c standards
+
+@macro IEEEFloatingPoint {}
+@cite{IEEE Standard for Binary Floating-Point Arithmetic}
+@end macro
+
+@macro IEEEScheme {}
+@cite{IEEE Standard for the Scheme Programming Language}
+@end macro
+
+@macro ISOChars {}
+@cite{ISO 6937/2}
+@end macro
+
+@c papers
+
+@macro PrincipalValues {}
+Principal Values and Branch Cuts in Complex APL
+@end macro
+
+@macro RevisedCubedScheme {}
+@uref{http://www.swiss.ai.mit.edu/~jaffer/r3rs_toc.html,,Revised@cubed{} Report on the Algorithmic Language Scheme}
+@end macro
+
+@macro StandardLispReport {}
+@uref{http://www.uni-koeln.de/REDUCE/3.6/doc/sl/,,Standard LISP Report}
+@end macro
+
+@macro NILReport {}
+NIL---A Perspective
+@end macro
+
+@macro SOneCLPaper {}
+S-1 Common Lisp Implementation
+@end macro
+
+@macro CLOSPaper {}
+Common Lisp Object System Specification
+@end macro
+
+@c languages
+
+@macro clisp {}
+@r{Common Lisp}
+@end macro
+
+@macro Lisp {}
+@r{Lisp}
+@end macro
+
+@macro maclisp {}
+@r{MacLisp}
+@end macro
+
+@macro apl {}
+@r{APL}
+@end macro
+
+@macro lmlisp {}
+@r{ZetaLisp}
+@end macro
+
+@macro scheme {}
+@r{Scheme}
+@end macro
+
+@macro interlisp {}
+@r{InterLisp}
+@end macro
+
+@macro slisp {}
+@r{Spice Lisp}
+@end macro
+
+@macro newlisp {}
+@r{Nil}
+@end macro
+
+@macro sOnelisp {}
+@r{S-1 Common Lisp}
+@end macro
+
+@macro fortran {}
+@r{Fortran}
+@end macro
+
+@macro stdlisp {}
+@r{Standard Lisp}
+@end macro
+
+@macro psl {}
+@r{Portable Standard Lisp}
+@end macro
+
+@macro Unix {}
+@r{Unix}
+@end macro
+
+@macro algol {}
+@t{Algol}
+@end macro
+
+@macro TopsTwenty {}
+@t{TOPS-20}
+@end macro
+
+@c important names
+
+@macro nil {}
+@code{nil}
+@end macro
+
+@macro allowotherkeys {}
+@t{&allow-other-keys}
+@end macro
+
+@macro aux {}
+@t{&aux}
+@end macro
+
+@macro body {}
+@t{&body}
+@end macro
+
+@macro environment {}
+@t{&environment}
+@end macro
+
+@macro key {}
+@t{&key}
+@end macro
+
+@macro opt {}
+@t{&optional}
+@end macro
+
+@macro optional {}
+@t{&optional}
+@end macro
+
+@macro rest {}
+@t{&rest}
+@end macro
+
+@macro whole {}
+@t{&whole}
+@end macro
+
+@c General phrases
+
+@macro etc {}
+@i{etc}
+@end macro
+
+@macro ie {}
+@i{i.e.},
+@end macro
+
+@macro eg {}
+@i{e.g.},
+@end macro
+
+@macro symbolnamedesignator {}
+string designator
+@end macro
+
+@macro symbolnamedesignators {}
+string designators
+@end macro
+
+@macro packagenamedesignator {}
+string designator
+@end macro
+
+@macro packagenamedesignators {}
+string designators
+@end macro
+
+
+@macro ExplainRecursiveP {}
+If @param{recursive-p} is @term{true}, this call is expected to be
+embedded in a higher-level call to @code{read} or a similar
+@term{function} used by the @term{Lisp reader}.
+@end macro
+
+@macro formatOp {arg}
+@samp{~\arg\}
+@end macro
+
+@macro formatdirective {arg}
+@samp{~\arg\} format directive
+@end macro
+
+@macro writekeys {arg}
+array base case circle escape gensym@*
+length level lines miser-width pprint-dispatch@*
+pretty radix readably right-margin \arg\@*
+@end macro
+
+@macro writekeydescriptions {arg}
+@param{array}---a @term{generalized boolean}.
+
+@param{base}---a @term{radix}.
+
+@param{case}---a @term{symbol} of @term{type} @f{(member :upcase :downcase :capitalize)}.
+
+@param{circle}---a @term{generalized boolean}.
+
+@param{escape}---a @term{generalized boolean}.
+
+@param{gensym}---a @term{generalized boolean}.
+
+@param{length}---a non-negative @term{integer}, or @nil{}.
+
+@param{level}---a non-negative @term{integer}, or @nil{}.
+
+@param{lines}---a non-negative @term{integer}, or @nil{}.
+
+@param{miser-width}---a non-negative @term{integer}, or @nil{}.
+
+@param{pprint-dispatch}---a @term{pprint dispatch table}.
+
+@param{pretty}---a @term{generalized boolean}.
+
+@param{radix}---a @term{generalized boolean}.
+
+@param{readably}---a @term{generalized boolean}.
+
+@param{right-margin}---a non-negative @term{integer}, or @nil{}.
+
+\arg\
+@end macro
+
+@macro therestart {arg}
+the @code{\arg\} restart
+@end macro
+
+@macro Therestart {arg}
+the @code{\arg\} restart
+@end macro
+
+@macro NoReturn {}
+@result{}@r{|}
+@end macro
+
+@macro DefunNoReturn {arg1, arg2}
+@defun \arg1\ \arg2\ @NoReturn{}
+@end defun
+@end macro
+
+@macro DefspecNoReturn {arg1, arg2}
+@defspec \arg1\ \arg2\ @NoReturn{}
+@end defspec
+@end macro
+
+@macro DefmacNoReturn {arg1, arg2}
+@defmac \arg1\ \arg2\ @NoReturn{}
+@end defmac
+@end macro
+
+@macro instofclass {arg}
+@term{instance} of the @term{class} @code{\arg\}
+@end macro
+
+@macro instsofclass {arg}
+@term{instances} of the @term{class} @code{\arg\}
+@end macro
+
+@macro Instsofclass {arg}
+@term{Instances} of the @term{class} @code{\arg\}
+@end macro
+
+@macro instanceofclasses {arg}
+@term{generalized instance} of @theclass{\arg\}
+@end macro
+
+@macro instancesofclasses {arg}
+@term{generalized instances} of @theclass{\arg\}
+@end macro
+
+@macro Instancesofclasses {arg}
+@term{Generalized instances} of @theclass{\arg\}
+@end macro
+
+@macro CLOS {}
+object system
+@end macro
+
+@macro OS {}
+object system
+@end macro
+
+@macro objectoftype {arg}
+@term{object} of @term{type} @f{\arg\}
+@end macro
+
+@macro objectsoftype {arg}
+@term{object} of @term{type} @f{\arg\}
+@end macro
+
+@macro Objectsoftype {arg}
+@term{object} of @term{type} @f{\arg\}
+@end macro
+
+@macro sssi {}
+@subs1{i}
+@end macro
+
+@macro sssk {}
+@sub1{k}
+@end macro
+
+@macro sssn {}
+@subs1{n}
+@end macro
+
+@macro sssx {}
+@subs1{x}
+@end macro
+
+@macro sssy {}
+@subs1{y}
+@end macro
+
+@macro sssz {}
+@subs1{z}
+@end macro
+
+@macro SpecializedVar {}
+@curly{var @vert{} (@TVar{} [specializer])}
+@end macro
+
+@macro VarValueSuppliedP {}
+@curly{var @vert{} (@TVar{} [init-form [supplied-p-parameter]])}
+@end macro
+
+@macro KeyVarValueSuppliedP {}
+@curly{var (@curly{var @vert{} (keyword-name @TVar{})}
+[init-form [supplied-p-parameter]])}
+@end macro
+
+@macro JustVar {}
+@curly{var @vert{} (@TVar{})}
+@end macro
+
+@macro JustKey {}
+@curly{var @vert{} (@curly{var @vert{} (keyword-name
+@TVar{})} [init-form [supplied-p-parameter]])}
+@end macro 
+
+
+@macro realtypespec {arg1}
+@subsubheading Compound Type Specifier Kind:
+
+Abbreviating.
+
+@subsubheading Compound Type Specifier Syntax:
+
+@Deftype{\arg1\, @ttbrac{lower-limit @brac{upper-limit}}}
+
+@subsubheading Compound Type Specifier Arguments:
+
+@param{lower-limit}, @param{upper-limit}---@term{interval designators} 
+for @term{type} @code{\arg1\}.
+@DefaultEach{@param{lower-limit} and @param{upper-limit}, the @term{symbol} @code{*}}
+
+@subsubheading Compound Type Specifier Description:
+
+This denotes the @term{\arg1\s} on the interval described by
+@param{lower-limit} and @param{upper-limit}.
+@end macro
+
+@macro MentionMetaObjects {arg1, arg2}
+Although no @term{implementation} is required to do so,
+implementors are strongly encouraged to implement @thefunction{\arg1\}
+using the @term{function} @f{\arg2\} described in the @term{Metaobject
+Protocol}.
+@end macro
+
+@macro quadrant {}
+@float Figure,fig12.10
+@example
+ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ Positive
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ Imaginary@ Axis
+
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ :
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ II@ @ :@ @ I
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ :
+@ @ @ @ Negative@ Real@ Axis@ .......................@ @ Positive@ Real@ Axis
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ :
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ III@ @ :@ @ IV
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ :
+
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ Negative
+@ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ @ Imaginary@ Axis
+@end example
+@caption{Quadrant Numbering for Branch Cuts}
+@end float
+@end macro
+
+@macro withaccessors {}
+@lisp
+(with-accessors (@var{slot-entry}@sub1{}, @dots{} @var{slot-entry}@subs1{n})
+@var{instance-form} @var{form}@sub1{} @dots{} @var{form}@subs1{k})
+@end lisp
+
+expands into the equivalent of
+
+@lisp
+(let ((in @var{instance-form}))
+  (symbol-macrolet (@var{Q}@sub1{} @dots{} @var{Q}@subs1{n}) @var{form}@sub1{} @dots{} @var{form}@subs1{k}))
+@end lisp
+
+where @var{Q}@subs1{i} is
+
+@lisp
+(@var{variable-name}@subs1{i} () (@var{accessor-name}@subs1{i} in))
+@end lisp
+
+@end macro
+
+@macro withslots {}
+@lisp
+(with-accessors (@var{slot-entry}@sub1{}, @dots{} @var{slot-entry}@subs1{n})
+@var{instance-form} @var{form}@sub1{} @dots{} @var{form}@subs1{k})
+@end lisp
+
+expands into the equivalent of
+
+@lisp
+(let ((in @var{instance-form}))
+  (symbol-macrolet (@var{Q}@sub1{} @dots{} @var{Q}@subs1{n}) @var{form}@sub1{} @dots{} @var{form}@subs1{k}))
+@end lisp
+
+where @var{Q}@subs1{i} is
+
+@lisp
+(@var{slot-entry}@subs1{i} () (slot-value in '@var{slot-entry}@subs1{i}))
+@end lisp
+
+if @var{slot-entry}@subs1{i} is a @term{symbol} and is
+
+@lisp
+(@var{variable-name}@subs1{i} () (slot-value in '@var{slot-name}@subs1{i}))
+@end lisp
+
+if @var{slot-entry}@subs1{i} is of the form
+
+@lisp
+(@var{variable-name}@subs1{i} @var{slot-name}@subs1{i})
+@end lisp
+
+@end macro
+
+@macro defclass {}
+@table @i
+@item slot-specifier::= 
+@i{slot-name} | (@i{slot-name} @interleave{@downarrow{}@i{slot-option}})
+
+@item slot-name::= @term{symbol}
+
+@item slot-option::= 
+@star{@curly{@kwd{reader} reader-function-name}} |@*
+                   @star{@curly{@kwd{writer} writer-function-name}} |@*
+                   @star{@curly{@kwd{accessor} reader-function-name}} |@*
+                   @curly{@kwd{allocation} allocation-type} |@*
+                   @star{@curly{@kwd{initarg} initarg-name}} |@*
+                   @curly{@kwd{initform} form} |@*
+                   @curly{@kwd{type} type-specifier} |@*
+                   @curly{@kwd{documentation} @term{string}}
+                   
+@item function-name::= @t{@curly{@term{symbol} | (setf @term{symbol})}}
+
+@item class-option::= 
+(@kwd{default-initargs} . initarg-list) |@*
+                        (@kwd{documentation} @term{string}) |@*
+                        (@kwd{metaclass} class-name)
+@end table
+@end macro
+
+
+@macro defmethod {}
+@table @i
+@item function-name::= @curly{@term{symbol} | @t{(setf @term{symbol})}}
+
+@item method-qualifier::= @t{@term{non-list}}
+
+@item specialized-lambda-list::= 
+(@star{@curly{var | (var @i{parameter-specializer-name})}}@*
+                               [@opt{} @{var | (var [initform [supplied-p-parameter]])@}*]
+                               @ttbrac{@t{&rest} var}@*
+                               [@key{} @{ var | (var [initfom [supplied-p-parameter]])@}*@*
+                                      [@keyref{allow-other-keys}]]@*
+                               [@t{&aux} @{var |@*
+                               (var [initform])@}*])
+
+@item parameter-specializer-name::= 
+@term{symbol} | (@t{eql} eql-specializer-form)
+@end table
+@end macro
+
+@macro macrolambdalist {}
+@auxbnf{reqvars, @curly{var | @down{pattern}}*}
+
+@auxbnf{optvars, [@opt{} @curly{var | (@curly{var
+@down{pattern}} [init-form [supplied-p-parameter]])}*]}
+
+@auxbnf{restvars, [@curly{@rest{} | @body{}} @curly{var | @down{pattern}}]}
+
+@auxbnf{keyvars, [@key{} @curly{var | (@curly{var | (keyword-name
+@curly{var | @down{pattern}})} [init-form [supplied-p-parameter]])}*
+[@allowotherkeys{}]]}
+
+@auxbnf{auxvars, [@aux{} @curly{var | (var [init-form])}*]}
+@end macro
+
+@macro dmacrolambdalist {}
+@auxbnf{reqvars, @curly{var | @down{lambda-list}}*}
+
+@auxbnf{optvars, [@opt{} @curly{var | (@curly{var
+@down{lambda-list}} [init-form [supplied-p-parameter]])}*]}
+
+@auxbnf{restvars, [@curly{@rest{} | @body{}} @curly{var | @down{lambda-list}}]}
+
+@auxbnf{keyvars, [@key{} @curly{var | (@curly{var | (keyword-name
+@curly{var | @down{lambda-list}})} [init-form [supplied-p-parameter]])}*
+[@allowotherkeys{}]]}
+
+@auxbnf{auxvars, [@aux{} @curly{var | (var [init-form])}*]}
+@end macro @c defclass
+
+@macro initargs {}
+@float
+@multitable @columnfractions 0.45 0.3 0.15
+@headitem Form @tab Defaulted Initialization Argument List @tab Contents of Slot X
+@item (make-instance 'r) @tab (a 1 b 2) @tab 1
+@item (make-instance 'r 'a 3) @tab (a 3 b 2) @tab 3
+@item (make-instance 'r 'b 4) @tab (b 4 a 1) @tab 4
+@item (make-instance 'r 'a 1 'a 2) @tab (a 1 a 2 b 2) @tab 1
+@end multitable
+@end float
+@end macro
+
+@macro editors {}
+@subheading Principal Technical Editors:
+
+@multitable @columnfractions 0.3 0.3 0.3
+@item
+@b{Kent M. Pitman}     @tab Harlequin, Inc. @tab 1993-present
+@item
+                       @tab Symbolics, Inc. @tab 1990-1992
+@item
+@b{Kathy Chapman}      @tab Digital Equipment Corporation @tab 1987-1989
+@end multitable
+
+@subheading Occasional Guest Editors:
+
+@multitable @columnfractions 0.3 0.3
+@item
+@b{Richard P. Gabriel} @tab Lucid, Inc.
+@item
+@b{Sandra Loosemore}   @tab self
+@end multitable
+
+@subheading Financial Contributors to the Editing Process:
+
+@multitable @columnfractions 1
+@item @b{Digital Equipment Corporation}
+@item @b{Harlequin, Ltd.} and @b{Harlequin, Inc.}
+@item @b{Symbolics, Inc.}
+@item @b{Apple, Inc.}
+@item @b{Franz, Inc.}
+@item @b{Lucid, Inc.}
+@end multitable
+@end macro

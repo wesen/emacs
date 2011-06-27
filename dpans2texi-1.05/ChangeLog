@@ -1,0 +1,53 @@
+2009-06-07  Jesper Harder  <jesper.harder@gmail.com>
+	Version 1.05
+
+	* Makefile.am (wget): Use quimby.gnus.org as source.
+
+2009-06-07  Richard M Kreuter <kreuter@progn.net>
+
+	* dpans2texi.el (dp-special-cases): The first row of Figure 15.4,
+	"Bit-wise Logical Operations on BitArrays", got lost
+
+2008-08-04  Jesper Harder  <jesper.harder@gmail.com>
+
+	* dpans2texi.el: Version 1.04 released.
+
+2008-08-04  Richard M Kreuter <kreuter@progn.net>
+
+	* dpans2texi.el (dp-remove-whitespace): Fix whitespace bug.
+	(dp-beginsection): Change heading of Section 1.1 to "Scope,
+	Purpose, and History".
+	(dp-special-cases): Avoid loosing the first two rows of
+	ConstituentTraitsOfStdChars.
+
+2005-04-18  Jesper Harder  <harder@phys.au.dk>
+	Version 1.03
+
+	* Makefile.am (wget): New target to fetch tex source files.
+
+	* dpans2texi.el (dp-com-duplicates): Add "time" to
+	dp-com-duplicates to avoid clobbering files when generating HTML
+	on case insensitive file systems.
+	Reported by Bryan O'Connor <bryan@lunch.org>.
+
+2004-04-11  Jesper Harder  <harder@ifa.au.dk>
+	Version 1.02
+
+	* Makefile.am: Include docbook and xml targets.
+
+2004-03-21  Jesper Harder  <harder@ifa.au.dk>
+
+	* dpans2texi.el: Version 1.01
+
+2004-03-07  Jesper Harder  <harder@ifa.au.dk>
+
+	* dpi.texi, dph.texi (metavar): Use guillemets.
+
+	* dph.texi: Replace U+25B9 with U+25B7.
+
+	* dpans2texi.el (dp-tr-alist): do.
+
+2004-03-02  Jesper Harder  <harder@ifa.au.dk>
+
+	* dpans2texi.el: Version 1.0
+

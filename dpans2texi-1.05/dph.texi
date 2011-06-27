@@ -1,0 +1,238 @@
+@c -*- Mode: Texinfo; coding: utf-8; -*-
+
+@macro metavar {arg}
+«\arg\»
+@end macro
+
+@macro cubed {}
+³
+@end macro
+
+@macro result {}
+@r{→}
+@end macro
+
+@macro CRLF {}
+↩
+@end macro
+
+@macro OUT {}
+▷
+@end macro
+
+@macro EQ {}
+≡
+@end macro
+
+@macro uumlaut {}
+ü
+@end macro
+
+@macro down {arg}
+@t{↓}\arg\
+@end macro
+
+@macro prevplus {}
+@html
+<sup>+</sup>
+@end html
+@end macro
+
+@macro begininterleave {}
+〚
+@end macro
+
+@macro extrainterleave {}
+@begininterleave{}
+@end macro
+
+@macro endinterleave {}
+〛
+@end macro
+
+@macro ssso {}
+@sub1{}
+@end macro
+
+@macro ssst {}
+@sub2{}
+@end macro
+
+@macro ssse {}
+@sub8{}
+@end macro
+
+@macro ssss {}
+@sub1{}@sub6{}
+@end macro
+
+@c ≠, yuck makeinfo mangles nbsp which is one of the byte-values.
+@macro neq {}
+≠
+@end macro
+
+@macro in {}
+∈
+@end macro
+
+@macro geq {}
+≥
+@end macro
+
+@macro bigcup {}
+⋃
+@end macro
+
+@macro leq {}
+≤
+@end macro
+
+@macro langle {}
+〈
+@end macro
+
+@macro rangle {}
+〉
+@end macro
+
+@macro downarrow {}
+↓
+@end macro
+
+@macro Partial {}
+∂
+@end macro
+
+@macro pi {}
+π
+@end macro
+
+@macro epsilon {}
+ε
+@end macro
+
+@macro alfa {}
+α
+@end macro
+
+@macro cdot {}
+·
+@end macro
+
+@macro centerdot {}
+·
+@end macro
+@macro Stress {arg}
+ˈ\arg\
+@end macro
+
+@macro stress {arg}
+ˌ\arg\
+@end macro
+
+@macro schwa {}
+ə
+@end macro
+
+@macro harda {}
+ā
+@end macro
+
+@macro harde {}
+ē
+@end macro
+
+@macro hardo {arg}
+ō
+@end macro
+
+@macro maybeStress {arg}
+ː\arg\
+@end macro
+
+@macro one {arg}
+\arg\¹
+@end macro
+
+@rmacro subs {arg}
+@html
+<sub>\arg\</sub>
+@end html
+@end rmacro
+
+@rmacro subs1 {arg}
+@html
+<sub>\arg\</sub>
+@end html
+@end rmacro
+
+@macro subOne {}
+@html
+<sub>1</sub>
+@end html
+@end macro
+
+@macro sub0 {}
+@html
+<sub>0</sub>
+@end html
+@end macro
+
+@macro sub1 {}
+@html
+<sub>1</sub>
+@end html
+@end macro
+
+@macro sub2 {}
+@html
+<sub>2</sub>
+@end html
+@end macro
+
+@macro sub3 {}
+@html
+<sub>3</sub>
+@end html
+@end macro
+
+@macro sub4 {}
+@html
+<sub>4</sub>
+@end html
+@end macro
+
+@macro sub5 {}
+@html
+<sub>5</sub>
+@end html
+@end macro
+
+@macro sub6 {}
+@html
+<sub>6</sub>
+@end html
+@end macro
+
+@macro sub7 {}
+@html
+<sub>7</sub>
+@end html
+@end macro
+
+@macro sub8 {}
+@html
+<sub>8</sub>
+@end html
+@end macro
+
+@macro sub9 {}
+@html
+<sub>9</sub>
+@end html
+@end macro
+
+@macro le {}
+≤
+@end macro
+

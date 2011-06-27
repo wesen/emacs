@@ -1,0 +1,18 @@
+Installation:	Instructions are included in the INSTALL file.
+
+Documentation:	An online documentation is included in VHDL Mode which can
+		be displayed within Emacs by typing C-c C-h (or by selecting
+		the VHDL menu entry).
+		Documentation on the indentation engine can be found in the
+		file `vhdl-mode.info'.
+
+Customization:	Perform customization of VHDL Mode within Emacs using the
+		`Customize' VHDL menu entry. Do NOT set any VHDL Mode variables
+		using the `vhdl-mode-hook' in .emacs anymore (except for
+		customization of the indentation engine, as described in
+		`vhdl-mode.info'). For site-wide customization, read the 
+		instructions in the INSTALL file.
+
+Release Notes:	Please consult the release notes for new features and important
+		changes in the current release.  They are accessible within
+		Emacs from the VHDL menu.
