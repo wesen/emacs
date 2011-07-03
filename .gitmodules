@@ -7,3 +7,12 @@
 [submodule "mo-git-blame"]
 	path = mo-git-blame
 	url = git://github.com/mbunkus/mo-git-blame.git
+[submodule "auto-complete"]
+	path = auto-complete
+	url = http://cx4a.org/repo/auto-complete.git
+[submodule "auto-complete-clang"]
+	path = auto-complete-clang
+	url = git://github.com/brianjcj/auto-complete-clang.git
+[submodule "yasnippet"]
+	path = yasnippet
+	url = git://github.com/crazycode/yasnippet.git
