@@ -60,7 +60,7 @@
   "View Php manual in emacs"
   :group 'tools)
 
-(defcustom php-doc-directory "/usr/share/doc/php-doc/html"
+(defcustom php-doc-directory "/Users/manuel/code/web/php-chunked-xhtml"
   "*Directory of php manual (multiple page html version)"
   :type 'directory
   :group 'php-doc)

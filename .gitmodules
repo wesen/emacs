@@ -19,3 +19,6 @@
 [submodule "cucumber.el"]
 	path = cucumber.el
 	url = git://github.com/michaelklishin/cucumber.el.git
+[submodule "emacs-w3m"]
+	path = emacs-w3m
+	url = git://github.com/sjatkinson/emacs-w3m.git
