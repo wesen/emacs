@@ -1,0 +1,28 @@
+# -*- mode: snippet -*-
+# name: unittest
+# --
+#include <CppUnitLite2.h>
+#include <TestResultStdErr.h>
+
+/*
+ * use:
+ * - CHECK (condition)
+ * - CHECK_EQUAL(expected, actual)
+ */
+
+class ${TestName}Fixture {
+  ${TestName}Fixture() {
+  }
+
+  ~${TestName}Fixture() {
+  }
+
+};
+ 
+TEST (${TestName}) {
+  CHECK(false);
+  $0
+}
+
+TEST_F (${TestName}Fixture, ${TestName}) {
+}
