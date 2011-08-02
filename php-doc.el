@@ -214,14 +214,17 @@ See `windata-display-buffer' for setup the arguments."
         (browse-url (concat "file://" file))
       (tree-mode-toggle-expand))))
 
+(defun w3m-browse-url-other-window (url &optional newwin)
+  (let ((w3m-pop-up-windows t))
+    (if (one-window-p) (split-window))
+    (other-window 1)
+    (w3m-browse-url url newwin)))
+
 (defun php-doc-w3m (url &rest ignore)
   (let ((win (next-window))
         buf)
-    (save-window-excursion
-      (select-window win)
-      (w3m-goto-url url)
-      (setq buf (current-buffer)))
-    (display-buffer buf)))
+    (save-excursion
+      (w3m-browse-url url))))
 
 (if (featurep 'help-dwim)
     (help-dwim-register

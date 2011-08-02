@@ -146,6 +146,15 @@ minor mode.")
   "A cache of git-blame information for the current buffer")
 (make-variable-buffer-local 'git-blame-cache)
 
+(defvar git-blame-commit-lines nil
+  "A cache of the actual buffer lines for a commit for the current buffer")
+;; (make-variable-buffer-local 'git-blame-commit-lines)
+(kill-local-variable 'git-blame-commit-info)
+
+(defvar git-blame-commit-info nil
+  "A cache of the commit info for a commit for the current buffer")
+;; (make-variable-buffer-local 'git-blame-commit-info)
+
 (defvar git-blame-idle-timer nil
   "An idle timer that updates the blame")
 (make-variable-buffer-local 'git-blame-cache)
@@ -233,16 +242,81 @@ See also function `git-blame-mode'."
                    "git-blame" blame-buf
                    "git" "blame"
                    args))
+
+      (make-local-variable 'git-blame-commit-lines)
+      (make-local-variable 'git-blame-commit-info)
+      (setq git-blame-commit-lines (make-hash-table :test 'equal)
+            git-blame-commit-info (make-hash-table :test 'equal))
+
       (with-current-buffer blame-buf
         (erase-buffer)
         (make-local-variable 'git-blame-file)
         (make-local-variable 'git-blame-current)
-        (setq git-blame-file display-buf)
-        (setq git-blame-current nil))
+        (make-local-variable 'git-blame-commit-lines)
+        (make-local-variable 'git-blame-info)
+
+        (setq git-blame-file display-buf
+              git-blame-current nil
+              git-blame-commit-lines (buffer-local-value 'git-blame-commit-lines display-buf)
+              git-blame-commit-info (buffer-local-value 'git-blame-commit-info display-buf)))
+        
       (set-process-filter git-blame-proc 'git-blame-filter)
       (set-process-sentinel git-blame-proc 'git-blame-sentinel)
       (process-send-region git-blame-proc (point-min) (point-max))
       (process-send-eof git-blame-proc))))
+
+(defun git-blame-commits-matching (name)
+  (let ((res)
+        (re (regexp-quote name)))
+    (maphash (lambda (k v)
+               (let ((author (git-blame-get-commit-property k "author")))
+                 (when (and author
+                            (posix-string-match re author))
+                   (push k res))))
+             git-blame-commit-info)
+    res))
+
+(defun git-blame-commits-not-matching (name)
+  (let ((res)
+        (re (regexp-quote name)))
+    (maphash (lambda (k v)
+               (let ((author (git-blame-get-commit-property k "author")))
+                 (unless (and author
+                              (posix-string-match re author))
+                   (push k res))))
+             git-blame-commit-info)
+    res))
+
+(defun git-blame-group-commit-regions (hash)
+  (let ((end-line nil)
+        (start-line nil)
+        res)
+    (dolist (region (reverse (gethash hash git-blame-commit-lines)))
+      (if (not start-line)
+          (setq start-line (first region)
+                end-line (second region))
+        (if (= (first region) (1+ end-line))
+            (setq end-line (second region))
+          (progn
+            (push (list start-line end-line) res)
+            (setq start-line (first region)
+                  end-line (second region))))))
+    (reverse (cons (list start-line end-line) res))))
+
+(require 'hide-region)
+
+(defun git-blame-narrow-author (name)
+  (dolist (commit (git-blame-commits-not-matching name))
+    (git-blame-hide-commit commit)))
+
+(defun git-blame-hide-commit (hash)
+  (save-excursion
+    (dolist (region (git-blame-group-commit-regions hash))
+      (goto-line (first region))
+      (push-mark (line-beginning-position) t)
+      (goto-line (second region))
+      (goto-char (line-end-position))
+      (hide-region-hide))))
 
 (defun remove-git-blame-text-properties (start end)
   (let ((modified (buffer-modified-p))
@@ -296,34 +370,64 @@ See also function `git-blame-mode'."
         (while more
           (setq more (git-blame-parse)))))))
 
+(defun push-hash (key value hashtable)
+  "Push a value into the hashtable. If the key does not exist, create a list with the value"
+  (let ((val (gethash key hashtable)))
+    (if val
+        (puthash key (cons value val) hashtable)
+      (puthash key (list value) hashtable))))
+
+(defun git-blame-set-commit-property (hash key value)
+  "Set the property of a commit for the local buffer"
+  (let ((val (gethash hash git-blame-commit-info)))
+    (if val
+        (let ((ks (assoc key val)))
+          (if ks
+              (setcdr ks value)
+            (push-hash hash `(,key . ,value) git-blame-commit-info)))
+      (push-hash hash `(,key . ,value) git-blame-commit-info))))
+
+(defun git-blame-get-commit-property (hash key)
+  "Get the property of a commit for the local buffer"
+  (cdr (assoc key (gethash hash git-blame-commit-info))))
+
 (defun git-blame-parse ()
   (cond ((looking-at "\\([0-9a-f]\\{40\\}\\) \\([0-9]+\\) \\([0-9]+\\) \\([0-9]+\\)\n")
+
          (let ((hash (match-string 1))
                (src-line (string-to-number (match-string 2)))
                (res-line (string-to-number (match-string 3)))
                (num-lines (string-to-number (match-string 4))))
-           (setq git-blame-current
-                 (if (string= hash "0000000000000000000000000000000000000000")
-                     nil
-                   (git-blame-new-commit
-                    hash src-line res-line num-lines))))
+
+           (unless (string= hash "0000000000000000000000000000000000000000")
+             (push-hash hash (list res-line (+ res-line num-lines)) git-blame-commit-lines)
+             (setq git-blame-current hash)
+             (git-blame-new-commit hash src-line res-line num-lines)))
+         
          (delete-region (point) (match-end 0))
          t)
+
         ((looking-at "filename \\(.+\\)\n")
          (let ((filename (match-string 1)))
-           (git-blame-add-info "filename" filename))
+           ; (git-blame-add-info "filename" filename)
+           )
          (delete-region (point) (match-end 0))
          t)
+
         ((looking-at "\\([a-z-]+\\) \\(.+\\)\n")
          (let ((key (match-string 1))
                (value (match-string 2)))
-           (git-blame-add-info key value))
+           (git-blame-set-commit-property git-blame-current key value)
+           ; (git-blame-add-info key value)
+           )
          (delete-region (point) (match-end 0))
          t)
+
         ((looking-at "boundary\n")
          (setq git-blame-current nil)
          (delete-region (point) (match-end 0))
          t)
+
         (t
          nil)))
 
@@ -358,12 +462,14 @@ See also function `git-blame-mode'."
             ;; the point-entered property doesn't seem to work in overlays
             ;;(overlay-put ovl 'point-entered
             ;;             `(lambda (x y) (git-blame-identify ,hash)))
-            (let ((modified (buffer-modified-p)))
-              (put-text-property (if (= start 1) start (1- start)) (1- end)
-                                 'point-entered
-                                 `(lambda (x y) (git-blame-identify ,hash)))
-              (set-buffer-modified-p modified))))
-        (setq num-lines (1- num-lines))))))
+            ;; (let ((modified (buffer-modified-p)))
+            ;;   (put-text-property (if (= start 1) start (1- start)) (1- end)
+            ;;                      'point-entered
+            ;;                      `(lambda (x y) (git-blame-identify ,hash)))
+            ;;   (set-buffer-modified-p modified))
+            ))
+        (setq num-lines (1- num-lines))))
+    (list hash src-line res-line num-lines)))
 
 (defun git-blame-add-info (key value)
   (if git-blame-current

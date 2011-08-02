@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: cccat
+# --
+Category::create(array('name' => "${2:category name}",
+                         'image' => '${3:image.jpg}',
+                         'title' => "$2",
+                         'meta_keywords' => '${4:keyword,keyword1}',
+                         'meta_description' => '${5:meta description}',
+                         'short_description' => "${6:short description}",
+                         'description' => "${7:description}",
+                         'category_order' => ${8:0},
+                         'list_view' => ${9:$$(yas/choose-value '("false", "true"))}));

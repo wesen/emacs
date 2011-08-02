@@ -22,3 +22,9 @@
 [submodule "emacs-w3m"]
 	path = emacs-w3m
 	url = git://github.com/sjatkinson/emacs-w3m.git
+[submodule "emacs-flymake"]
+	path = emacs-flymake
+	url = git://github.com/illusori/emacs-flymake.git
+[submodule "emacs-flymake-phpcs"]
+	path = emacs-flymake-phpcs
+	url = git://github.com/illusori/emacs-flymake-phpcs.git

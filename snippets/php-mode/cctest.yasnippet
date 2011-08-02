@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: cctest
+# --
+<?php
+
+require_once('tests/config.test.php');
+
+class Test${1:Feature} extends UnitTestCase {
+  function setUp() {
+     resetDatabase();
+     populateProducts();
+     clear_session();
+  }
+
+  function test${2:Thing}() {
+     \$this->assertFalse(true);
+     $0
+  }
+};
+
+?>

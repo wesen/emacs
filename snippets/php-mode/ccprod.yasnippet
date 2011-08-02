@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: ccprod
+# --
+$product =  Product::create(array('name' => "${1:product name}",
+                                    'image' => '${2:image.jpg}',
+                                    'price_type' => '${3:$$(yas/choose-value '("NORMAL" "FORMULA" "PLEASE_CALL"))}',
+                                    'price' => ${4:100},
+                                    'description' => "${5:$1 description}",
+                                    'inventory' => '${6:$$(yas/choose-value '("STOCK" "BUYING"))}',
+                                    'buying_quantity' => ${7:0},
+                                    'quantity' => ${8:10},
+                                    'minimum_stock_level' => ${9:0},
+                                    'inactive' => ${10:$$(yas/choose-value '("true" "false"))},
+                                    'delay_date' => '${11:0000-00-00 00:00:00}',
+                                    'created_at' => new DateTime($12),
+                                    'updated_at' => new DateTime()));
