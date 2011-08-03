@@ -1,0 +1,610 @@
+;;
+;; Emacs configuration
+;;
+;; (c) July 2011 - Manuel Odendahl - wesen@ruinwesen.com
+;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; General setup
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar HOME (expand-file-name "~"))
+(setq home-dir "/Users/manuel/")
+(setq user-mail-address "wesen@ruinwesen.com")
+
+(setq split-window-preferred-function 'split-window-sensibly)
+(setq split-width-threshold nil)
+
+(server-start)
+
+;; paths
+(add-to-list 'load-path "~/code/wesen/emacs/")
+(add-to-list 'load-path "~/code/wesen/emacs/packages/")
+;; (add-to-list 'load-path "~/code/wesen/emacs/emacs-starter-kit/")
+(add-to-list 'load-path "~/code/wesen/emacs/emacs-starter-kit/src/color-theme/")
+(add-to-list 'load-path "/Users/manuel/code/wesen/emacs/js2-mode/")
+(add-to-list 'load-path "~/code/wesen/emacs/Slime/")
+(add-to-list 'load-path "~/code/wesen/emacs/mo-git-blame/")
+(add-to-list 'load-path "~/code/wesen/emacs/auto-complete/")
+(add-to-list 'load-path "~/code/wesen/emacs/auto-complete-clang/")
+(add-to-list 'load-path "~/code/wesen/emacs/cucumber.el/")
+(add-to-list 'load-path "~/code/wesen/emacs/geben/")
+(add-to-list 'load-path "~/code/wesen/emacs/emacs-w3m/")
+(add-to-list 'load-path "~/code/wesen/emacs/clojure-mode/")
+(add-to-list 'load-path "~/code/wesen/emacs/swank-clojure/")
+
+;; load elpa
+(require 'package)
+(setq package-user-dir "~/.emacs.d/elpa/")
+(package-initialize)
+(add-to-list 'package-archives
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+;; load modes
+(require 'ruby-mode)
+;; (require 'prefer-utf)
+
+(unless (boundp 'aquamacs-version)
+  (require 'mouse)
+  (xterm-mouse-mode t)
+  (defun track-mouse (e))
+  (setq mouse-sel-mode t))
+
+(when (boundp 'aquamacs-version) 
+  (setq mac-allow-anti-aliasing nil)
+  (set-default-font "-apple-Andale_Mono-medium-normal-normal-*-9-*-*-*-m-0-iso10646-1"))
+
+;;(set-default-font "-apple-Menlo-medium-normal-normal-*-8-*-*-*-m-9-iso10646-1")
+;; (set-default-font "-apple-anonymous-medium-r-normal--8-0-72-72-m-0-iso10646-1")
+
+
+(require 'color-theme)
+(color-theme-initialize)
+(color-theme-dark-laptop)
+(global-font-lock-mode t)
+
+(menu-bar-mode -1)
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
+(when (fboundp 'tabbar-mode)
+  (tabbar-mode -1))
+(show-paren-mode 1)
+(transient-mark-mode t)
+
+;; automatic indent on return 
+(define-key global-map [(control m)] 'newline-and-indent)
+(define-key ruby-mode-map [(control m)] 'newline-and-indent)
+;; (global-set-key [(meta g)] 'goto-line)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Emacs lisp mode configuration
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
+(defun rgr/toggle-context-help ()
+  "Turn on or off the context help.
+Note that if ON and you hide the help buffer then you need to
+manually reshow it. A double toggle will make it reappear"
+  (interactive)
+  (with-current-buffer (help-buffer)
+    (unless (local-variable-p 'context-help)
+      (set (make-local-variable 'context-help) t))
+    (if (setq context-help (not context-help))
+	(progn
+          (if (not (get-buffer-window (help-buffer)))
+              (display-buffer (help-buffer)))))
+    (message "Context help %s" (if context-help "ON" "OFF"))))
+
+(defun rgr/context-help ()
+  "Display function or variable at point in *Help* buffer if visible.
+Default behaviour can be turned off by setting the buffer local
+context-help to false"
+  (interactive)
+  (let ((rgr-symbol (symbol-at-point))) ; symbol-at-point http://www.emacswiki.org/cgi-bin/wiki/thingatpt%2B.el
+    (with-current-buffer (help-buffer)
+      (unless (local-variable-p 'context-help)
+        (set (make-local-variable 'context-help) t))
+      (when (and context-help (get-buffer-window (help-buffer))
+                 rgr-symbol)
+        (progn 
+          (if (fboundp  rgr-symbol)
+              (describe-function rgr-symbol) 
+            (if (boundp  rgr-symbol)
+                (describe-variable rgr-symbol))))))))
+
+(defadvice eldoc-print-current-symbol-info
+  (around eldoc-show-c-tag activate)
+  (cond 
+   ((eq major-mode 'emacs-lisp-mode) (rgr/context-help) ad-do-it)
+   ((eq major-mode 'lisp-interaction-mode) (rgr/context-help) ad-do-it)
+   ((eq major-mode 'apropos-mode) (rgr/context-help) ad-do-it)
+   (t ad-do-it)))
+
+(global-set-key (kbd "C-c h") 'rgr/toggle-context-help)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Mode list
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; mode list stuff
+(setq auto-mode-alist
+      (append '(
+                ("\\.emacs$" . emacs-lisp-mode)
+                ("\\.pde$" . c++-mode)
+                ("Capfile" . ruby-mode)
+                ("\\.asd$" . lisp-mode)
+                ("\\.lisp$" . lisp-mode)
+                ("\\.lsp$" . lisp-mode)
+                ("\\.cl$" . lisp-mode)
+                ("\\.system$" . lisp-mode)
+                ("\\.js" . js2-mode)
+                ("\\.html" . nxhtml-mode)
+                ("\\.bknr$" . nxml-mode)
+		("\\.mustache" . html-mode)
+		("\\.php" . php-mode)
+		("\\.less" . css-mode)
+                ("\\.s" . asm-mode)
+                ("\\.S" . asm-mode)
+                ("\\.clj" . clojure-mode)
+                ) auto-mode-alist))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; js2-mode configuration
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'js2-mode)
+(define-key js2-mode-map [(control m)] 'newline-and-indent)
+(defun my-js2-indent-function ()
+  (interactive)
+  (save-restriction
+    (widen)
+    (let* ((inhibit-point-motion-hooks t)
+           (parse-status (save-excursion (syntax-ppss (point-at-bol))))
+           (offset (- (current-column) (current-indentation)))
+           (indentation (espresso--proper-indentation parse-status))
+           node)
+
+      (save-excursion
+
+        ;; I like to indent case and labels to half of the tab width
+        (back-to-indentation)
+        (if (looking-at "case\\s-")
+            (setq indentation (+ indentation (/ espresso-indent-level 2))))
+
+        ;; consecutive declarations in a var statement are nice if
+        ;; properly aligned, i.e:
+        ;;
+        ;; var foo = "bar",
+        ;;     bar = "foo";
+        (setq node (js2-node-at-point))
+        (when (and node
+                   (= js2-NAME (js2-node-type node))
+                   (= js2-VAR (js2-node-type (js2-node-parent node))))
+          (setq indentation (+ 4 indentation))))
+
+      (indent-line-to indentation)
+      (when (> offset 0) (forward-char offset)))))
+
+(defun my-indent-sexp ()
+  (interactive)
+  (save-restriction
+    (save-excursion
+      (widen)
+      (let* ((inhibit-point-motion-hooks t)
+             (parse-status (syntax-ppss (point)))
+             (beg (nth 1 parse-status))
+             (end-marker (make-marker))
+             (end (progn (goto-char beg) (forward-list) (point)))
+             (ovl (make-overlay beg end)))
+        (set-marker end-marker end)
+        (overlay-put ovl 'face 'highlight)
+        (goto-char beg)
+        (while (< (point) (marker-position end-marker))
+          ;; don't reindent blank lines so we don't set the "buffer
+          ;; modified" property for nothing
+          (beginning-of-line)
+          (unless (looking-at "\\s-*$")
+            (indent-according-to-mode))
+          (forward-line))
+        (run-with-timer 0.5 nil '(lambda(ovl)
+                                   (delete-overlay ovl)) ovl)))))
+
+(defun my-js2-mode-hook ()
+  (require 'espresso)
+  (setq espresso-indent-level 2
+        indent-tabs-mode nil
+        c-basic-offset 2)
+  (c-toggle-auto-state 0)
+  (c-toggle-hungry-state 1)
+  (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
+  (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
+  (define-key js2-mode-map [(meta control \;)] 
+    '(lambda()
+       (interactive)
+       (insert "/* -----[ ")
+       (save-excursion
+         (insert " ]----- */"))
+       ))
+  (define-key js2-mode-map [(return)] 'newline-and-indent)
+  (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
+  (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
+  (define-key js2-mode-map [(control meta q)] 'my-indent-sexp)
+  (if (featurep 'js2-highlight-vars)
+      (js2-highlight-vars-mode))
+  (message "My JS2 hook"))
+
+(add-hook 'js2-mode-hook 'my-js2-mode-hook)
+
+(autoload 'espresso-mode "espresso")
+(require 'espresso)
+(require 'js2-mode)
+(require 'js2-highlight-vars)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Slime setup
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'slime-autoloads)
+(require 'slime)
+(slime-setup '(slime-fancy slime-tramp))
+
+(add-hook 'lisp-mode-hook (lambda ()
+                            (slime-mode t)
+                            (setq lisp-indent-function 'common-lisp-indent-function)
+                            ))
+(global-set-key [(control t)] (quote slime-selector))
+
+(setq slime-lisp-implementations
+      '(
+        ;;        (ccl-qh ("ccl-qh"))
+	(ccl64 ("ccl64"))
+        (clojure ("/usr/local/bin/clj"))
+        ))
+(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+;; (setq inferior-lisp-program "ccl-qh")
+(define-key lisp-mode-map [(control m)] 'newline-and-indent)
+;; (define-key js2-mode-map [(control m)] 'newline-and-indent)
+
+;; add hyperspec lookup
+
+(require 'info-look)
+
+;; info-lookup-symbol in lisp: C-h S
+
+(info-lookup-add-help
+ :mode 'lisp-mode
+ :regexp "[^][()'\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+(define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
+
+;; javascript swank-js hook
+;; (add-hook 'js2-mode-hook
+;;          (lambda ()
+;;            (slime-js-minor-mode 1)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Remote server configuration for slime
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defvar *jockel-path*
+  "/Users/Remote/ruinwesen.com")
+(defvar *jockel2-path*
+  "/Users/Remote/jockel2")
+(defvar *ubuntu-path*
+  "/Users/Remote/ubuntu")
+
+(push (list ".*" 'identity 'identity) slime-filename-translations)
+
+(push (slime-create-filename-translator :machine-instance "jockel2.localdomain"
+                                        :remote-host "jockel2"
+                                        :username "manuel")
+      slime-filename-translations)
+(push (slime-create-filename-translator :machine-instance "ruinwesen"
+                                        :remote-host "u2.ruinwesen.com"
+                                        :username "manuel")
+      slime-filename-translations)
+(push (slime-create-filename-translator :machine-instance "mein.eigensex.org"
+                                        :remote-host "ruinwesen.com"
+                                        :username "mnl")
+      slime-filename-translations)
+(push (slime-create-filename-translator :machine-instance "quickhoney.com"
+                                        :remote-host "quickhoney.com"
+                                        :username "manuel")
+      slime-filename-translations)
+
+
+(defvar *current-tramp-path* nil)
+(defun connect-to-host (path)
+  (slime-connect "localhost" 4005))
+
+(defun jockel-slime ()
+  (interactive)
+  (connect-to-host *jockel-path*))
+
+(defun jockel2-slime ()
+  (interactive)
+  
+  (connect-to-host *jockel2-path*))
+
+
+(defun ubuntu-slime ()
+  (interactive)
+  (connect-to-host *ubuntu-path*))
+
+
+
+(defun jockel-homedir ()
+  (interactive)
+  (find-file (concat *jockel-path* "/home/mnl/")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; C indent config
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq c-basic-offset 2)
+(setq-default c-basic-offset 2)
+(setq c-indent-level 2)
+(setq tab-width 2)
+
+(setq indent-tabs-mode t)
+(setq-default indent-tabs-mode nil)
+(global-auto-revert-mode 1)
+
+(defun linux-c-mode ()
+  "C mode with adjusted defaults for use with the Linux
+kernel."
+  (interactive)
+  (c-mode)
+  (setq c-indent-level 8)
+  (setq c-brace-imaginary-offset 0)
+  (setq c-brace-offset -8)
+  (setq c-argdecl-indent 8)
+  (setq c-label-offset -8)
+  (setq c-continued-statement-offset 8)
+  (setq indent-tabs-mode nil)
+  (setq tab-width 8))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Misc modes
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; ack searching
+(autoload 'ack-same "full-ack" nil t)
+(autoload 'ack "full-ack" nil t)
+(autoload 'ack-find-same-file "full-ack" nil t)
+(autoload 'ack-find-file "full-ack" nil t)
+
+(define-coding-system-alias 'utf8 'utf-8)
+
+;; (require 'zencoding-mode)
+;; (add-hook 'sgml-mode-hook 'zencoding-mode)
+
+(require 'inf-ruby)
+
+(autoload 'mo-git-blame-file "mo-git-blame" nil t)
+(autoload 'mo-git-blame-current "mo-git-blame" nil t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Autocomplete setup
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+
+(require 'yasnippet-bundle)
+
+(require 'auto-complete-clang)
+
+(setq ac-auto-start nil)
+(setq ac-quick-help-delay 0.5)
+(define-key ac-mode-map [(control tab)] 'auto-complete)
+
+(defvar ac-cursor-color "blanched almond"
+  "Old cursor color.")
+
+(defun my-ac-config ()
+  (setq ac-clang-flags (split-string "-I/usr/include/c++/4.2.1 -I/usr/include -I/usr/local/include"))
+  (setq ac-clang-executable "/usr/local/bin/clang")
+  (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+  (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+  (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'c++-mode-common-hook 'ac-cc-mode-setup)
+  (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+  (add-hook 'css-mode-hook 'ac-css-mode-setup)
+  (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+  (global-auto-complete-mode t))
+(defun my-ac-cc-mode-setup ()
+  (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
+(add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+(add-hook 'c++-mode-common-hook 'my-ac-cc-mode-setup)
+(my-ac-config)
+
+(setq yas/root-directory "~/.emacs.d/snippets/")
+
+;; Load the snippets
+(yas/load-directory yas/root-directory)
+
+(require 'xcscope)
+
+;; (define-key c-mode-map "\M-." 'cscope-find-global-definition)
+;; (define-key c-mode-map "\M-," 'cscope-find-this-symbol)
+;; (define-key c-mode-map "\M-n" 'cscope-next-symbol)
+;; (define-key c-mode-map "\M-p" 'cscope-prev-symbol)
+;; (define-key c-mode-map "\M-[" 'cscope-pop-mark)
+;; (define-key c-mode-map "\M-]" 'cscope-display-buffer)
+;; (define-key c++-mode-map "\M-." 'cscope-find-global-definition)
+;; (define-key c++-mode-map "\M-," 'cscope-find-this-symbol)
+;; (define-key c++-mode-map "\M-n" 'cscope-next-symbol)
+;; (define-key c++-mode-map "\M-p" 'cscope-prev-symbol)
+;; (define-key c++-mode-map "\M-[" 'cscope-pop-mark)
+;; (define-key c++-mode-map "\M-]" 'cscope-display-buffer)
+
+(defun set-mididuino-flags ()
+  (interactive)
+  (setq ac-clang-executable "/usr/local/bin/clang")
+  (setq ac-clang-flags (split-string "-I/usr/local/CrossPack-AVR//include
+-I/usr/include
+-I/usr/include/c++/4.2.1
+-I/usr/local/include
+-I/Users/manuel/code/wesen/mididuino/hardware
+-I/Users/manuel/code/wesen/mididuino/hardware/arduino-libraries
+-I/Users/manuel/code/wesen/mididuino/hardware/arduino-libraries/MidiUart
+-I/Users/manuel/code/wesen/mididuino/hardware/bootloaders
+-I/Users/manuel/code/wesen/mididuino/hardware/bootloaders/minicommand2
+-I/Users/manuel/code/wesen/mididuino/hardware/cores
+-I/Users/manuel/code/wesen/mididuino/hardware/cores/minicommand2
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/CommonTools
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/Elektron
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/GUI
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/LFO
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MD
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MDPages
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MDSketches
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/Midi
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MidiSketches
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MidiTools
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MNM
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MNMPages
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/MNMSketches
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/Monome
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/PageTools
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/Profiler
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/SDCard
+-I/Users/manuel/code/wesen/mididuino/hardware/libraries/Sequencer
+-I/Users/manuel/code/wesen/mididuino/hardware/tools
+-I/Users/manuel/code/wesen/mididuino/hardware/tools/avr-extras
+-I/Users/manuel/code/wesen/mididuino/hardware/tools/mididuino
+-I/Users/manuel/code/wesen/mididuino/host
+-I/Users/manuel/code/wesen/mididuino/host/GUI
+-I/Users/manuel/code/wesen/mididuino/host/MidiUart
+-I/Users/manuel/code/wesen/mididuino/host/Tools
+-I/Users/manuel/code/wesen/mididuino/thirdparty/CppUnitLite2/src")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; Further configuration
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer 
+        (delq (current-buffer) 
+              (remove-if-not 'buffer-file-name (buffer-list)))))
+
+
+(setq feature-default-i18n-file "/path/to/gherkin/gem/i18n.yml")
+;; and load feature-mode
+(require 'feature-mode)
+(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
+
+(autoload 'geben "geben" "PHP Debugger on Emacs" t)
+
+(require 'el-navigation)
+
+(require 'w3m-load)
+(setq w3m-pop-up-frames t)
+
+(require 'php-mode)
+(require 'php-doc)
+(add-hook 'php-mode-hook
+          (lambda ()
+            ;; (local-set-key "\t" 'php-doc-complete-function)
+            (local-set-key (kbd "\C-c h") 'php-doc)
+            (set (make-local-variable 'eldoc-documentation-function)
+                 'php-doc-eldoc-function)
+            (eldoc-mode 1)))
+
+(setq font-lock-verbose nil)
+
+(when (boundp 'aquamacs-version) 
+  (define-key osx-key-mode-map (kbd "A-C-<right>") 'forward-sexp)
+  (define-key osx-key-mode-map (kbd "A-C-<left>") 'backward-sexp)
+  (define-key osx-key-mode-map (kbd "A-C-<up>") 'backward-up-list)
+  (define-key osx-key-mode-map (kbd "A-C-<down>") 'down-list)
+  (define-key osx-key-mode-map (kbd "A-C-SPC") 'mark-sexp))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; misc stuff
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'hide-region)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; flymake
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-to-list 'load-path "~/code/wesen/emacs/emacs-flymake/")
+(add-to-list 'load-path "~/code/wesen/emacs/emacs-flymake-phpcs/")
+
+(require 'flymake)
+(setq flymake-no-changes-timeout 5)
+(setq temporary-file-directory "~/.emacs.d/tmp/")
+(setq flymake-run-in-place nil)
+
+;; (setq flymake-phpcs-standard "/usr/share/pear/share/pear/PHP/CodeSniffer/Standards/Squiz/")
+(setq flymake-phpcs-standard "/Users/manuel/code/wesen/wesen-misc/PHPStandards/Wesen/ruleset.xml")
+(setq flymake-phpcs-command "~/code/wesen/emacs/emacs-flymake-phpcs/bin/flymake_phpcs")
+(require 'flymake-phpcs)
+
+(global-set-key (kbd "\C-c e") 'flymake-display-err-menu-for-current-line)
+(global-set-key (kbd "\C-c n") (lambda ()
+                                 (interactive)
+                                 (flymake-goto-next-error)
+                                 (flymake-display-err-menu-for-current-line)))
+(global-set-key (kbd "\C-c p") (lambda ()
+                                 (interactive)
+                                 (flymake-goto-prev-error)
+                                 (flymake-display-err-menu-for-current-line)))
+
+(defun indent-buffer ()
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; 
+;; linum
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(global-linum-mode t)
+(setq linum-format "%d  ")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; Clojure
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(require 'clojure-mode)
+
