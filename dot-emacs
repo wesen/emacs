@@ -11,8 +11,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defvar HOME (expand-file-name "~"))
-(setq home-dir "/Users/manuel/")
+(setq home-dir HOME)
 (setq user-mail-address "wesen@ruinwesen.com")
+
+(defvar emacs-dir (file-name-directory (file-truename "~/.emacs")))
+
+(add-to-list 'load-path emacs-dir)
 
 (setq split-window-preferred-function 'split-window-sensibly)
 (setq split-width-threshold nil)
@@ -20,20 +24,24 @@
 (server-start)
 
 ;; paths
-(add-to-list 'load-path "~/code/wesen/emacs/")
-(add-to-list 'load-path "~/code/wesen/emacs/packages/")
-;; (add-to-list 'load-path "~/code/wesen/emacs/emacs-starter-kit/")
-(add-to-list 'load-path "~/code/wesen/emacs/emacs-starter-kit/src/color-theme/")
-(add-to-list 'load-path "/Users/manuel/code/wesen/emacs/js2-mode/")
-(add-to-list 'load-path "~/code/wesen/emacs/Slime/")
-(add-to-list 'load-path "~/code/wesen/emacs/mo-git-blame/")
-(add-to-list 'load-path "~/code/wesen/emacs/auto-complete/")
-(add-to-list 'load-path "~/code/wesen/emacs/auto-complete-clang/")
-(add-to-list 'load-path "~/code/wesen/emacs/cucumber.el/")
-(add-to-list 'load-path "~/code/wesen/emacs/geben/")
-(add-to-list 'load-path "~/code/wesen/emacs/emacs-w3m/")
-(add-to-list 'load-path "~/code/wesen/emacs/clojure-mode/")
-(add-to-list 'load-path "~/code/wesen/emacs/swank-clojure/")
+
+
+(defun add-emacs-dirs (&rest paths)
+  (dolist (path paths)
+    (add-to-list 'load-path (concat emacs-dir path "/"))))
+
+(add-emacs-dirs
+ "packages"
+ "emacs-starter-kit/src/color-theme"
+ ;;              "js2-mode"
+ "Slime"
+ "mo-git-blame"
+ "auto-complete"
+ "auto-complete-clang"
+ "cucumber.el"
+ "geben"
+ "emacs-w3m"
+ "clojure-mode")
 
 ;; load elpa
 (require 'package)
@@ -258,14 +266,14 @@ context-help to false"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'slime-autoloads)
-(require 'slime)
-(slime-setup '(slime-fancy slime-tramp))
+;; (require 'slime-autoloads)
+;; (require 'slime)
+;; (slime-setup '(slime-fancy slime-tramp))
 
-(add-hook 'lisp-mode-hook (lambda ()
-                            (slime-mode t)
-                            (setq lisp-indent-function 'common-lisp-indent-function)
-                            ))
+;; (add-hook 'lisp-mode-hook (lambda ()
+;;                             (slime-mode t)
+;;                             (setq lisp-indent-function 'common-lisp-indent-function)
+;;                             ))
 (global-set-key [(control t)] (quote slime-selector))
 
 (setq slime-lisp-implementations
@@ -311,24 +319,24 @@ context-help to false"
 (defvar *ubuntu-path*
   "/Users/Remote/ubuntu")
 
-(push (list ".*" 'identity 'identity) slime-filename-translations)
+; (push (list ".*" 'identity 'identity) slime-filename-translations)
 
-(push (slime-create-filename-translator :machine-instance "jockel2.localdomain"
-                                        :remote-host "jockel2"
-                                        :username "manuel")
-      slime-filename-translations)
-(push (slime-create-filename-translator :machine-instance "ruinwesen"
-                                        :remote-host "u2.ruinwesen.com"
-                                        :username "manuel")
-      slime-filename-translations)
-(push (slime-create-filename-translator :machine-instance "mein.eigensex.org"
-                                        :remote-host "ruinwesen.com"
-                                        :username "mnl")
-      slime-filename-translations)
-(push (slime-create-filename-translator :machine-instance "quickhoney.com"
-                                        :remote-host "quickhoney.com"
-                                        :username "manuel")
-      slime-filename-translations)
+; (push (slime-create-filename-translator :machine-instance "jockel2.localdomain"
+;                                         :remote-host "jockel2"
+;                                         :username "manuel")
+;       slime-filename-translations)
+; (push (slime-create-filename-translator :machine-instance "ruinwesen"
+;                                         :remote-host "u2.ruinwesen.com"
+;                                         :username "manuel")
+;       slime-filename-translations)
+; (push (slime-create-filename-translator :machine-instance "mein.eigensex.org"
+;                                         :remote-host "ruinwesen.com"
+;                                         :username "mnl")
+;       slime-filename-translations)
+; (push (slime-create-filename-translator :machine-instance "quickhoney.com"
+;                                         :remote-host "quickhoney.com"
+;                                         :username "manuel")
+;       slime-filename-translations)
 
 
 (defvar *current-tramp-path* nil)
@@ -543,12 +551,21 @@ kernel."
 
 (setq font-lock-verbose nil)
 
+
 (when (boundp 'aquamacs-version) 
   (define-key osx-key-mode-map (kbd "A-C-<right>") 'forward-sexp)
   (define-key osx-key-mode-map (kbd "A-C-<left>") 'backward-sexp)
   (define-key osx-key-mode-map (kbd "A-C-<up>") 'backward-up-list)
   (define-key osx-key-mode-map (kbd "A-C-<down>") 'down-list)
   (define-key osx-key-mode-map (kbd "A-C-SPC") 'mark-sexp))
+
+
+(global-set-key "\M-a" 'backward-sexp)
+(global-set-key "\M-e" 'forward-sexp)
+(global-set-key (kbd "ESC <up>") 'backward-up-list)
+(global-set-key (kbd "ESC <down>") 'down-list)
+(global-set-key (kbd "M-SPC") 'mark-sexp)
+  
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; 
@@ -564,8 +581,7 @@ kernel."
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-to-list 'load-path "~/code/wesen/emacs/emacs-flymake/")
-(add-to-list 'load-path "~/code/wesen/emacs/emacs-flymake-phpcs/")
+(add-emacs-dirs "emacs-flymake" "emacs-flymake-phpcs")
 
 (require 'flymake)
 (setq flymake-no-changes-timeout 5)
@@ -574,7 +590,7 @@ kernel."
 
 ;; (setq flymake-phpcs-standard "/usr/share/pear/share/pear/PHP/CodeSniffer/Standards/Squiz/")
 (setq flymake-phpcs-standard "/Users/manuel/code/wesen/wesen-misc/PHPStandards/Wesen/ruleset.xml")
-(setq flymake-phpcs-command "~/code/wesen/emacs/emacs-flymake-phpcs/bin/flymake_phpcs")
+(setq flymake-phpcs-command (concat emacs-dir "emacs-flymake-phpcs/bin/flymake_phpcs"))
 (require 'flymake-phpcs)
 
 (global-set-key (kbd "\C-c e") 'flymake-display-err-menu-for-current-line)
@@ -597,7 +613,9 @@ kernel."
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(global-linum-mode t)
+(add-hook 'find-file-hook (lambda () (linum-mode 1)))
+;; (global-linum-mode t)
+(global-linum-mode nil)
 (setq linum-format "%d  ")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
