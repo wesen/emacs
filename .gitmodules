@@ -1,9 +1,6 @@
 [submodule "Slime"]
 	path = Slime
 	url = git://github.com/nikodemus/Slime.git
-[submodule "emacs-starter-kit"]
-	path = emacs-starter-kit
-	url = gitosis@bl0rg.net:emacs-starter-kit.git
 [submodule "mo-git-blame"]
 	path = mo-git-blame
 	url = git://github.com/mbunkus/mo-git-blame.git
