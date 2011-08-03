@@ -32,8 +32,6 @@
 
 (add-emacs-dirs
  "packages"
- "emacs-starter-kit/src/color-theme"
- ;;              "js2-mode"
  "Slime"
  "mo-git-blame"
  "auto-complete"
@@ -68,9 +66,12 @@
 ;; (set-default-font "-apple-anonymous-medium-r-normal--8-0-72-72-m-0-iso10646-1")
 
 
-; (require 'color-theme)
-; (color-theme-initialize)
-; (color-theme-dark-laptop)
+(add-emacs-dirs "emacs-color-theme-solarized")
+(require 'color-theme)
+(color-theme-initialize)
+(require 'color-theme-solarized)
+(setq solarized-termcolors 256)
+(color-theme-solarized-dark)
 (global-font-lock-mode t)
 
 (menu-bar-mode -1)
