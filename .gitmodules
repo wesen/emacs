@@ -28,3 +28,6 @@
 [submodule "emacs-flymake-phpcs"]
 	path = emacs-flymake-phpcs
 	url = git://github.com/illusori/emacs-flymake-phpcs.git
+[submodule "clojure-mode"]
+	path = clojure-mode
+	url = git://github.com/jochu/clojure-mode.git
