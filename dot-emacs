@@ -635,3 +635,7 @@ kernel."
 
 (load (concat emacs-dir "dvc/dvc-load.el"))
 (require 'dvc-autoloads)
+
+;; Local Variables:
+;; mode: emacs-lisp
+;; End:
