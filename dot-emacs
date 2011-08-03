@@ -66,7 +66,7 @@
 ;; (set-default-font "-apple-anonymous-medium-r-normal--8-0-72-72-m-0-iso10646-1")
 
 
-(add-emacs-dirs "emacs-color-theme-solarized")
+(add-emacs-dirs "solarized")
 (require 'color-theme)
 (color-theme-initialize)
 (require 'color-theme-solarized)
