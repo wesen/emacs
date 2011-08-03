@@ -45,7 +45,7 @@
 
 ;; load elpa
 (require 'package)
-(setq package-user-dir "~/.emacs.d/elpa/")
+(setq package-user-dir (concat emacs-dir "packages/"))
 (package-initialize)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -68,9 +68,9 @@
 ;; (set-default-font "-apple-anonymous-medium-r-normal--8-0-72-72-m-0-iso10646-1")
 
 
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-dark-laptop)
+; (require 'color-theme)
+; (color-theme-initialize)
+; (color-theme-dark-laptop)
 (global-font-lock-mode t)
 
 (menu-bar-mode -1)
@@ -451,7 +451,7 @@ kernel."
 (add-hook 'c++-mode-common-hook 'my-ac-cc-mode-setup)
 (my-ac-config)
 
-(setq yas/root-directory "~/.emacs.d/snippets/")
+(setq yas/root-directory (concat emacs-dir "snippets/"))
 
 ;; Load the snippets
 (yas/load-directory yas/root-directory)
