@@ -31,6 +31,3 @@
 [submodule "dvc"]
 	path = dvc
 	url = git://github.com/aakashd/dvc.git
-[submodule "emacs-color-theme-solarized"]
-	path = emacs-color-theme-solarized
-	url = git://github.com/sellout/emacs-color-theme-solarized.git
