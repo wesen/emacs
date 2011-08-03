@@ -70,8 +70,7 @@
 (require 'color-theme)
 (color-theme-initialize)
 (require 'color-theme-solarized)
-(setq solarized-termcolors 256)
-(color-theme-solarized-dark)
+(color-theme-dark-laptop)
 (global-font-lock-mode t)
 
 (menu-bar-mode -1)
