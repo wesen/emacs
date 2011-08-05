@@ -31,3 +31,6 @@
 [submodule "dvc"]
 	path = dvc
 	url = git://github.com/aakashd/dvc.git
+[submodule "markdown-mode"]
+	path = markdown-mode
+	url = git://jblevins.org/git/markdown-mode.git

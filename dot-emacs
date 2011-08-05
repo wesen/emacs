@@ -266,9 +266,9 @@ context-help to false"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (require 'slime-autoloads)
-;; (require 'slime)
-;; (slime-setup '(slime-fancy slime-tramp))
+(require 'slime-autoloads)
+(require 'slime)
+(slime-setup '(slime-fancy slime-tramp))
 
 ;; (add-hook 'lisp-mode-hook (lambda ()
 ;;                             (slime-mode t)
@@ -613,9 +613,9 @@ kernel."
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-hook 'find-file-hook (lambda () (linum-mode 1)))
+(add-hook 'find-file-hook (lambda () (when (buffer-file-name) (linum-mode 1))))
 ;; (global-linum-mode t)
-(global-linum-mode nil)
+;; (global-linum-mode nil)
 (setq linum-format "%d  ")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
