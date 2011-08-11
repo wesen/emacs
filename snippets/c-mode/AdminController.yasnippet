@@ -1,0 +1,33 @@
+# -*- mode: snippet -*-
+# name: AdminController
+# --
+<?php
+
+/*
+ * $1
+ *
+ * (c) `(format-time-string "%B %Y")` - Goldeneaglecoin
+ *
+ * Author: Manuel Odendahl - wesen@ruinwesen.com
+ */
+
+class `(file-basename (buffer-name))` extends AdminPage {
+  public function __construct() {
+    parent::__construct();
+    \$this->checkAdminLogin(array($3));
+  }
+
+  public function pageContent() {
+    return \$this->GetTemplate("admin/`(downcase-first (replace-regexp-in-string "[aA]dmin\\\\(.*\\\\)[pP]age" "\\\\1" (file-basename (buffer-name))))`");
+  }
+
+  public function handleForm() {
+  }
+
+  public function getJSON() {
+    \$data = array();
+    return array_merge(\$data, parent::GetJSON());
+  }
+};
+
+?>

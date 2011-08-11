@@ -1,0 +1,70 @@
+# -*- mode: snippet -*-
+# name: cc_script
+# --
+<?php
+
+/*
+ * $1
+ *
+ * (c) August 2011 - Goldeneaglecoin
+ *
+ * Author: Manuel Odendahl - wesen@ruinwesen.com
+ */
+
+set_include_path(get_include_path().PATH_SEPARATOR.dirname(__file__)."/../public/");
+
+require_once("Console/CommandLine.php");
+
+\$parser = new Console_CommandLine();
+\$parser->description = "$1";
+\$parser->version = '0.0.1';
+
+\$configs = array();
+foreach (glob('config/*.ini') as \$file) {
+  \$config = basename(\$file);
+  \$config = preg_replace('/.ini\$/', '', \$config);
+  array_push(\$configs, \$config);
+}
+
+\$parser->addOption('config', array('short_name' => '-c',
+                                   'long_name' => '--config',
+                                   'description' => 'choose an alternate config',
+                                   'default' => 'config',
+                                   'choices' => \$configs));
+\$parser->addOption('config_file', array('short_name' => '-C',
+                                        'long_name' => '--config-file',
+                                        'description' => 'choose an alternate config file'));
+\$parser->addOption('list_configs', array('long_name' => '--list-configs',
+                                         'action' => 'List',
+                                         'description' => 'list available configs',
+                                         'action_params' => array('list' => \$configs)));
+
+/* XXX add options here */
+
+try {
+  \$argv = \$_SERVER['argv'];
+  \$argc = count(\$argv);
+  \$result = \$parser->parse(\$argc, \$argv);
+} catch (Exception \$e) {
+  \$parser->displayError(\$e->getMessage());
+  die();
+  }
+
+\$opts = \$result->options;
+
+require_once('lib/functions.php');
+
+if (\$config = array_get(\$opts, "config")) {
+  define('CONFIG_NAME', \$config);
+}
+
+if (array_get(\$opts, "config_file")) {
+  define('CONFIG_FILE', array_get(\$opts, "config_file"));
+}
+
+require_once('common.php');
+ob_end_flush();
+
+/* XXX do processing here */
+
+?>
