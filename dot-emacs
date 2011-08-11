@@ -726,3 +726,19 @@ kernel."
 (require 'markdown-mode)
 
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+
+(define-key key-translation-map (kbd "M-[ C") (kbd "C-<right>"))
+(define-key key-translation-map (kbd "M-[ d") (kbd "C-<left>"))
+
+(defun slime-quit-other-buffer ()
+  (interactive)
+  (other-window 1)
+  (slime-popup-buffer-quit))
+
+(define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+
+(defun file-basename (filename)
+  (replace-regexp-in-string "^\\(.*\/\\)?\\([^/\.]*\\)\\(\.[^\.]*\\)?$" "\\2" filename))
+
+(defun downcase-first (string)
+  (store-substring string 0 (downcase (substring string 0 1))))
