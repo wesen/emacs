@@ -406,24 +406,24 @@ context-help to false"
 (defvar *ubuntu-path*
   "/Users/Remote/ubuntu")
 
-; (push (list ".*" 'identity 'identity) slime-filename-translations)
+                                        ; (push (list ".*" 'identity 'identity) slime-filename-translations)
 
-; (push (slime-create-filename-translator :machine-instance "jockel2.localdomain"
-;                                         :remote-host "jockel2"
-;                                         :username "manuel")
-;       slime-filename-translations)
-; (push (slime-create-filename-translator :machine-instance "ruinwesen"
-;                                         :remote-host "u2.ruinwesen.com"
-;                                         :username "manuel")
-;       slime-filename-translations)
-; (push (slime-create-filename-translator :machine-instance "mein.eigensex.org"
-;                                         :remote-host "ruinwesen.com"
-;                                         :username "mnl")
-;       slime-filename-translations)
-; (push (slime-create-filename-translator :machine-instance "quickhoney.com"
-;                                         :remote-host "quickhoney.com"
-;                                         :username "manuel")
-;       slime-filename-translations)
+                                        ; (push (slime-create-filename-translator :machine-instance "jockel2.localdomain"
+                                        ;                                         :remote-host "jockel2"
+                                        ;                                         :username "manuel")
+                                        ;       slime-filename-translations)
+                                        ; (push (slime-create-filename-translator :machine-instance "ruinwesen"
+                                        ;                                         :remote-host "u2.ruinwesen.com"
+                                        ;                                         :username "manuel")
+                                        ;       slime-filename-translations)
+                                        ; (push (slime-create-filename-translator :machine-instance "mein.eigensex.org"
+                                        ;                                         :remote-host "ruinwesen.com"
+                                        ;                                         :username "mnl")
+                                        ;       slime-filename-translations)
+                                        ; (push (slime-create-filename-translator :machine-instance "quickhoney.com"
+                                        ;                                         :remote-host "quickhoney.com"
+                                        ;                                         :username "manuel")
+                                        ;       slime-filename-translations)
 
 
 (defvar *current-tramp-path* nil)
