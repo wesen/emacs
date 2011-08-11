@@ -1,0 +1,15 @@
+# -*- mode: snippet -*-
+# name: $parser->addOption
+# expand-env: ((yas/indent-line 'auto))
+# --
+\$parser->addOption('$1', array('short_name' => '$2',
+                                  'long_name' => '$3',
+                                  'description' => '$4',
+                                  'default' => ${5:null},
+                                  'action' => '${6:$$(yas/choose-value
+                                                         '("StoreTrue" "StoreFalse"
+                                                           "StoreString" "StoreInt" "StoreFloat"
+                                                           "Counter" "Callback"))}'));
+                                                           
+                                                           
+

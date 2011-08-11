@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: $parser->addOptionList
+# --
+\$parser->addOption('$1', array('short_name' => '$2',
+                                           'long_name' => '$3',
+                                           'description' => '$4',
+                                           'action' => 'Callback',
+                                           'callback' => function (\$val, \$opt, \$res, \$parser, \$params) {
+                                             array_push(\$res->options['$1'], \$val);
+                                             return \$res->options['$1'];
+                                           },
+                                           'default' => array(),
+                                           'choices' => $5));
