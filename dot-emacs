@@ -58,7 +58,35 @@
   (require 'mouse)
   (xterm-mouse-mode t)
   (defun track-mouse (e))
-  (setq mouse-sel-mode t))
+  (setq mouse-sel-mode t)
+
+  ;; terminal smooth scrolling
+  (defun smooth-scroll (increment)
+    (scroll-up increment)
+    (sit-for 0.05)
+    (scroll-up increment)
+    (sit-for 0.02)
+    (scroll-up increment)
+    (sit-for 0.02)
+    (scroll-up increment)
+    (sit-for 0.05)
+    (scroll-up increment)
+    (sit-for 0.06)
+    (scroll-up increment))
+
+  (global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 1)))
+  (global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll -1)))
+
+  (defun my-terminal-config (&optional frame)
+    (if (not frame)
+        (xterm-mouse-mode 1)
+      (if xterm-mouse-mode
+          (xterm-mouse-mode 1))))
+
+  (add-hook 'after-make-frame-functions 'my-terminal-config)
+  )
+
+
 
 (when (boundp 'aquamacs-version) 
   (setq mac-allow-anti-aliasing nil)
