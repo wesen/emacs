@@ -713,3 +713,16 @@ kernel."
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; markdown mode
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(add-emacs-dirs "markdown-mode")
+
+(require 'markdown-mode)
+
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
