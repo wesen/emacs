@@ -21,7 +21,9 @@
 (setq split-window-preferred-function 'split-window-sensibly)
 (setq split-width-threshold nil)
 
-(server-start)
+                                        ; (setq server-use-tcp t)
+
+;; (server-start)
 
 ;; paths
 
