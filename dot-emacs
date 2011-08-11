@@ -632,6 +632,8 @@ kernel."
           (lambda ()
             ;; (local-set-key "\t" 'php-doc-complete-function)
             (local-set-key (kbd "\C-c h") 'php-doc)
+            (c-set-offset 'label 2)
+            (c-set-offset 'case-label 2)
             (set (make-local-variable 'eldoc-documentation-function)
                  'php-doc-eldoc-function)
             (eldoc-mode 1)))
