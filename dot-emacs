@@ -87,6 +87,25 @@
   )
 
 
+;; key bindings for sexp navigation
+
+(setq font-lock-verbose nil)
+
+
+(when (boundp 'aquamacs-version) 
+  (define-key osx-key-mode-map (kbd "A-C-<right>") 'forward-sexp)
+  (define-key osx-key-mode-map (kbd "A-C-<left>") 'backward-sexp)
+  (define-key osx-key-mode-map (kbd "A-C-<up>") 'backward-up-list)
+  (define-key osx-key-mode-map (kbd "A-C-<down>") 'down-list)
+  (define-key osx-key-mode-map (kbd "A-C-SPC") 'mark-sexp))
+
+
+(global-set-key "\M-a" 'backward-sexp)
+(global-set-key "\M-e" 'forward-sexp)
+(global-set-key (kbd "ESC <up>") 'backward-up-list)
+(global-set-key (kbd "ESC <down>") 'down-list)
+(global-set-key (kbd "M-SPC") 'mark-sexp)
+
 
 (when (boundp 'aquamacs-version) 
   (setq mac-allow-anti-aliasing nil)
