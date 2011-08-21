@@ -232,6 +232,7 @@ context-help to false"
            (indentation (espresso--proper-indentation parse-status))
            node)
 
+
       (save-excursion
 
         ;; I like to indent case and labels to half of the tab width
@@ -724,6 +725,18 @@ kernel."
 (load (concat emacs-dir "dvc/dvc-load.el"))
 (require 'dvc-autoloads)
 
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(safe-local-variable-values (quote ((c-file-offsets (substatement-open . 0) (arglist-intro . +) (arglist-close . +)) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby")))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
 ;; Local Variables:
 ;; mode: emacs-lisp
 ;; End:
@@ -750,11 +763,23 @@ kernel."
   (slime-popup-buffer-quit))
 
 (define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+(define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
 
 (defun file-basename (filename)
   (replace-regexp-in-string "^\\(.*\/\\)?\\([^/\.]*\\)\\(\.[^\.]*\\)?$" "\\2" filename))
 
 (defun downcase-first (string)
-  (store-substring string 0 (downcase (substring string 0 1))))(require 'pbcopy)
+  (store-substring string 0 (downcase (substring string 0 1))))
+
+;;; automatic revert (git!!)
+(global-auto-revert-mode 1)
+
+(add-emacs-dirs "jquery-doc")
+(require 'jquery-doc)
+(add-hook 'js-mode-hook 'jquery-doc-setup)
+
 (require 'pbcopy)
 (turn-on-pbcopy)
+
+(setq make-backup-files nil)
+(put 'downcase-region 'disabled nil)
