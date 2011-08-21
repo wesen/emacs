@@ -1,0 +1,25 @@
+# -*- mode: snippet -*-
+# name: unittest
+# --
+<?php
+
+/*
+ * $1
+ *
+ * (c) $2 2011 - Manuel Odendahl - wesen@ruinwesen.com
+ */
+
+require_once(dirname(__FILE__)."/../vendor/simpletest/autorun.php");
+require_once(dirname(__FILE__)."/../$3.php");
+
+class Test$4 extends UnitTestCase {
+  public function setUp() {
+  /* XXX */
+  }
+  
+  public function test$6() {
+  /* XXX */
+  }
+}
+
+?>

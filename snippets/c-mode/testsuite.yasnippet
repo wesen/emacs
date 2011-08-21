@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: testsuite
+# --
+<?php
+
+/*
+ * $2
+ *
+ * (c) $4 2011 - Manuel Odendahl - wesen@ruinwesen.com
+ */
+
+require_once(dirname(__FILE__).'/../vendor/simpletest/autorun.php');
+require_once(dirname(__FILE__).'/../$1.php');
+
+class $1TestSuite extends TestSuite {
+  function __construct() {
+    \$this->TestSuite('All $1 tests');
+    \$this->addFile(dirname(__FILE__)."/$3.php");
+  }
+};
+
+?>
