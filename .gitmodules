@@ -40,3 +40,6 @@
 [submodule "tumble"]
 	path = tumble
 	url = git://github.com/febuiles/tumble.git
+[submodule "gist.el"]
+	path = gist.el
+	url = git://github.com/defunkt/gist.el.git

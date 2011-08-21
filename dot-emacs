@@ -41,7 +41,9 @@
  "cucumber.el"
  "geben"
  "emacs-w3m"
- "clojure-mode")
+ "clojure-mode"
+ "gist.el"
+ "tumble")
 
 ;; load elpa
 (require 'package)
@@ -783,3 +785,9 @@ kernel."
 
 (setq make-backup-files nil)
 (put 'downcase-region 'disabled nil)
+
+;; gist.el
+(require 'gist)
+(setq gist-view-gist t)
+
+(require 'tumble)
