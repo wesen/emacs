@@ -755,4 +755,6 @@ kernel."
   (replace-regexp-in-string "^\\(.*\/\\)?\\([^/\.]*\\)\\(\.[^\.]*\\)?$" "\\2" filename))
 
 (defun downcase-first (string)
-  (store-substring string 0 (downcase (substring string 0 1))))
+  (store-substring string 0 (downcase (substring string 0 1))))(require 'pbcopy)
+(require 'pbcopy)
+(turn-on-pbcopy)
