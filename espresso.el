@@ -1784,7 +1784,8 @@ returns nil."
 (defun espresso--get-c-offset (symbol anchor)
   (let ((c-offsets-alist
          (list (cons 'c espresso-comment-lineup-func))))
-    (c-get-syntactic-indentation (list (cons symbol anchor)))))
+    (let ((c-current-comment-prefix "//+\\|\\**"))
+      (c-get-syntactic-indentation (list (list symbol anchor))))))
 
 (defun espresso--proper-indentation (parse-status)
   "Return the proper indentation for the current line."
@@ -3374,6 +3375,7 @@ Key bindings:
         c-paragraph-start "$"
         c-paragraph-separate "$"
         c-block-comment-prefix "* "
+        c-current-comment-prefix "//+\|\**"
         c-line-comment-starter "//"
         c-comment-start-regexp "/[*/]\\|\\s!"
         comment-start-skip "\\(//+\\|/\\*+\\)\\s *")
