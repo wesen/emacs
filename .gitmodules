@@ -34,3 +34,9 @@
 [submodule "markdown-mode"]
 	path = markdown-mode
 	url = git://jblevins.org/git/markdown-mode.git
+[submodule "jquery-doc"]
+	path = jquery-doc
+	url = git://github.com/ananthakumaran/jquery-doc.el.git
+[submodule "tumble"]
+	path = tumble
+	url = git://github.com/febuiles/tumble.git
