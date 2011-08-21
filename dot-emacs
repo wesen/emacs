@@ -203,8 +203,8 @@ context-help to false"
                 ("\\.lsp$" . lisp-mode)
                 ("\\.cl$" . lisp-mode)
                 ("\\.system$" . lisp-mode)
-                ("\\.js" . js2-mode)
-                ("\\.html" . nxhtml-mode)
+                ("\\.js" . js-mode)
+                ("\\.html" . html-mode)
                 ("\\.bknr$" . nxml-mode)
 		("\\.mustache" . html-mode)
 		("\\.php" . php-mode)
@@ -277,12 +277,26 @@ context-help to false"
         (run-with-timer 0.5 nil '(lambda(ovl)
                                    (delete-overlay ovl)) ovl)))))
 
+(defun my-js-mode-hook ()
+  (setq js-indent-level 2
+        indent-tabs-mode nil
+        c-basic-offset 2)
+  ;;  (c-toggle-auto-state 0)
+  (local-set-key (kbd "\C-c h") 'jquery-doc)
+  (c-toggle-hungry-state 1)
+  (define-key js-mode-map [(return)] 'newline-and-indent)
+  (define-key js-mode-map [(backspace)] 'c-electric-backspace)
+  (define-key js-mode-map [(control d)] 'c-electric-delete-forward)
+  (define-key js-mode-map [(control meta q)] 'my-indent-sexp)
+  )
+(add-hook 'js-mode-hook 'my-js-mode-hook)
+
 (defun my-js2-mode-hook ()
   (require 'espresso)
   (setq espresso-indent-level 2
         indent-tabs-mode nil
         c-basic-offset 2)
-  (c-toggle-auto-state 0)
+;;  (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
