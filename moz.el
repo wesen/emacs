@@ -114,11 +114,10 @@ The following keys are bound in this minor mode:
   "The current name of the repl.")
 
 (defvar moz-input-separator "\n--end-remote-input\n")
-(setq moz-input-separator "\n\n")
 
 (defvar moz-repl-host "localhost")
 
-(defvar moz-repl-port 8181)
+(defvar moz-repl-port 4242)
 
 (defun moz-temporary-file ()
   (if (and moz-temporary-file
@@ -140,12 +139,12 @@ The following keys are bound in this minor mode:
   (comint-send-region (inferior-moz-process)
                       start end)
   (comint-send-string (inferior-moz-process)
-											moz-input-separator)
+                      "\n--end-remote-input\n")
   (comint-send-string (inferior-moz-process)
                       (concat moz-repl-name ".popenv('inputMode', 'printPrompt'); "
                               "undefined; \n"))
   (comint-send-string (inferior-moz-process)
-											moz-input-separator)
+                      "\n--end-remote-input\n")
   (display-buffer (process-buffer (inferior-moz-process))))
 
 (defun moz-send-defun ()

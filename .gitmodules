@@ -43,3 +43,6 @@
 [submodule "gist.el"]
 	path = gist.el
 	url = git://github.com/defunkt/gist.el.git
+[submodule "ethan-wspace"]
+	path = ethan-wspace
+	url = https://github.com/glasserc/ethan-wspace.git

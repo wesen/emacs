@@ -280,6 +280,9 @@ context-help to false"
         (run-with-timer 0.5 nil '(lambda(ovl)
                                    (delete-overlay ovl)) ovl)))))
 
+(require 'moz)
+(autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
+
 (defun my-js-mode-hook ()
   (setq js-indent-level 2
         indent-tabs-mode nil
@@ -287,6 +290,7 @@ context-help to false"
   ;;  (c-toggle-auto-state 0)
   (local-set-key (kbd "\C-c h") 'jquery-doc)
   (c-toggle-hungry-state 1)
+  (moz-minor-mode 1)
   (define-key js-mode-map [(return)] 'newline-and-indent)
   (define-key js-mode-map [(backspace)] 'c-electric-backspace)
   (define-key js-mode-map [(control d)] 'c-electric-delete-forward)
@@ -791,3 +795,61 @@ kernel."
 (setq gist-view-gist t)
 
 (require 'tumble)
+
+(load "/Users/manuel/.private.el")
+
+(require 'align)
+(add-to-list 'align-rules-list
+  '(php-array
+     (regexp . "\\(\\s-*\\)=>")
+     (group . 1)
+     (modes . (list 'php-mode))
+     (repeat . nil)))
+
+(add-to-list 'align-rules-list
+  '(assignments
+     (regexp . "\\(\\s-*\\)=[^>]")
+     (group . 1)
+     (modes . (list 'php-mode 'c-mode 'js-mode))
+     (repeat . nil)))
+
+(add-to-list 'align-rules-list
+  '(assignments
+     (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
+     (group . 2)
+     (modes . (list 'js-mode))
+     (repeat . nil)))
+
+(add-to-list 'align-rules-list
+  '(assignments
+     (regexp . ")\\(\\s-*\\)\\.")
+     (group . 1)
+     (modes . (list 'js-mode))
+     (spacing . 0)
+     (repeat . nil)))
+
+(add-to-list 'align-rules-list
+  '(assignments
+     (regexp . ",\\(\\s-*\\)")
+     (group . 1)
+     (modes . (list 'js-mode 'c-mode 'c++-mode 'php-mode))
+     (spacing . 1)
+     (repeat . nil)))
+
+
+(add-to-list 'align-rules-list
+  '(assignments
+     (regexp . "\\(\\s-*\\)//")
+     (group . 1)
+     (modes . (list 'js-mode 'c-mode 'c++-mode 'php-mode))
+     (spacing . 1)
+     (repeat . nil)))
+
+(define-key global-map (kbd "M-'") 'align)
+
+(setq whitespace-style '(face tabs trailing space-before-tab
+                              empty space-after-tab tab-mark))
+;; (global-whitespace-mode t)
+
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)

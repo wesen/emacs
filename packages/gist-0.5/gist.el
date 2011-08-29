@@ -117,7 +117,7 @@ With a prefix argument, makes a private paste."
                   (file-name-extension file)
                   "txt")))
     (gist-request
-     "http://gist.github.com/gists"
+     "https://gist.github.com/gists"
      (or callback 'gist-created-callback)
      `(,@(if private '(("action_button" . "private")))
        ("file_ext[gistfile1]" . ,(concat "." ext))
