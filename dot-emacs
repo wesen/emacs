@@ -5,7 +5,7 @@
 ;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; General setup
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -94,7 +94,7 @@
 (setq font-lock-verbose nil)
 
 
-(when (boundp 'aquamacs-version) 
+(when (boundp 'aquamacs-version)
   (define-key osx-key-mode-map (kbd "A-C-<right>") 'forward-sexp)
   (define-key osx-key-mode-map (kbd "A-C-<left>") 'backward-sexp)
   (define-key osx-key-mode-map (kbd "A-C-<up>") 'backward-up-list)
@@ -109,7 +109,7 @@
 (global-set-key (kbd "M-SPC") 'mark-sexp)
 
 
-(when (boundp 'aquamacs-version) 
+(when (boundp 'aquamacs-version)
   (setq mac-allow-anti-aliasing nil)
   (set-default-font "-apple-Andale_Mono-medium-normal-normal-*-9-*-*-*-m-0-iso10646-1"))
 
@@ -132,13 +132,13 @@
 (show-paren-mode 1)
 (transient-mark-mode t)
 
-;; automatic indent on return 
+;; automatic indent on return
 (define-key global-map [(control m)] 'newline-and-indent)
 (define-key ruby-mode-map [(control m)] 'newline-and-indent)
 ;; (global-set-key [(meta g)] 'goto-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Emacs lisp mode configuration
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -156,7 +156,7 @@ manually reshow it. A double toggle will make it reappear"
     (unless (local-variable-p 'context-help)
       (set (make-local-variable 'context-help) t))
     (if (setq context-help (not context-help))
-	(progn
+        (progn
           (if (not (get-buffer-window (help-buffer)))
               (display-buffer (help-buffer)))))
     (message "Context help %s" (if context-help "ON" "OFF"))))
@@ -172,15 +172,15 @@ context-help to false"
         (set (make-local-variable 'context-help) t))
       (when (and context-help (get-buffer-window (help-buffer))
                  rgr-symbol)
-        (progn 
+        (progn
           (if (fboundp  rgr-symbol)
-              (describe-function rgr-symbol) 
+              (describe-function rgr-symbol)
             (if (boundp  rgr-symbol)
                 (describe-variable rgr-symbol))))))))
 
 (defadvice eldoc-print-current-symbol-info
   (around eldoc-show-c-tag activate)
-  (cond 
+  (cond
    ((eq major-mode 'emacs-lisp-mode) (rgr/context-help) ad-do-it)
    ((eq major-mode 'lisp-interaction-mode) (rgr/context-help) ad-do-it)
    ((eq major-mode 'apropos-mode) (rgr/context-help) ad-do-it)
@@ -189,7 +189,7 @@ context-help to false"
 (global-set-key (kbd "C-c h") 'rgr/toggle-context-help)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Mode list
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -208,16 +208,17 @@ context-help to false"
                 ("\\.js" . js-mode)
                 ("\\.html" . html-mode)
                 ("\\.bknr$" . nxml-mode)
-		("\\.mustache" . html-mode)
-		("\\.php" . php-mode)
-		("\\.less" . css-mode)
+                ("\\.mustache" . html-mode)
+                ("\\.php" . php-mode)
+                ("\\.sql" . sql-mode)
+                ("\\.less" . css-mode)
                 ("\\.s" . asm-mode)
                 ("\\.S" . asm-mode)
                 ("\\.clj" . clojure-mode)
                 ) auto-mode-alist))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; js2-mode configuration
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -307,7 +308,7 @@ context-help to false"
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
-  (define-key js2-mode-map [(meta control \;)] 
+  (define-key js2-mode-map [(meta control \;)]
     '(lambda()
        (interactive)
        (insert "/* -----[ ")
@@ -369,7 +370,7 @@ context-help to false"
 (ad-activate 'js2-parse-statement)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Slime setup
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -387,7 +388,7 @@ context-help to false"
 (setq slime-lisp-implementations
       '(
         ;;        (ccl-qh ("ccl-qh"))
-	(ccl64 ("ccl64"))
+        (ccl64 ("ccl64"))
         (clojure ("/usr/local/bin/clj"))
         ))
 (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
@@ -415,7 +416,7 @@ context-help to false"
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Remote server configuration for slime
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -457,7 +458,7 @@ context-help to false"
 
 (defun jockel2-slime ()
   (interactive)
-  
+
   (connect-to-host *jockel2-path*))
 
 
@@ -472,7 +473,7 @@ context-help to false"
   (find-file (concat *jockel-path* "/home/mnl/")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; C indent config
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -501,7 +502,7 @@ kernel."
   (setq tab-width 8))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Misc modes
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -523,7 +524,7 @@ kernel."
 (autoload 'mo-git-blame-current "mo-git-blame" nil t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Autocomplete setup
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -622,7 +623,7 @@ kernel."
 -I/Users/manuel/code/wesen/mididuino/thirdparty/CppUnitLite2/src")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; Further configuration
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -630,8 +631,8 @@ kernel."
 (defun kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
-  (mapc 'kill-buffer 
-        (delq (current-buffer) 
+  (mapc 'kill-buffer
+        (delq (current-buffer)
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
 
@@ -661,7 +662,7 @@ kernel."
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; misc stuff
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -669,7 +670,7 @@ kernel."
 (require 'hide-region)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; flymake
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -703,7 +704,7 @@ kernel."
 (global-set-key (kbd "C-M-]") 'indent-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 
+;;
 ;; linum
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
