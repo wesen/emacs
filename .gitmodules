@@ -42,7 +42,7 @@
 	url = git://github.com/febuiles/tumble.git
 [submodule "gist.el"]
 	path = gist.el
-	url = git://github.com/defunkt/gist.el.git
+	url = git://github.com/wesen/gist.el.git
 [submodule "ethan-wspace"]
 	path = ethan-wspace
 	url = https://github.com/glasserc/ethan-wspace.git
