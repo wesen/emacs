@@ -697,6 +697,13 @@ kernel."
                                  (flymake-goto-prev-error)
                                  (flymake-display-err-menu-for-current-line)))
 
+(add-emacs-dirs "lintnode")
+(require 'flymake-jslint)
+(setq lintnode-location (concat emacs-dir "lintnode"))
+(setq lintnode-node-program "nodemon")
+(add-hook 'javascript-mode-hook
+          (lambda () (lintnode-hook)))
+
 (defun indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
