@@ -205,7 +205,7 @@ context-help to false"
                 ("\\.lsp$" . lisp-mode)
                 ("\\.cl$" . lisp-mode)
                 ("\\.system$" . lisp-mode)
-                ("\\.js" . js-mode)
+                ("\\.js" . js2-mode)
                 ("\\.html" . html-mode)
                 ("\\.bknr$" . nxml-mode)
                 ("\\.mustache" . html-mode)
@@ -223,6 +223,7 @@ context-help to false"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(add-emacs-dirs "js2-mode")
 (require 'js2-mode)
 (define-key js2-mode-map [(control m)] 'newline-and-indent)
 (defun my-js2-indent-function ()
@@ -307,6 +308,7 @@ context-help to false"
 ;;  (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
+  (local-set-key (kbd "\C-c h") 'jquery-doc)
   (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
   (define-key js2-mode-map [(meta control \;)]
     '(lambda()
@@ -699,9 +701,12 @@ kernel."
 
 (add-emacs-dirs "lintnode")
 (require 'flymake-jslint)
+(setq lintnode-jslint-excludes (list 'onevar 'white 'nomen 'strict))
 (setq lintnode-location (concat emacs-dir "lintnode"))
-(setq lintnode-node-program "nodemon")
-(add-hook 'javascript-mode-hook
+(setq lintnode-node-program "node")
+(add-hook 'js-mode-hook
+          (lambda () (lintnode-hook)))
+(add-hook 'js2-mode-hook
           (lambda () (lintnode-hook)))
 
 (defun indent-buffer ()
@@ -791,6 +796,7 @@ kernel."
 (add-emacs-dirs "jquery-doc")
 (require 'jquery-doc)
 (add-hook 'js-mode-hook 'jquery-doc-setup)
+(add-hook 'js2-mode-hook 'jquery-doc-setup)
 
 (require 'pbcopy)
 (turn-on-pbcopy)
@@ -814,25 +820,25 @@ kernel."
      (modes . (list 'php-mode))
      (repeat . nil)))
 
-(add-to-list 'align-rules-list
-  '(assignments
-     (regexp . "\\(\\s-*\\)=[^>]")
-     (group . 1)
-     (modes . (list 'php-mode 'c-mode 'js-mode))
-     (repeat . nil)))
+;; (add-to-list 'align-rules-list
+;;   '(assignments
+;;      (regexp . "\\(\\s-*\\)=[^>]")
+;;      (group . 1)
+;;      (modes . (list 'php-mode 'c-mode 'js-mode 'js2-mode))
+;;      (repeat . nil)))
 
 (add-to-list 'align-rules-list
   '(assignments
      (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
      (group . 2)
-     (modes . (list 'js-mode))
+     (modes . (list 'js-mode 'js2-mode))
      (repeat . nil)))
 
 (add-to-list 'align-rules-list
   '(assignments
      (regexp . ")\\(\\s-*\\)\\.")
      (group . 1)
-     (modes . (list 'js-mode))
+     (modes . (list 'js-mode 'js2-mode))
      (spacing . 0)
      (repeat . nil)))
 
@@ -840,7 +846,7 @@ kernel."
   '(assignments
      (regexp . ",\\(\\s-*\\)")
      (group . 1)
-     (modes . (list 'js-mode 'c-mode 'c++-mode 'php-mode))
+     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
      (spacing . 1)
      (repeat . nil)))
 
@@ -849,7 +855,7 @@ kernel."
   '(assignments
      (regexp . "\\(\\s-*\\)//")
      (group . 1)
-     (modes . (list 'js-mode 'c-mode 'c++-mode 'php-mode))
+     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
      (spacing . 1)
      (repeat . nil)))
 
@@ -859,5 +865,5 @@ kernel."
                               empty space-after-tab tab-mark))
 ;; (global-whitespace-mode t)
 
-(require 'ethan-wspace)
-(global-ethan-wspace-mode 1)
+;(require 'ethan-wspace)
+;(global-ethan-wspace-mode 1)
