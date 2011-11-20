@@ -877,6 +877,7 @@ kernel."
      (repeat . nil)))
 
 (define-key global-map (kbd "M-'") 'align)
+(define-key global-map (kbd "M-C-_") 'fixup-whitespace)
 
 (setq whitespace-style '(face tabs trailing space-before-tab
                               empty space-after-tab tab-mark))
