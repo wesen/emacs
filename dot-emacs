@@ -852,6 +852,21 @@ kernel."
      (spacing . 1)
      (repeat . nil)))
 
+(setq align-rules-list (remove-if (lambda (x) (eq (car x) 'c++-comment)) align-rules-list))
+
+;; align c-comments in c-mode
+(add-to-list 'align-rules-list
+             `(c-comment
+               (regexp . ,(concat "\\(\\s-*\\)" (regexp-quote "/* ")))
+               (modes . (list 'c-mode 'c++-mode))))
+
+;; align c-comments in asm-mode
+(add-to-list 'align-rules-list
+             `(asm-comment
+               (regexp . ,(concat "\\(\\s-*\\)" (regexp-quote "/* ")))
+               (modes . (list 'asm-mode))))
+
+(add-to-list 'align-open-comment-modes 'asm-mode)
 
 (add-to-list 'align-rules-list
   '(assignments
