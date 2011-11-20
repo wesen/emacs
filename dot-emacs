@@ -822,12 +822,12 @@ kernel."
      (modes . (list 'php-mode))
      (repeat . nil)))
 
-;; (add-to-list 'align-rules-list
-;;   '(assignments
-;;      (regexp . "\\(\\s-*\\)=[^>]")
-;;      (group . 1)
-;;      (modes . (list 'php-mode 'c-mode 'js-mode 'js2-mode))
-;;      (repeat . nil)))
+(add-to-list 'align-rules-list
+  '(assignments
+     (regexp . "\\(\\s-*\\)=[^>]")
+     (group . 1)
+     (modes . (list 'php-mode 'c-mode 'js-mode))
+     (repeat . nil)))
 
 (add-to-list 'align-rules-list
   '(assignments
@@ -883,5 +883,18 @@ kernel."
                               empty space-after-tab tab-mark))
 ;; (global-whitespace-mode t)
 
-;(require 'ethan-wspace)
-;(global-ethan-wspace-mode 1)
+(require 'ethan-wspace)
+(global-ethan-wspace-mode 1)
+
+(defun my-makefile-hook ()
+  (message "makefile hook")
+  (setq ethan-wspace-mode nil)
+  (ethan-wspace-mode 0)
+  (ethan-wspace-clean-tabs-mode 0)
+  (ethan-wspace-highlight-tabs-mode 0)
+  (message "ethan wspace mode %s" ethan-wspace-mode))
+(add-hook 'makefile-mode-hook 'my-makefile-hook)
+
+(add-hook 'makefile-bsdmake-mode-hook 'my-makefile-hook)
+
+;; (require 'flymake-jslint)
