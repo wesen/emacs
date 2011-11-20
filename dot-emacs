@@ -135,6 +135,8 @@
 ;; automatic indent on return
 (define-key global-map [(control m)] 'newline-and-indent)
 (define-key ruby-mode-map [(control m)] 'newline-and-indent)
+(require 'asm-mode)
+(define-key asm-mode-map [(control m)] 'newline-and-indent)
 ;; (global-set-key [(meta g)] 'goto-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
