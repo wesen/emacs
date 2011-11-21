@@ -1,0 +1,45 @@
+# -*- mode: snippet -*-
+# name: post-object
+# --
+  /**
+   * Create $1
+   *
+   * @URL POST /$1
+   **/
+  public function create${1:$(upcase-initials text)}(\$__data = array()) {
+    \$errors = array();
+    \$success = false;
+
+    ${1:$(upcase-initials text)}::BEGIN();
+
+    try {
+      \$$1 = new ${1:$(upcase-initials text)}();
+
+      if (\$$1->is_valid()) {
+        \$$1->save();
+
+        \$success = true;
+      } else {
+        foreach (\$$1->errors->to_array() as \$k => \$v) {
+          \$errors[] = array("field" => camelize(\$k),
+                            "msg"   => join(". ", \$v));
+        }
+      }
+    } catch (Exception \$e) {
+      \$success = false;
+      \$errors[] = array("field" => "$1",
+                        "msg" => \$e->getMessage());
+    }
+
+    end:
+    if (\$success) {
+      ${1:$(upcase-initials text)}::COMMIT();
+    } else {
+      ${1:$(upcase-initials text)}::ROLLBACK();
+    }
+
+    return array("status" => \$success ? "success" : "error",
+                 "errors" => \$errors,
+                 "$1" => \$success ? RestServer::get("$1/". \$$1->id) : null);
+
+  }
