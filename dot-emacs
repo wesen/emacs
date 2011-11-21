@@ -85,8 +85,8 @@
   (defun my-terminal-config (&optional frame)
     (if (not frame)
         (xterm-mouse-mode 1)
-        (if xterm-mouse-mode
-            (xterm-mouse-mode 1))))
+      (if xterm-mouse-mode
+          (xterm-mouse-mode 1))))
 
   (add-hook 'after-make-frame-functions 'my-terminal-config)
   )
@@ -180,16 +180,16 @@ context-help to false"
         (progn
           (if (fboundp  rgr-symbol)
               (describe-function rgr-symbol)
-              (if (boundp  rgr-symbol)
-                  (describe-variable rgr-symbol))))))))
+            (if (boundp  rgr-symbol)
+                (describe-variable rgr-symbol))))))))
 
 (defadvice eldoc-print-current-symbol-info
-    (around eldoc-show-c-tag activate)
+  (around eldoc-show-c-tag activate)
   (cond
-    ((eq major-mode 'emacs-lisp-mode) (rgr/context-help) ad-do-it)
-    ((eq major-mode 'lisp-interaction-mode) (rgr/context-help) ad-do-it)
-    ((eq major-mode 'apropos-mode) (rgr/context-help) ad-do-it)
-    (t ad-do-it)))
+   ((eq major-mode 'emacs-lisp-mode) (rgr/context-help) ad-do-it)
+   ((eq major-mode 'lisp-interaction-mode) (rgr/context-help) ad-do-it)
+   ((eq major-mode 'apropos-mode) (rgr/context-help) ad-do-it)
+   (t ad-do-it)))
 
 (global-set-key (kbd "C-c h") 'rgr/toggle-context-help)
 
@@ -285,7 +285,7 @@ context-help to false"
             (indent-according-to-mode))
           (forward-line))
         (run-with-timer 0.5 nil '(lambda(ovl)
-                                  (delete-overlay ovl)) ovl)))))
+                                   (delete-overlay ovl)) ovl)))))
 
 (require 'moz)
 (autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
@@ -310,7 +310,7 @@ context-help to false"
   (setq espresso-indent-level 2
         indent-tabs-mode nil
         c-basic-offset 2)
-  ;;  (c-toggle-auto-state 0)
+;;  (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (local-set-key (kbd "\C-c h") 'jquery-doc)
@@ -356,7 +356,7 @@ context-help to false"
                       (back-to-indentation))
                     (point)) 1) js2-ts-cursor))
       (setq ad-return-value (js2-parse-assign-expr))
-      ad-do-it))
+    ad-do-it))
 (ad-activate 'js2-parse-statement)(defadvice js2-reparse (before json)
                                     (setq js2-buffer-file-name buffer-file-name))
 (ad-activate 'js2-reparse)
@@ -373,7 +373,7 @@ context-help to false"
                       (back-to-indentation))
                     (point)) 1) js2-ts-cursor))
       (setq ad-return-value (js2-parse-assign-expr))
-      ad-do-it))
+    ad-do-it))
 (ad-activate 'js2-parse-statement)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -655,12 +655,19 @@ kernel."
 (require 'w3m-load)
 (setq w3m-pop-up-frames t)
 
+(add-hook 'c++-mode-hook
+          (lambda
+            (c-set-offset 'arglist-intro '+)
+            (c-set-offset 'inher-intro '++)
+            )))
+
 (require 'php-mode)
 (require 'php-doc)
 (add-hook 'php-mode-hook
           (lambda ()
             ;; (local-set-key "\t" 'php-doc-complete-function)
             (local-set-key (kbd "\C-c h") 'php-doc)
+            (c-set-offset 'arglist-intro '+)
             (c-set-offset 'label 2)
             (c-set-offset 'case-label 2)
             (set (make-local-variable 'eldoc-documentation-function)
@@ -750,16 +757,16 @@ kernel."
 (require 'dvc-autoloads)
 
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  '(safe-local-variable-values (quote ((c-file-offsets (substatement-open . 0) (arglist-intro . +) (arglist-close . +)) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby")))))
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
  )
 ;; Local Variables:
 ;; mode: emacs-lisp
@@ -819,41 +826,41 @@ kernel."
 
 (require 'align)
 (add-to-list 'align-rules-list
-             '(php-array
-               (regexp . "\\(\\s-*\\)=>")
-               (group . 1)
-               (modes . (list 'php-mode))
-               (repeat . nil)))
+  '(php-array
+     (regexp . "\\(\\s-*\\)=>")
+     (group . 1)
+     (modes . (list 'php-mode))
+     (repeat . nil)))
+
+;; (add-to-list 'align-rules-list
+;;   '(assignments
+;;      (regexp . "\\(\\s-*\\)=[^>]")
+;;      (group . 1)
+;;      (modes . (list 'php-mode 'c-mode 'js-mode 'js2-mode))
+;;      (repeat . nil)))
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . "\\(\\s-*\\)=[^>]")
-               (group . 1)
-               (modes . (list 'php-mode 'c-mode 'js-mode))
-               (repeat . nil)))
+  '(assignments
+     (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
+     (group . 2)
+     (modes . (list 'js-mode 'js2-mode))
+     (repeat . nil)))
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
-               (group . 2)
-               (modes . (list 'js-mode 'js2-mode))
-               (repeat . nil)))
+  '(assignments
+     (regexp . ")\\(\\s-*\\)\\.")
+     (group . 1)
+     (modes . (list 'js-mode 'js2-mode))
+     (spacing . 0)
+     (repeat . nil)))
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . ")\\(\\s-*\\)\\.")
-               (group . 1)
-               (modes . (list 'js-mode 'js2-mode))
-               (spacing . 0)
-               (repeat . nil)))
-
-(add-to-list 'align-rules-list
-             '(assignments
-               (regexp . ",\\(\\s-*\\)")
-               (group . 1)
-               (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
-               (spacing . 1)
-               (repeat . nil)))
+  '(assignments
+     (regexp . ",\\(\\s-*\\)")
+     (group . 1)
+     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
+     (spacing . 1)
+     (repeat . nil)))
 
 (setq align-rules-list (remove-if (lambda (x) (eq (car x) 'c++-comment)) align-rules-list))
 
@@ -872,18 +879,18 @@ kernel."
 (add-to-list 'align-open-comment-modes 'asm-mode)
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . "\\(\\s-*\\)//")
-               (group . 1)
-               (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
-               (spacing . 1)
-               (repeat . nil)))
+  '(assignments
+     (regexp . "\\(\\s-*\\)//")
+     (group . 1)
+     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
+     (spacing . 1)
+     (repeat . nil)))
 
 (define-key global-map (kbd "M-'") 'align)
 (define-key global-map (kbd "M-C-_") 'fixup-whitespace)
 
 (setq whitespace-style '(face tabs trailing space-before-tab
-                         empty space-after-tab tab-mark))
+                              empty space-after-tab tab-mark))
 ;; (global-whitespace-mode t)
 
 (require 'ethan-wspace)
@@ -976,13 +983,21 @@ kernel."
        #'(lambda nil (interactive) (org-todo "STARTED")))
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
+;(require 'ethan-wspace)
+;(global-ethan-wspace-mode 1)
 
-(add-emacs-dirs "emacs-eclim" "emacs-eclim/vendor")
-(require 'eclim)
-
-(setq eclim-auto-save t)
-(global-eclim-mode)
-
-(custom-set-variables
- '(eclim-eclipse-dirs '("/Applications/eclipse-j2ee"))
- '(eclim-executable (eclim-executable-find)))
+;; benjamin ferrari
+(defun bf-pretty-print-xml-region (begin end)
+  "Pretty format XML markup in region. You need to have nxml-mode
+http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+this.  The function inserts linebreaks to separate tags that have
+nothing but whitespace between them.  It then indents the markup
+by using nxml's indentation rules."
+  (interactive "r")
+  (save-excursion
+      (nxml-mode)
+      (goto-char begin)
+      (while (search-forward-regexp "\>[ \\t]*\<" nil t) 
+        (backward-char) (insert "\n"))
+      (indent-region begin end))
+    (message "Ah, much better!"))
