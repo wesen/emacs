@@ -49,3 +49,6 @@
 [submodule "lintnode"]
 	path = lintnode
 	url = git://github.com/wesen/lintnode.git
+[submodule "lua-mode"]
+	path = lua-mode
+	url = git://github.com/immerrr/lua-mode.git

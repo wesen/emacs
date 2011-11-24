@@ -43,7 +43,10 @@
  "emacs-w3m"
  "clojure-mode"
  "gist.el"
- "tumble")
+ "tumble"
+ "lua-mode")
+
+ (require 'lua-mode)
 
 ;; load elpa
 (require 'package)
