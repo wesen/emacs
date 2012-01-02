@@ -52,3 +52,6 @@
 [submodule "lua-mode"]
 	path = lua-mode
 	url = git://github.com/immerrr/lua-mode.git
+[submodule "org-mode"]
+	path = org-mode
+	url = git://orgmode.org/org-mode.git
