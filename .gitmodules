@@ -39,7 +39,7 @@
 	url = git://github.com/wesen/jquery-doc.el.git
 [submodule "tumble"]
 	path = tumble
-	url = git://github.com/febuiles/tumble.git
+	url = git://github.com/wesen/tumble.git
 [submodule "gist.el"]
 	path = gist.el
 	url = git://github.com/wesen/gist.el.git
