@@ -976,3 +976,13 @@ kernel."
        #'(lambda nil (interactive) (org-todo "STARTED")))
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
+
+(add-emacs-dirs "emacs-eclim" "emacs-eclim/vendor")
+(require 'eclim)
+
+(setq eclim-auto-save t)
+(global-eclim-mode)
+
+(custom-set-variables
+ '(eclim-eclipse-dirs '("/Applications/eclipse-j2ee"))
+ '(eclim-executable (eclim-executable-find)))
