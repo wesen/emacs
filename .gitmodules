@@ -12,7 +12,7 @@
 	url = git://github.com/brianjcj/auto-complete-clang.git
 [submodule "yasnippet"]
 	path = yasnippet
-	url = git://github.com/crazycode/yasnippet.git
+	url = git://github.com/wesen/yasnippet.git
 [submodule "cucumber.el"]
 	path = cucumber.el
 	url = git://github.com/michaelklishin/cucumber.el.git
