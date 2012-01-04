@@ -55,3 +55,6 @@
 [submodule "org-mode"]
 	path = org-mode
 	url = git://orgmode.org/org-mode.git
+[submodule "emacs-eclim"]
+	path = emacs-eclim
+	url = git://github.com/senny/emacs-eclim.git
