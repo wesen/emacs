@@ -1,6 +1,6 @@
 [submodule "Slime"]
 	path = Slime
-	url = git://github.com/nikodemus/Slime.git
+	url = git://github.com/nablaone/slime.git
 [submodule "mo-git-blame"]
 	path = mo-git-blame
 	url = git://github.com/mbunkus/mo-git-blame.git
