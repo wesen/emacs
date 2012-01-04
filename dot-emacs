@@ -659,7 +659,7 @@ kernel."
           (lambda
             (c-set-offset 'arglist-intro '+)
             (c-set-offset 'inher-intro '++)
-            )))
+            ))
 
 (require 'php-mode)
 (require 'php-doc)
@@ -672,7 +672,7 @@ kernel."
             (c-set-offset 'case-label 2)
             (set (make-local-variable 'eldoc-documentation-function)
                  'php-doc-eldoc-function)
-            (eldoc-mode 1)))
+            (eldoc-mode 1)))		
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -983,6 +983,8 @@ kernel."
        #'(lambda nil (interactive) (org-todo "STARTED")))
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
+
+(require 'flymake-jslint)
 ;(require 'ethan-wspace)
 ;(global-ethan-wspace-mode 1)
 
