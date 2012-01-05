@@ -58,3 +58,6 @@
 [submodule "emacs-eclim"]
 	path = emacs-eclim
 	url = git://github.com/senny/emacs-eclim.git
+[submodule "egg"]
+	path = egg
+	url = git://github.com/byplayer/egg.git
