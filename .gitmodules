@@ -61,3 +61,9 @@
 [submodule "egg"]
 	path = egg
 	url = git://github.com/byplayer/egg.git
+[submodule "magit"]
+	path = magit
+	url = git://github.com/magit/magit.git
+[submodule "zencoding"]
+	path = zencoding
+	url = git://github.com/rooney/zencoding.git
