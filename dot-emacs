@@ -1,5 +1,4 @@
-;; -*- Emacs-Lisp -*-
-;;
+;; -*- Mode: emacs-lisp; -*-
 ;; Emacs configuration
 ;;
 ;; (c) July 2011 - Manuel Odendahl - wesen@ruinwesen.com
@@ -95,13 +94,6 @@
 
 (setq font-lock-verbose nil)
 
-
-(when (boundp 'aquamacs-version)
-  (define-key osx-key-mode-map (kbd "A-C-<right>") 'forward-sexp)
-  (define-key osx-key-mode-map (kbd "A-C-<left>") 'backward-sexp)
-  (define-key osx-key-mode-map (kbd "A-C-<up>") 'backward-up-list)
-  (define-key osx-key-mode-map (kbd "A-C-<down>") 'down-list)
-  (define-key osx-key-mode-map (kbd "A-C-SPC") 'mark-sexp))
 
 
 (global-set-key "\M-a" 'backward-sexp)
@@ -309,7 +301,7 @@ context-help to false"
   (setq espresso-indent-level 2
         indent-tabs-mode nil
         c-basic-offset 2)
-  ;;  (c-toggle-auto-state 0)
+;;  (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (local-set-key (kbd "\C-c h") 'jquery-doc)
@@ -388,39 +380,39 @@ context-help to false"
               (clojure-mode-font-lock-setup))))
 
 (defun load-slime ()
-  (require 'slime-autoloads)
-  (require 'slime)
-  (slime-setup '(slime-fancy slime-tramp))
+(require 'slime-autoloads)
+(require 'slime)
+(slime-setup '(slime-fancy slime-tramp slime-autodoc))
 
-  ;; (add-hook 'lisp-mode-hook (lambda ()
-  ;;                             (slime-mode t)
-  ;;                             (setq lisp-indent-function 'common-lisp-indent-function)
-  ;;                             ))
-  (global-set-key [(control t)] (quote slime-selector))
+;; (add-hook 'lisp-mode-hook (lambda ()
+;;                             (slime-mode t)
+;;                             (setq lisp-indent-function 'common-lisp-indent-function)
+;;                             ))
+(global-set-key [(control t)] (quote slime-selector))
 
-  (setq slime-lisp-implementations
-        '(
-          ;;        (ccl-qh ("ccl-qh"))
-          (ccl64 ("ccl64"))
-          (clojure ("/usr/local/bin/clj"))
-          ))
-  (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-  ;; (setq inferior-lisp-program "ccl-qh")
-  (define-key lisp-mode-map [(control m)] 'newline-and-indent)
-  ;; (define-key js2-mode-map [(control m)] 'newline-and-indent)
+(setq slime-lisp-implementations
+      '(
+        ;;        (ccl-qh ("ccl-qh"))
+        (ccl64 ("ccl64"))
+        (clojure ("/usr/local/bin/clj"))
+        ))
+(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+;; (setq inferior-lisp-program "ccl-qh")
+(define-key lisp-mode-map [(control m)] 'newline-and-indent)
+;; (define-key js2-mode-map [(control m)] 'newline-and-indent)
 
-  ;; add hyperspec lookup
+;; add hyperspec lookup
 
-  (require 'info-look)
+(require 'info-look)
 
-  ;; info-lookup-symbol in lisp: C-h S
+;; info-lookup-symbol in lisp: C-h S
 
-  (info-lookup-add-help
-   :mode 'lisp-mode
-   :regexp "[^][()'\" \t\n]+"
-   :ignore-case t
-   :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
-  (define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
+(info-lookup-add-help
+ :mode 'lisp-mode
+ :regexp "[^][()'\" \t\n]+"
+ :ignore-case t
+ :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+(define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
 
   (defun slime-quit-other-buffer ()
     (interactive)
@@ -430,10 +422,10 @@ context-help to false"
   (define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
   (define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
   
-  ;; javascript swank-js hook
-  ;; (add-hook 'js2-mode-hook
-  ;;          (lambda ()
-  ;;            (slime-js-minor-mode 1)))
+;; javascript swank-js hook
+;; (add-hook 'js2-mode-hook
+;;          (lambda ()
+;;            (slime-js-minor-mode 1)))
   )
 
 
@@ -576,7 +568,7 @@ kernel."
             (c-set-offset 'case-label 2)
             (set (make-local-variable 'eldoc-documentation-function)
                  'php-doc-eldoc-function)
-            (eldoc-mode 1)))
+            (eldoc-mode 1)))		
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -724,11 +716,11 @@ kernel."
 
 (require 'align)
 (add-to-list 'align-rules-list
-             '(php-array
-               (regexp . "\\(\\s-*\\)=>")
-               (group . 1)
-               (modes . (list 'php-mode))
-               (repeat . nil)))
+  '(php-array
+     (regexp . "\\(\\s-*\\)=>")
+     (group . 1)
+     (modes . (list 'php-mode))
+     (repeat . nil)))
 
 ;; (add-to-list 'align-rules-list
 ;;   '(assignments
@@ -738,27 +730,27 @@ kernel."
 ;;      (repeat . nil)))
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
-               (group . 2)
-               (modes . (list 'js-mode 'js2-mode))
-               (repeat . nil)))
+  '(assignments
+     (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
+     (group . 2)
+     (modes . (list 'js-mode 'js2-mode))
+     (repeat . nil)))
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . ")\\(\\s-*\\)\\.")
-               (group . 1)
-               (modes . (list 'js-mode 'js2-mode))
-               (spacing . 0)
-               (repeat . nil)))
+  '(assignments
+     (regexp . ")\\(\\s-*\\)\\.")
+     (group . 1)
+     (modes . (list 'js-mode 'js2-mode))
+     (spacing . 0)
+     (repeat . nil)))
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . ",\\(\\s-*\\)")
-               (group . 1)
-               (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
-               (spacing . 1)
-               (repeat . nil)))
+  '(assignments
+     (regexp . ",\\(\\s-*\\)")
+     (group . 1)
+     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
+     (spacing . 1)
+     (repeat . nil)))
 
 (setq align-rules-list (remove-if (lambda (x) (eq (car x) 'c++-comment)) align-rules-list))
 
@@ -777,12 +769,12 @@ kernel."
 (add-to-list 'align-open-comment-modes 'asm-mode)
 
 (add-to-list 'align-rules-list
-             '(assignments
-               (regexp . "\\(\\s-*\\)//")
-               (group . 1)
-               (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
-               (spacing . 1)
-               (repeat . nil)))
+  '(assignments
+     (regexp . "\\(\\s-*\\)//")
+     (group . 1)
+     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
+     (spacing . 1)
+     (repeat . nil)))
 
 (define-key global-map (kbd "M-'") 'align)
 (define-key global-map (kbd "M-C-_") 'fixup-whitespace)
@@ -817,6 +809,10 @@ kernel."
                              "~/code/wesen/org/ruinwesen.org"
                              "~/code/wesen/org/todo.org"))
 
+;; (org-babel-do-load-languages
+;; 'org-babel-load-languuages
+;; '((sh . true) (python . true)))
+
 (setq shift-select-mode nil)
 
 (setq org-modules
@@ -824,6 +820,9 @@ kernel."
 (require 'org-mac-message)
 (setq org-mac-mail-account "wesen@ruinwesen.com")
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . true) (python . true)))
 
 (global-set-key "\C-ca" 'org-agenda)
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
