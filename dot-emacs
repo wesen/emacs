@@ -1,3 +1,4 @@
+;; -*- Emacs-Lisp -*-
 ;;
 ;; Emacs configuration
 ;;
@@ -21,12 +22,10 @@
 (setq split-window-preferred-function 'split-window-sensibly)
 (setq split-width-threshold nil)
 
-                                        ; (setq server-use-tcp t)
-
+;; (setq server-use-tcp t)
 ;; (server-start)
 
 ;; paths
-
 
 (defun add-emacs-dirs (&rest paths)
   (dolist (path paths)
@@ -310,7 +309,7 @@ context-help to false"
   (setq espresso-indent-level 2
         indent-tabs-mode nil
         c-basic-offset 2)
-;;  (c-toggle-auto-state 0)
+  ;;  (c-toggle-auto-state 0)
   (c-toggle-hungry-state 1)
   (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
   (local-set-key (kbd "\C-c h") 'jquery-doc)
@@ -382,102 +381,61 @@ context-help to false"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'slime-autoloads)
-(require 'slime)
-(slime-setup '(slime-fancy slime-tramp))
+(add-hook 'slime-repl-mode-hook
+          (defun clojure-mode-slime-font-lock ()
+            (slime-setup '(slime-fancy slime-tramp))
+            (let (font-lock-mode)
+              (clojure-mode-font-lock-setup))))
 
-;; (add-hook 'lisp-mode-hook (lambda ()
-;;                             (slime-mode t)
-;;                             (setq lisp-indent-function 'common-lisp-indent-function)
-;;                             ))
-(global-set-key [(control t)] (quote slime-selector))
+(defun load-slime ()
+  (require 'slime-autoloads)
+  (require 'slime)
+  (slime-setup '(slime-fancy slime-tramp))
 
-(setq slime-lisp-implementations
-      '(
-        ;;        (ccl-qh ("ccl-qh"))
-        (ccl64 ("ccl64"))
-        (clojure ("/usr/local/bin/clj"))
-        ))
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
-;; (setq inferior-lisp-program "ccl-qh")
-(define-key lisp-mode-map [(control m)] 'newline-and-indent)
-;; (define-key js2-mode-map [(control m)] 'newline-and-indent)
+  ;; (add-hook 'lisp-mode-hook (lambda ()
+  ;;                             (slime-mode t)
+  ;;                             (setq lisp-indent-function 'common-lisp-indent-function)
+  ;;                             ))
+  (global-set-key [(control t)] (quote slime-selector))
 
-;; add hyperspec lookup
+  (setq slime-lisp-implementations
+        '(
+          ;;        (ccl-qh ("ccl-qh"))
+          (ccl64 ("ccl64"))
+          (clojure ("/usr/local/bin/clj"))
+          ))
+  (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+  ;; (setq inferior-lisp-program "ccl-qh")
+  (define-key lisp-mode-map [(control m)] 'newline-and-indent)
+  ;; (define-key js2-mode-map [(control m)] 'newline-and-indent)
 
-(require 'info-look)
+  ;; add hyperspec lookup
 
-;; info-lookup-symbol in lisp: C-h S
+  (require 'info-look)
 
-(info-lookup-add-help
- :mode 'lisp-mode
- :regexp "[^][()'\" \t\n]+"
- :ignore-case t
- :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
-(define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
+  ;; info-lookup-symbol in lisp: C-h S
 
-;; javascript swank-js hook
-;; (add-hook 'js2-mode-hook
-;;          (lambda ()
-;;            (slime-js-minor-mode 1)))
+  (info-lookup-add-help
+   :mode 'lisp-mode
+   :regexp "[^][()'\" \t\n]+"
+   :ignore-case t
+   :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+  (define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
 
+  (defun slime-quit-other-buffer ()
+    (interactive)
+    (other-window 1)
+    (slime-popup-buffer-quit))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Remote server configuration for slime
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+  (define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+  
+  ;; javascript swank-js hook
+  ;; (add-hook 'js2-mode-hook
+  ;;          (lambda ()
+  ;;            (slime-js-minor-mode 1)))
+  )
 
-(defvar *jockel-path*
-  "/Users/Remote/ruinwesen.com")
-(defvar *jockel2-path*
-  "/Users/Remote/jockel2")
-(defvar *ubuntu-path*
-  "/Users/Remote/ubuntu")
-
-                                        ; (push (list ".*" 'identity 'identity) slime-filename-translations)
-
-                                        ; (push (slime-create-filename-translator :machine-instance "jockel2.localdomain"
-                                        ;                                         :remote-host "jockel2"
-                                        ;                                         :username "manuel")
-                                        ;       slime-filename-translations)
-                                        ; (push (slime-create-filename-translator :machine-instance "ruinwesen"
-                                        ;                                         :remote-host "u2.ruinwesen.com"
-                                        ;                                         :username "manuel")
-                                        ;       slime-filename-translations)
-                                        ; (push (slime-create-filename-translator :machine-instance "mein.eigensex.org"
-                                        ;                                         :remote-host "ruinwesen.com"
-                                        ;                                         :username "mnl")
-                                        ;       slime-filename-translations)
-                                        ; (push (slime-create-filename-translator :machine-instance "quickhoney.com"
-                                        ;                                         :remote-host "quickhoney.com"
-                                        ;                                         :username "manuel")
-                                        ;       slime-filename-translations)
-
-
-(defvar *current-tramp-path* nil)
-(defun connect-to-host (path)
-  (slime-connect "localhost" 4005))
-
-(defun jockel-slime ()
-  (interactive)
-  (connect-to-host *jockel-path*))
-
-(defun jockel2-slime ()
-  (interactive)
-
-  (connect-to-host *jockel2-path*))
-
-
-(defun ubuntu-slime ()
-  (interactive)
-  (connect-to-host *ubuntu-path*))
-
-
-
-(defun jockel-homedir ()
-  (interactive)
-  (find-file (concat *jockel-path* "/home/mnl/")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -575,61 +533,6 @@ kernel."
 
 (require 'xcscope)
 
-;; (define-key c-mode-map "\M-." 'cscope-find-global-definition)
-;; (define-key c-mode-map "\M-," 'cscope-find-this-symbol)
-;; (define-key c-mode-map "\M-n" 'cscope-next-symbol)
-;; (define-key c-mode-map "\M-p" 'cscope-prev-symbol)
-;; (define-key c-mode-map "\M-[" 'cscope-pop-mark)
-;; (define-key c-mode-map "\M-]" 'cscope-display-buffer)
-;; (define-key c++-mode-map "\M-." 'cscope-find-global-definition)
-;; (define-key c++-mode-map "\M-," 'cscope-find-this-symbol)
-;; (define-key c++-mode-map "\M-n" 'cscope-next-symbol)
-;; (define-key c++-mode-map "\M-p" 'cscope-prev-symbol)
-;; (define-key c++-mode-map "\M-[" 'cscope-pop-mark)
-;; (define-key c++-mode-map "\M-]" 'cscope-display-buffer)
-
-(defun set-mididuino-flags ()
-  (interactive)
-  (setq ac-clang-executable "/usr/local/bin/clang")
-  (setq ac-clang-flags (split-string "-I/usr/local/CrossPack-AVR//include
--I/usr/include
--I/usr/include/c++/4.2.1
--I/usr/local/include
--I/Users/manuel/code/wesen/mididuino/hardware
--I/Users/manuel/code/wesen/mididuino/hardware/arduino-libraries
--I/Users/manuel/code/wesen/mididuino/hardware/arduino-libraries/MidiUart
--I/Users/manuel/code/wesen/mididuino/hardware/bootloaders
--I/Users/manuel/code/wesen/mididuino/hardware/bootloaders/minicommand2
--I/Users/manuel/code/wesen/mididuino/hardware/cores
--I/Users/manuel/code/wesen/mididuino/hardware/cores/minicommand2
--I/Users/manuel/code/wesen/mididuino/hardware/libraries
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/CommonTools
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/Elektron
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/GUI
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/LFO
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MD
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MDPages
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MDSketches
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/Midi
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MidiSketches
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MidiTools
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MNM
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MNMPages
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/MNMSketches
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/Monome
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/PageTools
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/Profiler
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/SDCard
--I/Users/manuel/code/wesen/mididuino/hardware/libraries/Sequencer
--I/Users/manuel/code/wesen/mididuino/hardware/tools
--I/Users/manuel/code/wesen/mididuino/hardware/tools/avr-extras
--I/Users/manuel/code/wesen/mididuino/hardware/tools/mididuino
--I/Users/manuel/code/wesen/mididuino/host
--I/Users/manuel/code/wesen/mididuino/host/GUI
--I/Users/manuel/code/wesen/mididuino/host/MidiUart
--I/Users/manuel/code/wesen/mididuino/host/Tools
--I/Users/manuel/code/wesen/mididuino/thirdparty/CppUnitLite2/src")))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Further configuration
@@ -673,7 +576,7 @@ kernel."
             (c-set-offset 'case-label 2)
             (set (make-local-variable 'eldoc-documentation-function)
                  'php-doc-eldoc-function)
-            (eldoc-mode 1)))		
+            (eldoc-mode 1)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -790,13 +693,6 @@ kernel."
 (define-key key-translation-map (kbd "M-[ C") (kbd "C-<right>"))
 (define-key key-translation-map (kbd "M-[ d") (kbd "C-<left>"))
 
-(defun slime-quit-other-buffer ()
-  (interactive)
-  (other-window 1)
-  (slime-popup-buffer-quit))
-
-(define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
-(define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
 
 (defun file-basename (filename)
   (replace-regexp-in-string "^\\(.*\/\\)?\\([^/\.]*\\)\\(\.[^\.]*\\)?$" "\\2" filename))
@@ -828,11 +724,11 @@ kernel."
 
 (require 'align)
 (add-to-list 'align-rules-list
-  '(php-array
-     (regexp . "\\(\\s-*\\)=>")
-     (group . 1)
-     (modes . (list 'php-mode))
-     (repeat . nil)))
+             '(php-array
+               (regexp . "\\(\\s-*\\)=>")
+               (group . 1)
+               (modes . (list 'php-mode))
+               (repeat . nil)))
 
 ;; (add-to-list 'align-rules-list
 ;;   '(assignments
@@ -842,27 +738,27 @@ kernel."
 ;;      (repeat . nil)))
 
 (add-to-list 'align-rules-list
-  '(assignments
-     (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
-     (group . 2)
-     (modes . (list 'js-mode 'js2-mode))
-     (repeat . nil)))
+             '(assignments
+               (regexp . "\\(\\s-*\\):\\(\\s-+\\)")
+               (group . 2)
+               (modes . (list 'js-mode 'js2-mode))
+               (repeat . nil)))
 
 (add-to-list 'align-rules-list
-  '(assignments
-     (regexp . ")\\(\\s-*\\)\\.")
-     (group . 1)
-     (modes . (list 'js-mode 'js2-mode))
-     (spacing . 0)
-     (repeat . nil)))
+             '(assignments
+               (regexp . ")\\(\\s-*\\)\\.")
+               (group . 1)
+               (modes . (list 'js-mode 'js2-mode))
+               (spacing . 0)
+               (repeat . nil)))
 
 (add-to-list 'align-rules-list
-  '(assignments
-     (regexp . ",\\(\\s-*\\)")
-     (group . 1)
-     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
-     (spacing . 1)
-     (repeat . nil)))
+             '(assignments
+               (regexp . ",\\(\\s-*\\)")
+               (group . 1)
+               (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
+               (spacing . 1)
+               (repeat . nil)))
 
 (setq align-rules-list (remove-if (lambda (x) (eq (car x) 'c++-comment)) align-rules-list))
 
@@ -881,12 +777,12 @@ kernel."
 (add-to-list 'align-open-comment-modes 'asm-mode)
 
 (add-to-list 'align-rules-list
-  '(assignments
-     (regexp . "\\(\\s-*\\)//")
-     (group . 1)
-     (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
-     (spacing . 1)
-     (repeat . nil)))
+             '(assignments
+               (regexp . "\\(\\s-*\\)//")
+               (group . 1)
+               (modes . (list 'js-mode 'js2-mode 'c-mode 'c++-mode 'php-mode))
+               (spacing . 1)
+               (repeat . nil)))
 
 (define-key global-map (kbd "M-'") 'align)
 (define-key global-map (kbd "M-C-_") 'fixup-whitespace)
