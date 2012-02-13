@@ -64,3 +64,9 @@
 [submodule "zencoding"]
 	path = zencoding
 	url = git://github.com/rooney/zencoding.git
+[submodule "scpaste2"]
+	path = scpaste2
+	url = https://github.com/technomancy/scpaste.git
+[submodule "org-confluence"]
+	path = org-confluence
+	url = git://github.com/hgschmie/org-confluence.git
