@@ -822,7 +822,8 @@ kernel."
 
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((sh . true) (python . true)))
+ '((sh . true) (python . true)
+   (js . true) ))
 
 (global-set-key "\C-ca" 'org-agenda)
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
@@ -872,3 +873,27 @@ by using nxml's indentation rules."
 (add-emacs-dirs "magit")
 (require 'magit)
 (require 'rebase-mode)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files nil))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(require 'htmlize)
+(add-emacs-dirs "scpaste2")
+(require 'scpaste)
+
+(setq scpaste-http-destination "http://bl0rg.net/~manuel/p"
+      scpaste-scp-destination "bl0rg.net:public_html/p")
+
+(define-key input-decode-map "\e[1;2A" [S-up])
+(define-key input-decode-map "\e[1;2B" [S-down])
+(define-key input-decode-map "\e[1;2C" [S-right])
+(define-key input-decode-map "\e[1;2D" [S-left]) 
