@@ -828,8 +828,8 @@ kernel."
 (global-set-key "\C-ca" 'org-agenda)
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
 (define-key global-map [(control meta ?r)] 'remember)
-
-
+(setq org-src-fontify-natively t)
+(setq org-confirm-babel-evaluate nil)
 
 (eval-after-load "org"
   '(progn
@@ -873,18 +873,6 @@ by using nxml's indentation rules."
 (add-emacs-dirs "magit")
 (require 'magit)
 (require 'rebase-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (require 'htmlize)
 (add-emacs-dirs "scpaste2")
@@ -896,4 +884,40 @@ by using nxml's indentation rules."
 (define-key input-decode-map "\e[1;2A" [S-up])
 (define-key input-decode-map "\e[1;2B" [S-down])
 (define-key input-decode-map "\e[1;2C" [S-right])
-(define-key input-decode-map "\e[1;2D" [S-left]) 
+(define-key input-decode-map "\e[1;2D" [S-left])
+
+(add-emacs-dirs "org-confluence" "confluence-el")
+(require 'org-confluence)
+(require 'confluence)
+
+(autoload 'confluence-get-page "confluence" nil t)
+
+(require 'longlines)
+
+;; ess
+(add-emacs-dirs "ess/lisp")
+(require 'ess-site)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; custom variables
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(org-agenda-files nil)
+ '(confluence-url "https://confluence.solute.ka/rpc/xmlrpc")
+ '(confluence-default-space-alist (list (cons confluence-url "display/IR")))
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+
+(require 'go-mode-load)

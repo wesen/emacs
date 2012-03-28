@@ -1,7 +1,13 @@
 (1
+ (adaptive-wrap .
+		[(0 1)
+		 nil "Smart line-wrapping with wrap-prefix" single])
  (all .
       [(1 0)
        nil "Edit all lines matching a given regexp" single])
+ (ampc .
+       [(0 1 1)
+	nil "Asynchronous Music Player Controller" single])
  (auctex .
 	 [(11 86)
 	  nil "Integrated environment for *TeX*" tar])
@@ -11,12 +17,21 @@
  (debbugs .
 	  [(0 3)
 	   nil "SOAP library to access debbugs servers" tar])
+ (djvu .
+       [(0 5)
+	nil "edit and view Djvu files via djvused" single])
+ (ediprolog .
+	    [(1 0)
+	     nil "Emacs Does Interactive Prolog" single])
  (eldoc-eval .
 	     [(0 1)
 	      nil "Enable eldoc support when minibuffer is in use." single])
  (epoch-view .
 	     [(0 0 1)
 	      nil "Minor mode to visualize epoch timestamps" single])
+ (f90-interface-browser .
+			[(1 0)
+			 nil "Parse and browse f90 interfaces" single])
  (jgraph-mode .
 	      [(0 0)
 	       nil "Major mode for Jgraph files" single])
@@ -42,10 +57,10 @@
        [(3 20)
 	nil "Authoring and publishing tool" tar])
  (oauth2 .
-	 [(0 1)
+	 [(0 2)
 	  nil "OAuth 2.0 Authorization Protocol" single])
  (org .
-      [(20111025)
+      [(20120216)
        nil "Outline-based notes management and organizer" tar])
  (quarter-plane .
 		[(0 1)
@@ -58,20 +73,23 @@
 		 nil "Interactively list/edit registers" single])
  (shen-mode .
 	    [(0 1)
-	     nil "A major mode for editing shen source code" single])
+	     nil "Utilities for working with Shen code." tar])
  (sisu-mode .
 	    [(3 0 3)
 	     nil "Major mode for SiSU markup text" single])
  (svg-clock .
-	    [(0 2)
+	    [(0 4)
 	     nil "Analog clock using Scalable Vector Graphics" single])
  (undo-tree .
-	    [(0 3 1)
+	    [(0 3 3)
 	     nil "Treat undo history as a tree" single])
  (uni-confusables .
 		  [(0 1)
 		   nil "Unicode confusables table" tar])
  (windresize .
 	     [(0 1)
-	      nil "Resize windows interactively" single]))
+	      nil "Resize windows interactively" single])
+ (xclip .
+	[(1 0)
+	 nil "Emacs Interface to XClip" single]))
 
