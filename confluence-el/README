@@ -1,0 +1,62 @@
+OVERVIEW
+======================================================================
+
+This is an Emacs lisp library for interacting with the Confluence Wiki
+Software from Atlassian:
+
+  http://www.atlassian.com/software/confluence/
+
+It allows you to pull and edit the wiki-markup for a page and store it
+back into your confluence instance.
+
+This mode can be downloaded from:
+
+  http://code.google.com/p/confluence-el/
+
+
+
+INSTALLATION 
+======================================================================
+
+You must set confluence-url in your .emacs file before using the
+functions in this module.  It's best to place confluence.el and
+xml-rpc.el on your load path; often ~/.emacs.d or ~/elisp.
+
+Some examples:
+
+  (require 'confluence)
+  (setq confluence-url "http://intranet/confluence/rpc/xmlrpc")
+
+USING CONFLUENCE MODE
+======================================================================
+
+To open a page, M-x confluence-get-page and enter the path to the
+page, for example, to open a page in your home space: ~username/Tasks
+
+It is often convienient to bind this to a global key \C-xwf in your .emacs file:
+  
+   (global-set-key "\C-xwf")
+
+Once you have opened a page, made changes, simply saving the page
+("\C-x\C-s") will push the changes back to the wiki.
+
+To view the chagnes in your page versus what is in the wiki, type \C-xwd
+
+
+
+Changes
+--------------------------------------------------------------------------------
+ * 1.0 : Wed Nov 19 10:39:31 EST 2008
+   - confluence.el: created by James Ahlborn, eliminates the need for 
+     JScheme for xmlrpc, now includes xml-rpc.el
+ * 0.2 : Wed Sep 19 09:18:18 EDT 2007
+   - confluence.scm: removed '.page' suffix on binary page file storage
+     this fixes bugs in the earlier tgz
+ * 0.1 : Wed Oct 18 12:38:45 EDT 2006
+   - confluence.scm: added page info functions
+   - confluence.el:  added diff function and keybinding
+   - confluence.el:  added revert-buffer call to open/save, disabling of
+        auto-fill-mode on open, and preservation of buffer modes after 
+        storage (and subsequent reversion).
+
+
