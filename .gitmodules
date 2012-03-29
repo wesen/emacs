@@ -73,3 +73,6 @@
 [submodule "ess"]
 	path = ess
 	url = git://github.com/emacsmirror/ess.git
+[submodule "gocode"]
+	path = gocode
+	url = git://github.com/wesen/gocode.git
