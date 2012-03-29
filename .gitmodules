@@ -6,7 +6,7 @@
 	url = git://github.com/mbunkus/mo-git-blame.git
 [submodule "auto-complete"]
 	path = auto-complete
-	url = http://cx4a.org/repo/auto-complete.git
+	url = http://github.com/wesen/auto-complete.git
 [submodule "auto-complete-clang"]
 	path = auto-complete-clang
 	url = git://github.com/brianjcj/auto-complete-clang.git
