@@ -488,6 +488,7 @@ kernel."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (require 'auto-complete-config)
+(ac-config-default)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 
 (require 'yasnippet-bundle)
@@ -496,7 +497,7 @@ kernel."
 
 (setq ac-auto-start nil)
 (setq ac-quick-help-delay 0.5)
-(define-key ac-mode-map [(control tab)] 'auto-complete)
+(define-key ac-mode-map (kbd "C-c TAB") 'auto-complete)
 
 (defvar ac-cursor-color "blanched almond"
   "Old cursor color.")
@@ -820,16 +821,16 @@ kernel."
 (require 'org-mac-message)
 (setq org-mac-mail-account "wesen@ruinwesen.com")
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((sh . true) (python . true)
-   (js . true) ))
+;(org-babel-do-load-languages
+; 'org-babel-load-languages
+;'((sh . true) (python . true)
+;   (js . true) ))
 
 (global-set-key "\C-ca" 'org-agenda)
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
 (define-key global-map [(control meta ?r)] 'remember)
 (setq org-src-fontify-natively t)
-(setq org-confirm-babel-evaluate nil)
+;(setq org-confirm-babel-evaluate nil)
 
 (eval-after-load "org"
   '(progn
@@ -921,3 +922,25 @@ by using nxml's indentation rules."
  )
 
 (require 'go-mode-load)
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+
+(setq ac-expand-on-auto-complete nil
+      ac-use-quick-help nil
+      ac-use-fuzzy nil
+      ac-menu-height 20)
+(define-key ac-mode-map (kbd "C-c TAB") 'auto-complete)
+(define-key ac-mode-map (kbd "C-c H") 'ac-last-persist-help)
+(define-key ac-mode-map (kbd "C-c h") 'ac-help)
+
+(add-hook 'go-mode-hook '(lambda()
+                           (setq ethan-wspace-mode nil)
+                           (setq ethan-wspace-highlight-tabs-mode nil)
+                           (ethan-wspace-mode 0)
+                           (ethan-wspace-clean-tabs-mode 0)
+                           (ethan-wspace-highlight-tabs-mode 0)
+                           (setq tab-width 2)))
+
+(setq tags-table-list '("/Users/manuel/code/misc/go-path/" "."))
+
+;; (require 'pos-tip)
