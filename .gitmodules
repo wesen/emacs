@@ -45,7 +45,7 @@
 	url = git://github.com/wesen/gist.el.git
 [submodule "ethan-wspace"]
 	path = ethan-wspace
-	url = https://github.com/glasserc/ethan-wspace.git
+	url = https://github.com/wesen/ethan-wspace.git
 [submodule "lintnode"]
 	path = lintnode
 	url = git://github.com/wesen/lintnode.git
