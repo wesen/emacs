@@ -38,7 +38,7 @@
  "auto-complete-clang"
  "cucumber.el"
  "geben"
- "emacs-w3m"
+ ; "emacs-w3m"
  "clojure-mode"
  "gist.el"
  "tumble"
@@ -549,8 +549,8 @@ kernel."
 
 (require 'el-navigation)
 
-(require 'w3m-load)
-(setq w3m-pop-up-frames t)
+; (require 'w3m-load)
+; (setq w3m-pop-up-frames t)
 
 (add-hook 'c++-mode-hook
           (lambda
@@ -896,8 +896,8 @@ by using nxml's indentation rules."
 (require 'longlines)
 
 ;; ess
-(add-emacs-dirs "ess/lisp")
-(require 'ess-site)
+; (add-emacs-dirs "ess/lisp")
+; (require 'ess-site)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
