@@ -1,0 +1,5 @@
+(defun terminal-init-screen ()
+  (message "terminal init")
+  (load "term/xterm")
+  (xterm-register-default-colors)
+  (tty-set-up-initial-frame-faces))
