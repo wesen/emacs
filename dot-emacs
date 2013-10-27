@@ -54,7 +54,7 @@
              '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 ;; load modes
-(require 'ruby-mode)
+;; (require 'ruby-mode)
 ;; (require 'prefer-utf)
 
 (unless (boundp 'aquamacs-version)
@@ -128,7 +128,7 @@
 
 ;; automatic indent on return
 (define-key global-map [(control m)] 'newline-and-indent)
-(define-key ruby-mode-map [(control m)] 'newline-and-indent)
+; (define-key ruby-mode-map [(control m)] 'newline-and-indent)
 (require 'asm-mode)
 (define-key asm-mode-map [(control m)] 'newline-and-indent)
 ;; (global-set-key [(meta g)] 'goto-line)
@@ -194,7 +194,11 @@ context-help to false"
 (setq auto-mode-alist
       (append '(
                 ("\\.emacs$" . emacs-lisp-mode)
-                ("\\.pde$" . c++-mode)
+                ("\\.ino$" . c++-mode)
+                ("\\.cu$" . c++-mode)
+                ("\\.cl$" . c++-mode)
+                ("\\.sh$" . shell-script-mode)
+                ("\\.pde$" . java-mode)
                 ("Capfile" . ruby-mode)
                 ("\\.asd$" . lisp-mode)
                 ("\\.lisp$" . lisp-mode)
@@ -380,22 +384,24 @@ context-help to false"
               (clojure-mode-font-lock-setup))))
 
 (defun load-slime ()
-(require 'slime-autoloads)
-(require 'slime)
-(slime-setup '(slime-fancy slime-tramp slime-autodoc))
-
-;; (add-hook 'lisp-mode-hook (lambda ()
-;;                             (slime-mode t)
-;;                             (setq lisp-indent-function 'common-lisp-indent-function)
-;;                             ))
-(global-set-key [(control t)] (quote slime-selector))
-
-(setq slime-lisp-implementations
-      '(
-        ;;        (ccl-qh ("ccl-qh"))
-        (ccl64 ("ccl64"))
-        (clojure ("/usr/local/bin/clj"))
-        ))
+  (require 'slime-autoloads)
+  (require 'slime)
+  (slime-setup '(slime-fancy slime-tramp slime-autodoc))0;95;c
+  
+  (add-hook 'lisp-mode-hook (lambda ()
+                              (slime-mode t)
+                              (setq lisp-indent-function 'common-lisp-indent-function)
+                              ))
+  (global-set-key [(control t)] (quote slime-selector))
+  
+  (setq slime-lisp-implementations
+        '(
+          ;;        (ccl-qh ("ccl-qh"))
+          (ccl64 ("ccl64"))
+          (clojure ("/usr/local/bin/clj"))
+          )))
+  
+(load-slime)
 (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 ;; (setq inferior-lisp-program "ccl-qh")
 (define-key lisp-mode-map [(control m)] 'newline-and-indent)
@@ -412,21 +418,21 @@ context-help to false"
  :regexp "[^][()'\" \t\n]+"
  :ignore-case t
  :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+
 (define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
 
-  (defun slime-quit-other-buffer ()
-    (interactive)
-    (other-window 1)
-    (slime-popup-buffer-quit))
+(defun slime-quit-other-buffer ()
+  (interactive)
+  (other-window 1)
+  (slime-popup-buffer-quit))
 
-  (define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
-  (define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
-  
+(define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+(define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+
 ;; javascript swank-js hook
 ;; (add-hook 'js2-mode-hook
 ;;          (lambda ()
 ;;            (slime-js-minor-mode 1)))
-  )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -586,38 +592,38 @@ kernel."
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-emacs-dirs "emacs-flymake" "emacs-flymake-phpcs")
+;(add-emacs-dirs "emacs-flymake" "emacs-flymake-phpcs")
 
-(require 'flymake)
-(setq flymake-no-changes-timeout 5)
-(setq temporary-file-directory "~/.emacs.d/tmp/")
-(setq flymake-run-in-place nil)
+;(require 'flymake)
+;(setq flymake-no-changes-timeout 5)
+;(setq temporary-file-directory "~/.emacs.d/tmp/")
+;(setq flymake-run-in-place nil)
 
 ;; (setq flymake-phpcs-standard "/usr/share/pear/share/pear/PHP/CodeSniffer/Standards/Squiz/")
-(setq flymake-phpcs-standard "/Users/manuel/code/wesen/wesen-misc/PHPStandards/Wesen/ruleset.xml")
-(setq flymake-phpcs-command (concat emacs-dir "emacs-flymake-phpcs/bin/flymake_phpcs"))
-(require 'flymake-phpcs)
+;(setq flymake-phpcs-standard "/Users/manuel/code/wesen/wesen-misc/PHPStandards/Wesen/ruleset.xml")
+;(setq flymake-phpcs-command (concat emacs-dir "emacs-flymake-phpcs/bin/flymake_phpcs"))
+;(require 'flymake-phpcs)
 
-(global-set-key (kbd "\C-c e") 'flymake-display-err-menu-for-current-line)
-(global-set-key (kbd "\C-c n") (lambda ()
-                                 (interactive)
-                                 (flymake-goto-next-error)
-                                 (flymake-display-err-menu-for-current-line)))
-(global-set-key (kbd "\C-c p") (lambda ()
-                                 (interactive)
-                                 (flymake-goto-prev-error)
-                                 (flymake-display-err-menu-for-current-line)))
+;(global-set-key (kbd "\C-c e") 'flymake-display-err-menu-for-current-line)
+;(global-set-key (kbd "\C-c n") (lambda ()
+  ;                               (interactive)
+ ;                                (flymake-goto-next-error)
+   ;                              (flymake-display-err-menu-for-current-line)))
+;(global-set-key (kbd "\C-c p") (lambda ()
+ ;                                (interactive)
+  ;                               (flymake-goto-prev-error)
+   ;                              (flymake-display-err-menu-for-current-line)))
 
 (add-emacs-dirs "lintnode")
-(require 'flymake-jslint)
-(setq lintnode-jslint-excludes (list 'onevar 'white 'nomen 'strict))
-(setq lintnode-location (concat emacs-dir "lintnode"))
-(setq lintnode-node-program "node")
-(add-hook 'js-mode-hook
-          (lambda () (lintnode-hook)))
-(add-hook 'js2-mode-hook
-          (lambda () (lintnode-hook)))
-
+;(require 'flymake-jslint)
+;(setq lintnode-jslint-excludes (list 'onevar 'white 'nomen 'strict))
+;(setq lintnode-location (concat emacs-dir "lintnode"))
+;(setq lintnode-node-program "node")
+;(add-hook 'js-mode-hook
+          ;(lambda () (lintnode-hook)))
+;(add-hook 'js2-mode-hook
+          ;(lambda () (lintnode-hook)))
+;
 (defun indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
@@ -831,6 +837,20 @@ kernel."
 (define-key global-map [(control meta ?r)] 'remember)
 (setq org-src-fontify-natively t)
 ;(setq org-confirm-babel-evaluate nil)
+(add-hook 'org-mode-hook
+          (lambda ()
+            (org-set-local 'yas/trigger-key [tab])
+            (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
+  (defun yas/org-very-safe-expand ()
+                     (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
+    (add-hook 'org-mode-hook
+                    (lambda ()
+                        (make-variable-buffer-local 'yas/trigger-key)
+                        (setq yas/trigger-key [tab])
+                        (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
+                        (define-key yas/keymap [tab] 'yas/next-field)))
+(add-hook 'org-mode-hook '(lambda () (yas/minor-mode t)
+                            (message "minor-mode")))
 
 (eval-after-load "org"
   '(progn
@@ -851,7 +871,7 @@ kernel."
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
 
-(require 'flymake-jslint)
+;(require 'flymake-jslint)
 ;(require 'ethan-wspace)
 ;(global-ethan-wspace-mode 1)
 
@@ -882,10 +902,19 @@ by using nxml's indentation rules."
 (setq scpaste-http-destination "http://bl0rg.net/~manuel/p"
       scpaste-scp-destination "bl0rg.net:public_html/p")
 
-(define-key input-decode-map "\e[1;2A" [S-up])
-(define-key input-decode-map "\e[1;2B" [S-down])
-(define-key input-decode-map "\e[1;2C" [S-right])
-(define-key input-decode-map "\e[1;2D" [S-left])
+(defadvice terminal-init-xterm  (after select-shift-up activate)
+  (define-key input-decode-map "\e[1;2A" [S-up])
+  (define-key input-decode-map "\e[1;2B" [S-down])
+  (define-key input-decode-map "\e[1;2C" [S-right])
+  (define-key input-decode-map "\e[1;2D" [S-left])
+  (define-key input-decode-map "\e[1;3A" [M-up])
+  (define-key input-decode-map "\e[1;3B" [M-down])
+  (define-key input-decode-map "\e[1;3C" [M-right])
+  (define-key input-decode-map "\e[1;3D" [M-left])
+  (define-key input-decode-map "\e[1;5A" [C-up])
+  (define-key input-decode-map "\e[1;5B" [C-down])
+  (define-key input-decode-map "\e[1;5C" [C-right])
+  (define-key input-decode-map "\e[1;5D" [C-left]))
 
 (add-emacs-dirs "org-confluence" "confluence-el")
 (require 'org-confluence)
@@ -944,3 +973,27 @@ by using nxml's indentation rules."
 (setq tags-table-list '("/Users/manuel/code/misc/go-path/" "."))
 
 ;; (require 'pos-tip)
+
+(defun orgtbl-to-markdown (table params)
+  "Convert the Orgtbl mode TABLE to Markdown."
+  (let* ((alignment (mapconcat (lambda (x) (if x "r" "l"))
+                               org-table-last-alignment ""))
+         (params2
+          (list
+           :tstart ""
+           :tend ""
+           :lstart "|" :lend "|" :sep "| "
+           :efmt "%s\\,(%s)" :hline "---")))
+    (orgtbl-to-generic table (org-combine-plists params2 params))))
+
+(require 'csharp-mode)
+
+(defun markdown-preview-file ()
+  "run Marked on the current file and revert the buffer"
+  (interactive)
+  (shell-command
+   (format "open -a /Applications/Marked.app %s"
+           (shell-quote-argument (buffer-file-name))))
+  )
+
+(global-set-key "\C-cm" 'markdown-preview-file)
