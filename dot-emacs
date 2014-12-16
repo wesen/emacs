@@ -502,7 +502,7 @@ kernel."
 (require 'auto-complete-clang)
 
 (setq ac-auto-start nil)
-(setq ac-quick-help-delay 0.5)
+(setq ac-quick-help-delay 0.1)
 (define-key ac-mode-map (kbd "C-c TAB") 'auto-complete)
 
 (defvar ac-cursor-color "blanched almond"
@@ -526,6 +526,18 @@ kernel."
 (my-ac-config)
 
 (setq yas/root-directory (concat emacs-dir "snippets/"))
+
+;; ess
+(add-emacs-dirs "ess/lisp")
+(require 'ess-site)
+
+
+(defun my-ac-ess-config ()
+  (setq ac-sources
+        '(ac-source-R-objects ac-source-R-args ac-source-R  ac-source-filename ac-source-words-in-buffer)))
+
+(add-hook 'ess-mode-hook 'my-ac-ess-config)
+(add-hook 'ess-post-run-hook 'my-ac-ess-config)
 
 ;; Load the snippets
 (yas/load-directory yas/root-directory)
@@ -924,9 +936,6 @@ by using nxml's indentation rules."
 
 (require 'longlines)
 
-;; ess
-; (add-emacs-dirs "ess/lisp")
-; (require 'ess-site)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -955,7 +964,7 @@ by using nxml's indentation rules."
 (require 'auto-complete-config)
 
 (setq ac-expand-on-auto-complete nil
-      ac-use-quick-help nil
+      ac-use-quick-help t
       ac-use-fuzzy nil
       ac-menu-height 20)
 (define-key ac-mode-map (kbd "C-c TAB") 'auto-complete)
@@ -997,3 +1006,48 @@ by using nxml's indentation rules."
   )
 
 (global-set-key "\C-cm" 'markdown-preview-file)
+
+;; glsl mode
+(autoload 'glsl-mode "glsl-mode" nil t)
+(add-to-list 'auto-mode-alist '("\\.vsh\\'" . glsl-mode))
+(add-to-list 'auto-mode-alist '("\\.fsh\\'" . glsl-mode))
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+
+;; Usage Example:
+;;
+;; <!-- BEGIN RECEIVE ORGTBL ${1:YOUR_TABLE_NAME} -->
+;; <!-- END RECEIVE ORGTBL $1 -->
+;;
+;; <!--
+;; #+ORGTBL: SEND $1 orgtbl-to-gfm
+;; | $0 |
+;; -->
+
+(defun orgtbl-to-gfm (table params)
+  "Convert the Orgtbl mode TABLE to GitHub Flavored Markdown."
+  (let* ((alignment (mapconcat (lambda (x) (if x "|--:" "|---"))
+                               org-table-last-alignment ""))
+         (params2
+          (list
+           :splice t
+           :hline (concat alignment "|")
+           :lstart "| " :lend " |" :sep " | ")))
+    (concat (orgtbl-to-generic table (org-combine-plists params2 params)) "\n")))
+
+ (defun clear-shell ()
+   "Clear a comint window buffer"
+   (interactive)
+   (let ((comint-buffer-maximum-size 0))
+     (comint-truncate-buffer)))
+
+(custom-set-variables
+ '(haskell-tags-on-save t))
+
+(add-emacs-dirs "flymake-easy" "flymake-haskell-multi" "emacs-flymake-cursor")
+(require 'flymake-easy)
+(require 'flymake-haskell-multi)
+(add-hook 'haskell-mode-hoook 'flymake-haskell-multi-load)
+(add-hook 'haskell-mode-hoook 'flymake-cursor-mode)
+(eval-after-load 'flymake '(require 'flymake-cursor))

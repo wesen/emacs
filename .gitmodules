@@ -76,3 +76,15 @@
 [submodule "gocode"]
 	path = gocode
 	url = git://github.com/wesen/gocode.git
+[submodule "flymake-haskell-multi"]
+	path = flymake-haskell-multi
+	url = https://github.com/purcell/flymake-haskell-multi
+[submodule "flymake-easy"]
+	path = flymake-easy
+	url = https://github.com/purcell/flymake-easy
+[submodule "emacs-flymake-cursor"]
+	path = emacs-flymake-cursor
+	url = https://github.com/illusori/emacs-flymake-cursor
+[submodule "wsd-mode"]
+	path = wsd-mode
+	url = https://github.com/josteink/wsd-mode
