@@ -32,19 +32,17 @@
 
 (add-emacs-dirs
  "packages"
- "Slime"
+ ;; "Slime"
  "mo-git-blame"
- "auto-complete"
- "auto-complete-clang"
- "cucumber.el"
- "geben"
+ ; "auto-complete"
+ ; "auto-complete-clang"
+ ; "cucumber.el"
+ ; "geben"
  ; "emacs-w3m"
- "clojure-mode"
+ ; "clojure-mode"
  "gist.el"
  "tumble"
  "lua-mode")
-
-(require 'lua-mode)
 
 ;; load elpa
 (require 'package)
@@ -94,22 +92,11 @@
 
 (setq font-lock-verbose nil)
 
-
-
 (global-set-key "\M-a" 'backward-sexp)
 (global-set-key "\M-e" 'forward-sexp)
 (global-set-key (kbd "ESC <up>") 'backward-up-list)
 (global-set-key (kbd "ESC <down>") 'down-list)
 (global-set-key (kbd "M-SPC") 'mark-sexp)
-
-
-(when (boundp 'aquamacs-version)
-  (setq mac-allow-anti-aliasing nil)
-  (set-default-font "-apple-Andale_Mono-medium-normal-normal-*-9-*-*-*-m-0-iso10646-1"))
-
-;;(set-default-font "-apple-Menlo-medium-normal-normal-*-8-*-*-*-m-9-iso10646-1")
-;; (set-default-font "-apple-anonymous-medium-r-normal--8-0-72-72-m-0-iso10646-1")
-
 
 (add-emacs-dirs "solarized")
 (require 'color-theme)
@@ -117,6 +104,9 @@
 (require 'color-theme-solarized)
 (color-theme-dark-laptop)
 (global-font-lock-mode t)
+
+(set-face-attribute 'default nil
+                    :family "Monaco" :height 100 :weight 'normal)
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode)
@@ -217,171 +207,12 @@ context-help to false"
                 ("\\.clj" . clojure-mode)
                 ) auto-mode-alist))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; js2-mode configuration
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(add-emacs-dirs "js2-mode")
-(require 'js2-mode)
-(define-key js2-mode-map [(control m)] 'newline-and-indent)
-(defun my-js2-indent-function ()
-  (interactive)
-  (save-restriction
-    (widen)
-    (let* ((inhibit-point-motion-hooks t)
-           (parse-status (save-excursion (syntax-ppss (point-at-bol))))
-           (offset (- (current-column) (current-indentation)))
-           (indentation (espresso--proper-indentation parse-status))
-           node)
-
-
-      (save-excursion
-
-        ;; I like to indent case and labels to half of the tab width
-        (back-to-indentation)
-        (if (looking-at "case\\s-")
-            (setq indentation (+ indentation (/ espresso-indent-level 2))))
-
-        ;; consecutive declarations in a var statement are nice if
-        ;; properly aligned, i.e:
-        ;;
-        ;; var foo = "bar",
-        ;;     bar = "foo";
-        (setq node (js2-node-at-point))
-        (when (and node
-                   (= js2-NAME (js2-node-type node))
-                   (= js2-VAR (js2-node-type (js2-node-parent node))))
-          (setq indentation (+ 4 indentation))))
-
-      (indent-line-to indentation)
-      (when (> offset 0) (forward-char offset)))))
-
-(defun my-indent-sexp ()
-  (interactive)
-  (save-restriction
-    (save-excursion
-      (widen)
-      (let* ((inhibit-point-motion-hooks t)
-             (parse-status (syntax-ppss (point)))
-             (beg (nth 1 parse-status))
-             (end-marker (make-marker))
-             (end (progn (goto-char beg) (forward-list) (point)))
-             (ovl (make-overlay beg end)))
-        (set-marker end-marker end)
-        (overlay-put ovl 'face 'highlight)
-        (goto-char beg)
-        (while (< (point) (marker-position end-marker))
-          ;; don't reindent blank lines so we don't set the "buffer
-          ;; modified" property for nothing
-          (beginning-of-line)
-          (unless (looking-at "\\s-*$")
-            (indent-according-to-mode))
-          (forward-line))
-        (run-with-timer 0.5 nil '(lambda(ovl)
-                                   (delete-overlay ovl)) ovl)))))
-
-(require 'moz)
-(autoload 'moz-minor-mode "moz" "Mozilla Minor and Inferior Mozilla Modes" t)
-
-(defun my-js-mode-hook ()
-  (setq js-indent-level 2
-        indent-tabs-mode nil
-        c-basic-offset 2)
-  ;;  (c-toggle-auto-state 0)
-  (local-set-key (kbd "\C-c h") 'jquery-doc)
-  (c-toggle-hungry-state 1)
-  (moz-minor-mode 1)
-  (define-key js-mode-map [(return)] 'newline-and-indent)
-  (define-key js-mode-map [(backspace)] 'c-electric-backspace)
-  (define-key js-mode-map [(control d)] 'c-electric-delete-forward)
-  (define-key js-mode-map [(control meta q)] 'my-indent-sexp)
-  )
-(add-hook 'js-mode-hook 'my-js-mode-hook)
-
-(defun my-js2-mode-hook ()
-  (require 'espresso)
-  (setq espresso-indent-level 2
-        indent-tabs-mode nil
-        c-basic-offset 2)
-;;  (c-toggle-auto-state 0)
-  (c-toggle-hungry-state 1)
-  (set (make-local-variable 'indent-line-function) 'my-js2-indent-function)
-  (local-set-key (kbd "\C-c h") 'jquery-doc)
-  (define-key js2-mode-map [(meta control |)] 'cperl-lineup)
-  (define-key js2-mode-map [(meta control \;)]
-    '(lambda()
-       (interactive)
-       (insert "/* -----[ ")
-       (save-excursion
-         (insert " ]----- */"))
-       ))
-  (define-key js2-mode-map [(return)] 'newline-and-indent)
-  (define-key js2-mode-map [(backspace)] 'c-electric-backspace)
-  (define-key js2-mode-map [(control d)] 'c-electric-delete-forward)
-  (define-key js2-mode-map [(control meta q)] 'my-indent-sexp)
-  (if (featurep 'js2-highlight-vars)
-      (js2-highlight-vars-mode))
-  (message "My JS2 hook"))
-
-(add-hook 'js2-mode-hook 'my-js2-mode-hook)
-
-(autoload 'espresso-mode "espresso")
-(require 'espresso)
-(require 'js2-mode)
-(require 'js2-highlight-vars)
-
-;; make json work
-(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
-
-(defadvice js2-reparse (before json)
-  (setq js2-buffer-file-name buffer-file-name))
-(ad-activate 'js2-reparse)
-
-(defadvice js2-parse-statement (around json)
-  (if (and (= tt js2-LC)
-           js2-buffer-file-name
-           (string-equal (substring js2-buffer-file-name -5) ".json")
-           (eq (+ (save-excursion
-                    (goto-char (point-min))
-                    (back-to-indentation)
-                    (while (eolp)
-                      (next-line)
-                      (back-to-indentation))
-                    (point)) 1) js2-ts-cursor))
-      (setq ad-return-value (js2-parse-assign-expr))
-    ad-do-it))
-(ad-activate 'js2-parse-statement)(defadvice js2-reparse (before json)
-                                    (setq js2-buffer-file-name buffer-file-name))
-(ad-activate 'js2-reparse)
-
-(defadvice js2-parse-statement (around json)
-  (if (and (= tt js2-LC)
-           js2-buffer-file-name
-           (string-equal (substring js2-buffer-file-name -5) ".json")
-           (eq (+ (save-excursion
-                    (goto-char (point-min))
-                    (back-to-indentation)
-                    (while (eolp)
-                      (next-line)
-                      (back-to-indentation))
-                    (point)) 1) js2-ts-cursor))
-      (setq ad-return-value (js2-parse-assign-expr))
-    ad-do-it))
-(ad-activate 'js2-parse-statement)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Slime setup
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(add-hook 'slime-repl-mode-hook
-          (defun clojure-mode-slime-font-lock ()
-            (slime-setup '(slime-fancy slime-tramp))
-            (let (font-lock-mode)
-              (clojure-mode-font-lock-setup))))
 
 (defun load-slime ()
   (require 'slime-autoloads)
@@ -401,10 +232,10 @@ context-help to false"
           (clojure ("/usr/local/bin/clj"))
           )))
   
-(load-slime)
-(add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
+;; (load-slime)
+;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 ;; (setq inferior-lisp-program "ccl-qh")
-(define-key lisp-mode-map [(control m)] 'newline-and-indent)
+;;(define-key lisp-mode-map [(control m)] 'newline-and-indent)
 ;; (define-key js2-mode-map [(control m)] 'newline-and-indent)
 
 ;; add hyperspec lookup
@@ -426,8 +257,8 @@ context-help to false"
   (other-window 1)
   (slime-popup-buffer-quit))
 
-(define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
-(define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+; (define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
+; (define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
 
 ;; javascript swank-js hook
 ;; (add-hook 'js2-mode-hook
@@ -497,10 +328,6 @@ kernel."
 (ac-config-default)
 (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 
-(require 'yasnippet-bundle)
-
-(require 'auto-complete-clang)
-
 (setq ac-auto-start nil)
 (setq ac-quick-help-delay 0.1)
 (define-key ac-mode-map (kbd "C-c TAB") 'auto-complete)
@@ -525,25 +352,6 @@ kernel."
 (add-hook 'c++-mode-common-hook 'my-ac-cc-mode-setup)
 (my-ac-config)
 
-(setq yas/root-directory (concat emacs-dir "snippets/"))
-
-;; ess
-(add-emacs-dirs "ess/lisp")
-(require 'ess-site)
-
-
-(defun my-ac-ess-config ()
-  (setq ac-sources
-        '(ac-source-R-objects ac-source-R-args ac-source-R  ac-source-filename ac-source-words-in-buffer)))
-
-(add-hook 'ess-mode-hook 'my-ac-ess-config)
-(add-hook 'ess-post-run-hook 'my-ac-ess-config)
-
-;; Load the snippets
-(yas/load-directory yas/root-directory)
-
-(require 'xcscope)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; Further configuration
@@ -558,13 +366,6 @@ kernel."
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
 
-(setq feature-default-i18n-file "/path/to/gherkin/gem/i18n.yml")
-;; and load feature-mode
-(require 'feature-mode)
-(add-to-list 'auto-mode-alist '("\.feature$" . feature-mode))
-
-(autoload 'geben "geben" "PHP Debugger on Emacs" t)
-
 (require 'el-navigation)
 
 ; (require 'w3m-load)
@@ -576,20 +377,6 @@ kernel."
             (c-set-offset 'inher-intro '++)
             ))
 
-(require 'php-mode)
-(require 'php-doc)
-(add-hook 'php-mode-hook
-          (lambda ()
-            ;; (local-set-key "\t" 'php-doc-complete-function)
-            (local-set-key (kbd "\C-c h") 'php-doc)
-            (c-set-offset 'arglist-intro '+)
-            (c-set-offset 'label 2)
-            (c-set-offset 'case-label 2)
-            (set (make-local-variable 'eldoc-documentation-function)
-                 'php-doc-eldoc-function)
-            (eldoc-mode 1)))		
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; misc stuff
@@ -598,44 +385,6 @@ kernel."
 
 (require 'hide-region)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; flymake
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;(add-emacs-dirs "emacs-flymake" "emacs-flymake-phpcs")
-
-;(require 'flymake)
-;(setq flymake-no-changes-timeout 5)
-;(setq temporary-file-directory "~/.emacs.d/tmp/")
-;(setq flymake-run-in-place nil)
-
-;; (setq flymake-phpcs-standard "/usr/share/pear/share/pear/PHP/CodeSniffer/Standards/Squiz/")
-;(setq flymake-phpcs-standard "/Users/manuel/code/wesen/wesen-misc/PHPStandards/Wesen/ruleset.xml")
-;(setq flymake-phpcs-command (concat emacs-dir "emacs-flymake-phpcs/bin/flymake_phpcs"))
-;(require 'flymake-phpcs)
-
-;(global-set-key (kbd "\C-c e") 'flymake-display-err-menu-for-current-line)
-;(global-set-key (kbd "\C-c n") (lambda ()
-  ;                               (interactive)
- ;                                (flymake-goto-next-error)
-   ;                              (flymake-display-err-menu-for-current-line)))
-;(global-set-key (kbd "\C-c p") (lambda ()
- ;                                (interactive)
-  ;                               (flymake-goto-prev-error)
-   ;                              (flymake-display-err-menu-for-current-line)))
-
-(add-emacs-dirs "lintnode")
-;(require 'flymake-jslint)
-;(setq lintnode-jslint-excludes (list 'onevar 'white 'nomen 'strict))
-;(setq lintnode-location (concat emacs-dir "lintnode"))
-;(setq lintnode-node-program "node")
-;(add-hook 'js-mode-hook
-          ;(lambda () (lintnode-hook)))
-;(add-hook 'js2-mode-hook
-          ;(lambda () (lintnode-hook)))
-;
 (defun indent-buffer ()
   (interactive)
   (indent-region (point-min) (point-max)))
@@ -661,33 +410,25 @@ kernel."
 
 (require 'clojure-mode)
 
+(require 'ac-cider)
+(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+(add-hook 'cider-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(eval-after-load "auto-complete"
+  '(progn
+     (add-to-list 'ac-modes 'cider-mode)
+     (add-to-list 'ac-modes 'cider-repl-mode)))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; DVC
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
 
-;; (load (concat emacs-dir "dvc/dvc-load.el"))
-;; (require 'dvc-autoloads)
+(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
 
-;; (custom-set-variables
-;;   ;; custom-set-variables was added by Custom.
-;;   ;; If you edit it by hand, you could mess it up, so be careful.
-;;   ;; Your init file should contain only one such instance.
-;;   ;; If there is more than one, they won't work right.
-;;  '(egg-enable-tooltip t)
-;;  '(safe-local-variable-values (quote ((c-file-offsets (substatement-open . 0) (arglist-intro . +) (arglist-close . +)) (ruby-compilation-executable . "ruby") (ruby-compilation-executable . "ruby1.8") (ruby-compilation-executable . "ruby1.9") (ruby-compilation-executable . "rbx") (ruby-compilation-executable . "jruby")))))
-;; (custom-set-faces
-;;   ;; custom-set-faces was added by Custom.
-;;   ;; If you edit it by hand, you could mess it up, so be careful.
-;;   ;; Your init file should contain only one such instance.
-;;   ;; If there is more than one, they won't work right.
-;;  )
-;; ;; Local Variables:
-;; ;; mode: emacs-lisp
-;; ;; End:
+(require 'cider-eldoc)
 
+(define-key cider-repl-mode-map (kbd "M-RET") 'cider-repl-closing-return)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -714,11 +455,6 @@ kernel."
 ;;; automatic revert (git!!)
 (global-auto-revert-mode 1)
 
-(add-emacs-dirs "jquery-doc")
-(require 'jquery-doc)
-(add-hook 'js-mode-hook 'jquery-doc-setup)
-(add-hook 'js2-mode-hook 'jquery-doc-setup)
-
 (require 'pbcopy)
 (turn-on-pbcopy)
 
@@ -728,8 +464,6 @@ kernel."
 ;; gist.el
 (require 'gist)
 (setq gist-view-gist t)
-
-(require 'tumble)
 
 (load "/Users/manuel/.private.el")
 
@@ -824,19 +558,24 @@ kernel."
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq org-agenda-files (list "~/code/wesen/org/hihello.org"
-                             "~/code/wesen/org/ruinwesen.org"
-                             "~/code/wesen/org/todo.org"))
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '(
+   (sh . true)
+   (emacs-lisp . t)
+   (plantuml . t)
+   (python . true)
+   ))
 
-;; (org-babel-do-load-languages
-;; 'org-babel-load-languuages
-;; '((sh . true) (python . true)))
+(setq org-plantuml-jar-path (expand-file-name "/usr/local/Cellar/plantuml/8015/plantuml.8015.jar"))
+
+
+(add-to-list 'org-src-lang-modes
+             '("plantuml" . fundamental))
 
 (setq shift-select-mode nil)
 
-(setq org-modules
-      '(org-timer org-mac-message))
-(require 'org-mac-message)
+(setq org-modules '(org-timer))
 (setq org-mac-mail-account "wesen@ruinwesen.com")
 
 ;(org-babel-do-load-languages
@@ -845,30 +584,37 @@ kernel."
 ;   (js . true) ))
 
 (global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
+(setq org-startup-with-inline-images t)
+
+(defun bh/display-inline-images ()
+  (condition-case nil
+      (org-display-inline-images)
+    (error nil)))
+
+(add-hook 'org-babel-after-execute-hook 'bh/display-inline-images 'append)
+
+; Do not prompt to confirm evaluation
+; This may be dangerous - make sure you understand the consequences
+; of setting this -- see the docstring for details
+(setq org-confirm-babel-evaluate nil)
+
 (add-hook 'remember-mode-hook 'org-remember-apply-template)
 (define-key global-map [(control meta ?r)] 'remember)
 (setq org-src-fontify-natively t)
 ;(setq org-confirm-babel-evaluate nil)
-(add-hook 'org-mode-hook
-          (lambda ()
-            (org-set-local 'yas/trigger-key [tab])
-            (define-key yas/keymap [tab] 'yas/next-field-or-maybe-expand)))
-  (defun yas/org-very-safe-expand ()
-                     (let ((yas/fallback-behavior 'return-nil)) (yas/expand)))
-    (add-hook 'org-mode-hook
-                    (lambda ()
-                        (make-variable-buffer-local 'yas/trigger-key)
-                        (setq yas/trigger-key [tab])
-                        (add-to-list 'org-tab-first-hook 'yas/org-very-safe-expand)
-                        (define-key yas/keymap [tab] 'yas/next-field)))
-(add-hook 'org-mode-hook '(lambda () (yas/minor-mode t)
-                            (message "minor-mode")))
+
+(setq org-log-done t)
 
 (eval-after-load "org"
   '(progn
      (define-prefix-command 'org-todo-state-map)
 
      (define-key org-mode-map "\C-cx" 'org-todo-state-map)
+
+     (setq org-agenda-files (list "~/code/wesen/wesen-misc/org/log.org"
+                                  "~/code/wesen/wesen-misc/org/formlabs.org"))
 
      (define-key org-todo-state-map "x"
        #'(lambda nil (interactive) (org-todo "CANCELLED")))
@@ -882,6 +628,7 @@ kernel."
        #'(lambda nil (interactive) (org-todo "STARTED")))
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
+
 
 ;(require 'flymake-jslint)
 ;(require 'ethan-wspace)
@@ -902,10 +649,6 @@ by using nxml's indentation rules."
         (backward-char) (insert "\n"))
       (indent-region begin end))
     (message "Ah, much better!"))
-
-(add-emacs-dirs "magit")
-(require 'magit)
-(require 'rebase-mode)
 
 (require 'htmlize)
 (add-emacs-dirs "scpaste2")
@@ -928,12 +671,6 @@ by using nxml's indentation rules."
   (define-key input-decode-map "\e[1;5C" [C-right])
   (define-key input-decode-map "\e[1;5D" [C-left]))
 
-(add-emacs-dirs "org-confluence" "confluence-el")
-(require 'org-confluence)
-(require 'confluence)
-
-(autoload 'confluence-get-page "confluence" nil t)
-
 (require 'longlines)
 
 
@@ -942,22 +679,6 @@ by using nxml's indentation rules."
 ;; custom variables
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-agenda-files nil)
- '(confluence-url "https://confluence.solute.ka/rpc/xmlrpc")
- '(confluence-default-space-alist (list (cons confluence-url "display/IR")))
- )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (require 'go-mode-load)
 (require 'go-autocomplete)
@@ -1051,3 +772,17 @@ by using nxml's indentation rules."
 (add-hook 'haskell-mode-hoook 'flymake-haskell-multi-load)
 (add-hook 'haskell-mode-hoook 'flymake-cursor-mode)
 (eval-after-load 'flymake '(require 'flymake-cursor))
+
+(defvar plantuml-jar-path (expand-file-name "/usr/local/Cellar/plantuml/8015/plantuml.8015.jar"))
+(defvar plantuml-opts " -nbthread auto ") ; spaces on either sides of string
+(require 'plantuml-mode)
+(setq plantuml-jar-path (expand-file-name "/usr/local/Cellar/plantuml/8002/plantuml.8015.jar"))
+
+(add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
+(add-hook 'plantuml-mode-hook
+          (lambda ()
+            (local-set-key (kbd "M-SPC") 'plantuml-complete-symbol)))
+
+(require 'server)
+(unless (server-running-p)
+  (server-start))
