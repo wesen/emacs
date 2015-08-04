@@ -309,9 +309,9 @@ kernel."
 
 (define-coding-system-alias 'utf8 'utf-8)
 
-(add-emacs-dirs "zencoding")
-(require 'zencoding-mode)
-(add-hook 'sgml-mode-hook 'zencoding-mode)
+; (add-emacs-dirs "zencoding")
+;(require 'zencoding-mode)
+;(add-hook 'sgml-mode-hook 'zencoding-mode)
 
 (require 'inf-ruby)
 
@@ -465,7 +465,7 @@ kernel."
 (require 'gist)
 (setq gist-view-gist t)
 
-(load "/Users/manuel/.private.el")
+(load "~/.private.el")
 
 (require 'align)
 (add-to-list 'align-rules-list
@@ -585,6 +585,7 @@ kernel."
 
 (global-set-key "\C-ca" 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
+(global-set-key "\C-cl" 'org-store-link)
 
 (setq org-startup-with-inline-images t)
 
@@ -773,15 +774,6 @@ by using nxml's indentation rules."
 (add-hook 'haskell-mode-hoook 'flymake-cursor-mode)
 (eval-after-load 'flymake '(require 'flymake-cursor))
 
-(defvar plantuml-jar-path (expand-file-name "/usr/local/Cellar/plantuml/8015/plantuml.8015.jar"))
-(defvar plantuml-opts " -nbthread auto ") ; spaces on either sides of string
-(require 'plantuml-mode)
-(setq plantuml-jar-path (expand-file-name "/usr/local/Cellar/plantuml/8002/plantuml.8015.jar"))
-
-(add-to-list 'auto-mode-alist '("\\.uml\\'" . plantuml-mode))
-(add-hook 'plantuml-mode-hook
-          (lambda ()
-            (local-set-key (kbd "M-SPC") 'plantuml-complete-symbol)))
 
 (require 'server)
 (unless (server-running-p)
