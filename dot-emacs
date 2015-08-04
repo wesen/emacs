@@ -21,6 +21,8 @@
 (setq split-window-preferred-function 'split-window-sensibly)
 (setq split-width-threshold nil)
 
+(setq visible-bell 1)
+
 ;; (setq server-use-tcp t)
 ;; (server-start)
 
@@ -47,45 +49,48 @@
 ;; load elpa
 (require 'package)
 (setq package-user-dir (concat emacs-dir "packages/"))
-(package-initialize)
 (add-to-list 'package-archives
              '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+(package-initialize)
 
 ;; load modes
 ;; (require 'ruby-mode)
 ;; (require 'prefer-utf)
 
-(unless (boundp 'aquamacs-version)
-  (require 'mouse)
-  (xterm-mouse-mode t)
-  (defun track-mouse (e))
-  (setq mouse-sel-mode t)
+;; (unless (boundp 'aquamacs-version)
+;;   (require 'mouse)
+;;   (xterm-mouse-mode t)
+;;   (defun track-mouse (e))
+;;   (setq mouse-sel-mode t)
 
-  ;; terminal smooth scrolling
-  (defun smooth-scroll (increment)
-    (scroll-up increment)
-    (sit-for 0.05)
-    (scroll-up increment)
-    (sit-for 0.02)
-    (scroll-up increment)
-    (sit-for 0.02)
-    (scroll-up increment)
-    (sit-for 0.05)
-    (scroll-up increment)
-    (sit-for 0.06)
-    (scroll-up increment))
+;;   ;; terminal smooth scrolling
+;;   (defun smooth-scroll (increment)
+;;     (scroll-up increment)
+;;     (sit-for 0.05)
+;;     (scroll-up increment)
+;;     (sit-for 0.02)
+;;     (scroll-up increment)
+;;     (sit-for 0.02)
+;;     (scroll-up increment)
+;;     (sit-for 0.05)
+;;     (scroll-up increment)
+;;     (sit-for 0.06)
+;;     (scroll-up increment))
 
-  (global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 1)))
-  (global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll -1)))
+;;   (global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 1)))
+;;   (global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll -1)))
 
-  (defun my-terminal-config (&optional frame)
-    (if (not frame)
-        (xterm-mouse-mode 1)
-      (if xterm-mouse-mode
-          (xterm-mouse-mode 1))))
+;;   (defun my-terminal-config (&optional frame)
+;;     (if (not frame)
+;;         (xterm-mouse-mode 1)
+;;       (if xterm-mouse-mode
+;;           (xterm-mouse-mode 1))))
 
-  (add-hook 'after-make-frame-functions 'my-terminal-config)
-  )
+;;   (add-hook 'after-make-frame-functions 'my-terminal-config)
+;;   )
 
 
 ;; key bindings for sexp navigation
@@ -214,6 +219,8 @@ context-help to false"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(setq slime-contribs '(slime-fancy))
+
 (defun load-slime ()
   (require 'slime-autoloads)
   (require 'slime)
@@ -229,8 +236,10 @@ context-help to false"
         '(
           ;;        (ccl-qh ("ccl-qh"))
           (ccl64 ("ccl64"))
-          (clojure ("/usr/local/bin/clj"))
+          ;; (clojure ("/usr/local/bin/clj"))
           )))
+
+(setq inferior-lisp-program "/usr/local/bin/ccl64")
   
 ;; (load-slime)
 ;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
@@ -370,12 +379,6 @@ kernel."
 
 ; (require 'w3m-load)
 ; (setq w3m-pop-up-frames t)
-
-(add-hook 'c++-mode-hook
-          (lambda
-            (c-set-offset 'arglist-intro '+)
-            (c-set-offset 'inher-intro '++)
-            ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -561,6 +564,10 @@ kernel."
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
+   (C . t)
+   (clojure . t)
+   (ditaa . t)
+   (haskell . t)
    (sh . true)
    (emacs-lisp . t)
    (plantuml . t)
@@ -568,10 +575,12 @@ kernel."
    ))
 
 (setq org-plantuml-jar-path (expand-file-name "/usr/local/Cellar/plantuml/8015/plantuml.8015.jar"))
-
+(setq org-ditaa-jar-path (expand-file-name "/usr/local/Cellar/ditaa/0.9/libexec/ditaa0_9.jar"))
 
 (add-to-list 'org-src-lang-modes
              '("plantuml" . fundamental))
+
+(setq org-image-actual-width 400)
 
 (setq shift-select-mode nil)
 
@@ -630,10 +639,47 @@ kernel."
      (define-key org-todo-state-map "w"
        #'(lambda nil (interactive) (org-todo "WAITING")))))
 
+;; org-mode publishing
+
+(setq org-publish-project-alist
+      '(("formlabs-notes"
+         :base-directory "~/code/wesen/wesen-misc/org/formlabs/"
+         :base-extension "org"
+         ;; :publishing-directory "~/Sites/org/"
+         :publishing-directory "/ssh:manuel@jeeves.local:public_html/"
+         :recursive nil
+         :publishing-function org-html-publish-to-html
+         :headline-levels 4
+         :auto-preamble t)
+
+        ("org-static"
+         :base-directory "~/code/wesen/wesen-misc/org/formlabs/"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         ;; :publishing-directory "~/Sites/org/"
+         :publishing-directory "/ssh:manuel@jeeves.local:public_html/"
+         :recursive t
+         :publishing-function org-publish-attachment
+         )
+
+        ("org" :components ("org-notes" "org-static"))
+        )
+      )
+
+(require 'ox-md)
+(require 'ox-taskjuggler)
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(haskell-tags-on-save t)
+ '(org-export-backends (quote (ascii html icalendar latex md)))
+ '(promela-auto-match-delimiter nil))
 
 ;(require 'flymake-jslint)
 ;(require 'ethan-wspace)
-;(global-ethan-wspace-mode 1)
+;(global-ethan-wspace-mode 1) 
 
 ;; benjamin ferrari
 (defun bf-pretty-print-xml-region (begin end)
@@ -717,8 +763,6 @@ by using nxml's indentation rules."
            :efmt "%s\\,(%s)" :hline "---")))
     (orgtbl-to-generic table (org-combine-plists params2 params))))
 
-(require 'csharp-mode)
-
 (defun markdown-preview-file ()
   "run Marked on the current file and revert the buffer"
   (interactive)
@@ -734,6 +778,10 @@ by using nxml's indentation rules."
 (add-to-list 'auto-mode-alist '("\\.vsh\\'" . glsl-mode))
 (add-to-list 'auto-mode-alist '("\\.fsh\\'" . glsl-mode))
 
+(require 'haskell-interactive-mode)
+(require 'haskell-process)
+
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
@@ -764,8 +812,7 @@ by using nxml's indentation rules."
    (let ((comint-buffer-maximum-size 0))
      (comint-truncate-buffer)))
 
-(custom-set-variables
- '(haskell-tags-on-save t))
+
 
 (add-emacs-dirs "flymake-easy" "flymake-haskell-multi" "emacs-flymake-cursor")
 (require 'flymake-easy)
@@ -778,3 +825,10 @@ by using nxml's indentation rules."
 (require 'server)
 (unless (server-running-p)
   (server-start))
+(put 'narrow-to-region 'disabled nil)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
