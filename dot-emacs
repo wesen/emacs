@@ -533,6 +533,7 @@ kernel."
      (repeat . nil)))
 
 (define-key global-map (kbd "M-'") 'align)
+(define-key global-map (kbd "M-\"") 'align-regexp)
 (define-key global-map (kbd "M-C-_") 'fixup-whitespace)
 
 (setq whitespace-style '(face tabs trailing space-before-tab
@@ -568,7 +569,7 @@ kernel."
    (clojure . t)
    (ditaa . t)
    (haskell . t)
-   (sh . true)
+   (shell . true)
    (emacs-lisp . t)
    (plantuml . t)
    (python . true)
@@ -666,7 +667,7 @@ kernel."
       )
 
 (require 'ox-md)
-(require 'ox-taskjuggler)
+; (require 'ox-taskjuggler)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -781,8 +782,9 @@ by using nxml's indentation rules."
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 
-(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(add-hook 'haskell-mode-hook 'haskell-indent-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 ;; Usage Example:
@@ -805,6 +807,18 @@ by using nxml's indentation rules."
            :hline (concat alignment "|")
            :lstart "| " :lend " |" :sep " | ")))
     (concat (orgtbl-to-generic table (org-combine-plists params2 params)) "\n")))
+
+(defun stag-insert-org-to-md-table (table-name)
+  (interactive "*sEnter table name: ")
+  (insert "<!---
+#+ORGTBL: SEND " table-name " orgtbl-to-gfm
+
+-->
+<!--- BEGIN RECEIVE ORGTBL " table-name " -->
+<!--- END RECEIVE ORGTBL " table-name " -->")
+  (previous-line)
+  (previous-line)
+  (previous-line))
 
  (defun clear-shell ()
    "Clear a comint window buffer"
@@ -832,3 +846,90 @@ by using nxml's indentation rules."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; tufte-book class for writing classy books
+(require 'ox-latex)
+(add-to-list 'org-latex-classes
+'("tuftebook"
+"\\documentclass{tufte-book}\n
+\\usepackage{color}
+\\usepackage{amssymb}
+\\usepackage{gensymb}
+\\usepackage{nicefrac}
+\\usepackage{units}"
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+("\\paragraph{%s}" . "\\paragraph*{%s}")
+("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(add-to-list 'org-latex-classes
+'("tuftehandout"
+"\\documentclass{tufte-handout}
+\\usepackage{color}
+\\usepackage{amssymb}
+\\usepackage{amsmath}
+\\usepackage{gensymb}
+\\usepackage{nicefrac}
+\\usepackage{units}"
+("\\section{%s}" . "\\section*{%s}")
+("\\subsection{%s}" . "\\subsection*{%s}")
+("\\paragraph{%s}" . "\\paragraph*{%s}")
+("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+;; coq mode
+(load-file (concat emacs-dir "/ProofGeneral/generic/proof-site.el"))
+
+(add-to-list 'load-path "/usr/local/opt/coq/lib/emacs/site-lisp")
+(setq auto-mode-alist (cons '("\\.v$" . coq-mode) auto-mode-alist))
+(autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
+
+(custom-set-variables
+ '(coq-prog-args `("-emacs" "-R" ,(concat emacs-dir "cpdt/src") "Cpdt"))
+ )
+
+(with-eval-after-load 'coq
+  (define-key coq-mode-map (kbd "C-c i") 'proof-query-identifier)
+  
+  ;; from http://www.dougwoos.com/2014/03/01/prettifying-coq-buffers-in-emacs.html
+  (global-prettify-symbols-mode 1)
+  (setq coq-symbols
+        '(("forall" ?∀)
+          ("->" ?→)
+          ("exists" ?∃)
+          ("=>" ?⇒)
+          ("False" ?⊥)
+          ("True" ?⊤)))
+  
+  (add-hook 'coq-mode-hook
+            (lambda ()
+              (setq prettify-symbols-alist coq-symbols)))
+  (add-hook 'coq-goals-mode-hook
+            (lambda ()
+              (setq prettify-symbols-alist coq-symbols)))
+  (add-hook 'coq-response-mode-hook
+            (lambda ()
+              (setq prettify-symbols-alist coq-symbols))))
+
+;; ocaml stuff
+
+(autoload 'utop "utop" "Toplevel for OCaml" t)
+(autoload 'utop-minor-mode "utop" "Minor mode for utop" t)
+(add-hook 'tuareg-mode-hook 'utop-minor-mode)
+
+;; Add opam emacs directory to the load-path
+(setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
+(add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+;; Load merlin-mode
+(require 'merlin)
+;; Start merlin on ocaml files
+(add-hook 'tuareg-mode-hook 'merlin-mode t)
+(add-hook 'caml-mode-hook 'merlin-mode t)
+;; Enable auto-complete
+(setq merlin-use-auto-complete-mode 'easy)
+;; Use opam switch to lookup ocamlmerlin binary
+(setq merlin-command 'opam)
+
+(setq auto-mode-alist 
+      (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode))
+              auto-mode-alist))
