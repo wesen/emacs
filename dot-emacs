@@ -674,9 +674,16 @@ kernel."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(coq-prog-args
+   (\`
+    ("-emacs" "-R"
+     (\,
+      (concat emacs-dir "cpdt/src"))
+     "Cpdt")))
  '(haskell-tags-on-save t)
  '(org-export-backends (quote (ascii html icalendar latex md)))
- '(promela-auto-match-delimiter nil))
+ '(promela-auto-match-delimiter nil)
+ '(tuareg-use-abbrev-mode t))
 
 ;(require 'flymake-jslint)
 ;(require 'ethan-wspace)
@@ -883,9 +890,7 @@ by using nxml's indentation rules."
 (setq auto-mode-alist (cons '("\\.v$" . coq-mode) auto-mode-alist))
 (autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
 
-(custom-set-variables
- '(coq-prog-args `("-emacs" "-R" ,(concat emacs-dir "cpdt/src") "Cpdt"))
- )
+
 
 (with-eval-after-load 'coq
   (define-key coq-mode-map (kbd "C-c i") 'proof-query-identifier)
@@ -898,6 +903,7 @@ by using nxml's indentation rules."
           ("exists" ?∃)
           ("=>" ?⇒)
           ("False" ?⊥)
+          ("fun" ?λ)
           ("True" ?⊤)))
   
   (add-hook 'coq-mode-hook
@@ -919,6 +925,7 @@ by using nxml's indentation rules."
 ;; Add opam emacs directory to the load-path
 (setq opam-share (substring (shell-command-to-string "opam config var share 2> /dev/null") 0 -1))
 (add-to-list 'load-path (concat opam-share "/emacs/site-lisp"))
+
 ;; Load merlin-mode
 (require 'merlin)
 ;; Start merlin on ocaml files
@@ -933,3 +940,29 @@ by using nxml's indentation rules."
       (append '(("\\.ml[ily]?$" . tuareg-mode)
                 ("\\.topml$" . tuareg-mode))
               auto-mode-alist))
+
+(add-to-list 'align-rules-list
+  '(ocaml-match
+     (regexp . "\\(\\s-*\\):")
+     (group . 1)
+     (modes . (list 'tuareg-mode))
+     (repeat . nil)))
+
+(add-to-list 'align-rules-list
+  '(ocaml-match
+     (regexp . "\\(\\s-*\\)->")
+     (group . 1)
+     (modes . (list 'tuareg-mode))
+     (repeat . nil)))
+
+(add-to-list 'align-rules-list
+  '(ocaml-match
+     (regexp . "\\(\\s-*\\)of")
+     (group . 1)
+     (modes . (list 'tuareg-mode))
+     (repeat . nil)))
+
+(require 'ocp-indent)
+
+;; verilog stuff
+(require 'verilog-mode)
