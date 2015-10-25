@@ -21,7 +21,9 @@
 (setq split-window-preferred-function 'split-window-sensibly)
 (setq split-width-threshold nil)
 
-(setq visible-bell 1)
+;; crude fix for el capitan
+(setq visible-bell nil)
+(setq ring-bell-function 'ignore)
 
 ;; (setq server-use-tcp t)
 ;; (server-start)
@@ -966,3 +968,11 @@ by using nxml's indentation rules."
 
 ;; verilog stuff
 (require 'verilog-mode)
+
+(defun dos2unix (buffer)
+  "Automate M-% C-q C-m RET C-q C-j RET"
+  (interactive "*b")
+  (save-excursion
+    (goto-char (point-min))
+    (while (search-forward (string ?\C-m) nil t)
+      (replace-match (string ?\C-j) nil t))))
