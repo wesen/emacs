@@ -58,15 +58,16 @@ See `x-set-selection'."
 
 (defun pbcopy-select-text (text &optional push)
   "See `x-select-text'."
-  (pbcopy-set-selection 'primary text)
-  (setq pbcopy-last-selected-text-primary text)
-  (when pbcopy-select-enable-clipboard
-    (pbcopy-set-selection 'clipboard text)
-    (setq pbcopy-last-selected-text-clipboard text)))
+  (unless (file-remote-p buffer-file-name)
+    (pbcopy-set-selection 'primary text)
+    (setq pbcopy-last-selected-text-primary text)
+    (when pbcopy-select-enable-clipboard
+      (pbcopy-set-selection 'clipboard text)
+      (setq pbcopy-last-selected-text-clipboard text))))
 
 (defun pbcopy-selection-value ()
   "See `x-cut-buffer-or-selection-value'."
-  (when pbcopy-program
+  (when (and pbcopy-program (not (file-remote-p buffer-file-name)))
     (let (clip-text primary-text)
       (when pbcopy-select-enable-clipboard
         (setq clip-text (shell-command-to-string "pbpaste"))
