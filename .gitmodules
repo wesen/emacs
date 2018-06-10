@@ -1,9 +1,0 @@
-[submodule "Slime"]
-	path = Slime
-	url = git://github.com/nablaone/slime.git
-[submodule "dvc"]
-	path = dvc
-	url = git://github.com/wesen/dvc.git
-[submodule "magit"]
-	path = magit
-	url = git://github.com/magit/magit.git
