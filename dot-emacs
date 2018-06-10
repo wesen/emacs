@@ -19,7 +19,6 @@
 (add-to-list 'load-path emacs-dir)
 
 (setq split-window-preferred-function 'split-window-sensibly)
-(setq split-width-threshold nil)
 
 ;; crude fix for el capitan
 (setq visible-bell nil)
@@ -37,16 +36,17 @@
 (add-emacs-dirs
  "packages"
  ;; "Slime"
- "mo-git-blame"
+ ;; "mo-git-blame"
  ; "auto-complete"
  ; "auto-complete-clang"
  ; "cucumber.el"
  ; "geben"
  ; "emacs-w3m"
  ; "clojure-mode"
- "gist.el"
- "tumble"
- "lua-mode")
+ ;; "gist.el"
+ ;; "tumble"
+ ;; "lua-mode"
+)
 
 ;; load elpa
 (require 'package)
@@ -57,43 +57,6 @@
              '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (package-initialize)
-
-;; load modes
-;; (require 'ruby-mode)
-;; (require 'prefer-utf)
-
-;; (unless (boundp 'aquamacs-version)
-;;   (require 'mouse)
-;;   (xterm-mouse-mode t)
-;;   (defun track-mouse (e))
-;;   (setq mouse-sel-mode t)
-
-;;   ;; terminal smooth scrolling
-;;   (defun smooth-scroll (increment)
-;;     (scroll-up increment)
-;;     (sit-for 0.05)
-;;     (scroll-up increment)
-;;     (sit-for 0.02)
-;;     (scroll-up increment)
-;;     (sit-for 0.02)
-;;     (scroll-up increment)
-;;     (sit-for 0.05)
-;;     (scroll-up increment)
-;;     (sit-for 0.06)
-;;     (scroll-up increment))
-
-;;   (global-set-key [(mouse-5)] '(lambda () (interactive) (smooth-scroll 1)))
-;;   (global-set-key [(mouse-4)] '(lambda () (interactive) (smooth-scroll -1)))
-
-;;   (defun my-terminal-config (&optional frame)
-;;     (if (not frame)
-;;         (xterm-mouse-mode 1)
-;;       (if xterm-mouse-mode
-;;           (xterm-mouse-mode 1))))
-
-;;   (add-hook 'after-make-frame-functions 'my-terminal-config)
-;;   )
-
 
 ;; key bindings for sexp navigation
 
@@ -125,10 +88,6 @@
 
 ;; automatic indent on return
 (define-key global-map [(control m)] 'newline-and-indent)
-; (define-key ruby-mode-map [(control m)] 'newline-and-indent)
-(require 'asm-mode)
-(define-key asm-mode-map [(control m)] 'newline-and-indent)
-;; (global-set-key [(meta g)] 'goto-line)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -221,12 +180,11 @@ context-help to false"
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq slime-contribs '(slime-fancy))
+(add-to-list 'slime-contribs 'slime-repl)
 
 (defun load-slime ()
-  (require 'slime-autoloads)
+;;  (require 'slime-autoloads)
   (require 'slime)
-  (slime-setup '(slime-fancy slime-tramp slime-autodoc))0;95;c
   
   (add-hook 'lisp-mode-hook (lambda ()
                               (slime-mode t)
@@ -242,8 +200,8 @@ context-help to false"
           )))
 
 (setq inferior-lisp-program "/usr/local/bin/ccl64")
-  
-;; (load-slime)
+
+(load-slime)
 ;; (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 ;; (setq inferior-lisp-program "ccl-qh")
 ;;(define-key lisp-mode-map [(control m)] 'newline-and-indent)
@@ -263,13 +221,6 @@ context-help to false"
 
 (define-key global-map (kbd "C-h C-i") 'info-lookup-symbol)
 
-(defun slime-quit-other-buffer ()
-  (interactive)
-  (other-window 1)
-  (slime-popup-buffer-quit))
-
-; (define-key slime-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
-; (define-key slime-repl-mode-map (kbd "C-c q") 'slime-quit-other-buffer)
 
 ;; javascript swank-js hook
 ;; (add-hook 'js2-mode-hook
@@ -305,29 +256,6 @@ kernel."
   (setq c-continued-statement-offset 8)
   (setq indent-tabs-mode nil)
   (setq tab-width 8))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
-;; Misc modes
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; ack searching
-(autoload 'ack-same "full-ack" nil t)
-(autoload 'ack "full-ack" nil t)
-(autoload 'ack-find-same-file "full-ack" nil t)
-(autoload 'ack-find-file "full-ack" nil t)
-
-(define-coding-system-alias 'utf8 'utf-8)
-
-; (add-emacs-dirs "zencoding")
-;(require 'zencoding-mode)
-;(add-hook 'sgml-mode-hook 'zencoding-mode)
-
-(require 'inf-ruby)
-
-(autoload 'mo-git-blame-file "mo-git-blame" nil t)
-(autoload 'mo-git-blame-current "mo-git-blame" nil t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -377,12 +305,6 @@ kernel."
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
 
-(require 'el-navigation)
-
-; (require 'w3m-load)
-; (setq w3m-pop-up-frames t)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; misc stuff
 ;;
@@ -409,47 +331,12 @@ kernel."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;; Clojure
-;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(require 'clojure-mode)
-
-(require 'ac-cider)
-(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
-(add-hook 'cider-mode-hook 'ac-cider-setup)
-(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
-(eval-after-load "auto-complete"
-  '(progn
-     (add-to-list 'ac-modes 'cider-mode)
-     (add-to-list 'ac-modes 'cider-repl-mode)))
-
-(defun set-auto-complete-as-completion-at-point-function ()
-  (setq completion-at-point-functions '(auto-complete)))
-
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
-(add-hook 'cider-mode-hook 'cider-turn-on-eldoc-mode)
-
-(require 'cider-eldoc)
-
-(define-key cider-repl-mode-map (kbd "M-RET") 'cider-repl-closing-return)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;
 ;; markdown mode
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(add-emacs-dirs "markdown-mode")
-
-(require 'markdown-mode)
-
-(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-
 (define-key key-translation-map (kbd "M-[ C") (kbd "C-<right>"))
 (define-key key-translation-map (kbd "M-[ d") (kbd "C-<left>"))
-
 
 (defun file-basename (filename)
   (replace-regexp-in-string "^\\(.*\/\\)?\\([^/\.]*\\)\\(\.[^\.]*\\)?$" "\\2" filename))
@@ -460,15 +347,8 @@ kernel."
 ;;; automatic revert (git!!)
 (global-auto-revert-mode 1)
 
-(require 'pbcopy)
-(turn-on-pbcopy)
-
 (setq make-backup-files nil)
 (put 'downcase-region 'disabled nil)
-
-;; gist.el
-(require 'gist)
-(setq gist-view-gist t)
 
 (load "~/.private.el")
 
@@ -479,13 +359,6 @@ kernel."
      (group . 1)
      (modes . (list 'php-mode))
      (repeat . nil)))
-
-;; (add-to-list 'align-rules-list
-;;   '(assignments
-;;      (regexp . "\\(\\s-*\\)=[^>]")
-;;      (group . 1)
-;;      (modes . (list 'php-mode 'c-mode 'js-mode 'js2-mode))
-;;      (repeat . nil)))
 
 (add-to-list 'align-rules-list
   '(assignments
@@ -541,22 +414,6 @@ kernel."
 (setq whitespace-style '(face tabs trailing space-before-tab
                               empty space-after-tab tab-mark))
 ;; (global-whitespace-mode t)
-
-(require 'ethan-wspace)
-(global-ethan-wspace-mode 1)
-
-(defun my-makefile-hook ()
-  (message "makefile hook")
-  (setq ethan-wspace-mode nil)
-  (ethan-wspace-mode 0)
-  (ethan-wspace-clean-tabs-mode 0)
-  (ethan-wspace-highlight-tabs-mode 0)
-  (message "ethan wspace mode %s" ethan-wspace-mode))
-(add-hook 'makefile-mode-hook 'my-makefile-hook)
-
-(add-hook 'makefile-bsdmake-mode-hook 'my-makefile-hook)
-
-;; (require 'flymake-jslint)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -668,46 +525,19 @@ kernel."
         )
       )
 
-(require 'ox-md)
-; (require 'ox-taskjuggler)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(coq-prog-args
-   (\`
-    ("-emacs" "-R"
-     (\,
-      (concat emacs-dir "cpdt/src"))
-     "Cpdt")))
  '(haskell-tags-on-save t)
  '(org-export-backends (quote (ascii html icalendar latex md)))
+ '(package-selected-packages
+   (quote
+    (pbcopy slime-docker slime-repl slime yaml-mode w3 tuareg rinari python-mode puppet-mode php-mode paredit org ocp-indent mustache-mode merlin magit haskell-mode gist company ac-cider)))
  '(promela-auto-match-delimiter nil)
  '(tuareg-use-abbrev-mode t))
 
-;(require 'flymake-jslint)
-;(require 'ethan-wspace)
-;(global-ethan-wspace-mode 1) 
-
-;; benjamin ferrari
-(defun bf-pretty-print-xml-region (begin end)
-  "Pretty format XML markup in region. You need to have nxml-mode
-http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
-this.  The function inserts linebreaks to separate tags that have
-nothing but whitespace between them.  It then indents the markup
-by using nxml's indentation rules."
-  (interactive "r")
-  (save-excursion
-      (nxml-mode)
-      (goto-char begin)
-      (while (search-forward-regexp "\>[ \\t]*\<" nil t) 
-        (backward-char) (insert "\n"))
-      (indent-region begin end))
-    (message "Ah, much better!"))
-
-(require 'htmlize)
 (add-emacs-dirs "scpaste2")
 (require 'scpaste)
 
@@ -737,10 +567,6 @@ by using nxml's indentation rules."
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(require 'go-mode-load)
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-
 (setq ac-expand-on-auto-complete nil
       ac-use-quick-help t
       ac-use-fuzzy nil
@@ -748,18 +574,6 @@ by using nxml's indentation rules."
 (define-key ac-mode-map (kbd "C-c TAB") 'auto-complete)
 (define-key ac-mode-map (kbd "C-c H") 'ac-last-persist-help)
 (define-key ac-mode-map (kbd "C-c h") 'ac-help)
-
-(add-hook 'go-mode-hook '(lambda()
-                           (setq ethan-wspace-mode nil)
-                           (setq ethan-wspace-highlight-tabs-mode nil)
-                           (ethan-wspace-mode 0)
-                           (ethan-wspace-clean-tabs-mode 0)
-                           (ethan-wspace-highlight-tabs-mode 0)
-                           (setq tab-width 2)))
-
-(setq tags-table-list '("/Users/manuel/code/misc/go-path/" "."))
-
-;; (require 'pos-tip)
 
 (defun orgtbl-to-markdown (table params)
   "Convert the Orgtbl mode TABLE to Markdown."
@@ -782,19 +596,6 @@ by using nxml's indentation rules."
   )
 
 (global-set-key "\C-cm" 'markdown-preview-file)
-
-;; glsl mode
-(autoload 'glsl-mode "glsl-mode" nil t)
-(add-to-list 'auto-mode-alist '("\\.vsh\\'" . glsl-mode))
-(add-to-list 'auto-mode-alist '("\\.fsh\\'" . glsl-mode))
-
-(require 'haskell-interactive-mode)
-(require 'haskell-process)
-
-; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-mode-hook 'haskell-indent-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 ;; Usage Example:
 ;;
@@ -837,14 +638,6 @@ by using nxml's indentation rules."
 
 
 
-(add-emacs-dirs "flymake-easy" "flymake-haskell-multi" "emacs-flymake-cursor")
-(require 'flymake-easy)
-(require 'flymake-haskell-multi)
-(add-hook 'haskell-mode-hoook 'flymake-haskell-multi-load)
-(add-hook 'haskell-mode-hoook 'flymake-cursor-mode)
-(eval-after-load 'flymake '(require 'flymake-cursor))
-
-
 (require 'server)
 (unless (server-running-p)
   (server-start))
@@ -856,43 +649,13 @@ by using nxml's indentation rules."
  ;; If there is more than one, they won't work right.
  )
 
-;; tufte-book class for writing classy books
-(require 'ox-latex)
-(add-to-list 'org-latex-classes
-'("tuftebook"
-"\\documentclass{tufte-book}\n
-\\usepackage{color}
-\\usepackage{amssymb}
-\\usepackage{gensymb}
-\\usepackage{nicefrac}
-\\usepackage{units}"
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-("\\paragraph{%s}" . "\\paragraph*{%s}")
-("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-(add-to-list 'org-latex-classes
-'("tuftehandout"
-"\\documentclass{tufte-handout}
-\\usepackage{color}
-\\usepackage{amssymb}
-\\usepackage{amsmath}
-\\usepackage{gensymb}
-\\usepackage{nicefrac}
-\\usepackage{units}"
-("\\section{%s}" . "\\section*{%s}")
-("\\subsection{%s}" . "\\subsection*{%s}")
-("\\paragraph{%s}" . "\\paragraph*{%s}")
-("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
 ;; coq mode
-(load-file (concat emacs-dir "/ProofGeneral/generic/proof-site.el"))
+(load-file "/usr/local//Cellar/proof-general/4.4_1/share/emacs/site-lisp/proof-general/generic/proof-site.el")
+(load-file "/usr/local//Cellar/ssreflect/1.5_3/share/ssreflect/pg-ssr.el")
 
-(add-to-list 'load-path "/usr/local/opt/coq/lib/emacs/site-lisp")
 (setq auto-mode-alist (cons '("\\.v$" . coq-mode) auto-mode-alist))
 (autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
-
-
+(setq coq-prog-name "/usr/local/bin/coqtop")
 
 (with-eval-after-load 'coq
   (define-key coq-mode-map (kbd "C-c i") 'proof-query-identifier)
@@ -965,9 +728,6 @@ by using nxml's indentation rules."
      (repeat . nil)))
 
 (require 'ocp-indent)
-
-;; verilog stuff
-(require 'verilog-mode)
 
 (defun dos2unix (buffer)
   "Automate M-% C-q C-m RET C-q C-j RET"

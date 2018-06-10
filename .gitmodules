@@ -4,30 +4,15 @@
 [submodule "mo-git-blame"]
 	path = mo-git-blame
 	url = git://github.com/mbunkus/mo-git-blame.git
-[submodule "auto-complete"]
-	path = auto-complete
-	url = http://github.com/wesen/auto-complete.git
-[submodule "auto-complete-clang"]
-	path = auto-complete-clang
-	url = git://github.com/brianjcj/auto-complete-clang.git
 [submodule "yasnippet"]
 	path = yasnippet
 	url = git://github.com/wesen/yasnippet.git
-[submodule "cucumber.el"]
-	path = cucumber.el
-	url = git://github.com/michaelklishin/cucumber.el.git
-[submodule "emacs-w3m"]
-	path = emacs-w3m
-	url = git://github.com/sjatkinson/emacs-w3m.git
 [submodule "emacs-flymake"]
 	path = emacs-flymake
 	url = git://github.com/wesen/emacs-flymake.git
 [submodule "emacs-flymake-phpcs"]
 	path = emacs-flymake-phpcs
 	url = git://github.com/illusori/emacs-flymake-phpcs.git
-[submodule "clojure-mode"]
-	path = clojure-mode
-	url = git://github.com/jochu/clojure-mode.git
 [submodule "dvc"]
 	path = dvc
 	url = git://github.com/wesen/dvc.git
@@ -37,21 +22,12 @@
 [submodule "jquery-doc"]
 	path = jquery-doc
 	url = git://github.com/wesen/jquery-doc.el.git
-[submodule "tumble"]
-	path = tumble
-	url = git://github.com/wesen/tumble.git
-[submodule "gist.el"]
-	path = gist.el
-	url = git://github.com/wesen/gist.el.git
 [submodule "ethan-wspace"]
 	path = ethan-wspace
 	url = https://github.com/wesen/ethan-wspace.git
 [submodule "lintnode"]
 	path = lintnode
 	url = git://github.com/wesen/lintnode.git
-[submodule "lua-mode"]
-	path = lua-mode
-	url = git://github.com/immerrr/lua-mode.git
 [submodule "emacs-eclim"]
 	path = emacs-eclim
 	url = git://github.com/senny/emacs-eclim.git
